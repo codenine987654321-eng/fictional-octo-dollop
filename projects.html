@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاريع المبرمج محمد فهد</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #00d2ff; --bg: #0f172a; --yemen-red: #CE1126; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background: var(--bg); color: white; text-align: center; overflow-x: hidden; }
+
+        /* علم اليمن المتحرك */
+        .yemen-flag {
+            width: 100px; height: 60px; margin: 20px auto;
+            display: flex; flex-direction: column;
+            animation: wave 2s infinite ease-in-out;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .yemen-flag div { flex: 1; width: 100%; }
+        .red { background: #CE1126; }
+        .white { background: #FFFFFF; }
+        .black { background: #000000; }
+        @keyframes wave {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+        }
+
+        /* الساعة الرقمية */
+        #clock { font-size: 1.5rem; color: var(--primary); margin: 10px 0; font-weight: bold; }
+
+        .container { padding: 50px 10%; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--primary); }
+        
+        /* كروت المشاريع المتحركة */
+        .project-card {
+            background: #1e293b; padding: 25px; border-radius: 15px;
+            border-right: 5px solid var(--primary); margin-bottom: 20px;
+            transition: 0.3s; opacity: 0; transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+        }
+        .project-card:hover { transform: scale(1.02); background: #26334d; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        .back-btn {
+            display: inline-block; padding: 12px 30px; border-radius: 50px;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            color: white; text-decoration: none; font-weight: bold; margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="yemen-flag">
+        <div class="red"></div>
+        <div class="white"></div>
+        <div class="black"></div>
+    </div>
+
+    <h1>مشاريع المبرمج محمد فهد 🇾🇪</h1>
+    
+    <div id="clock">جاري تحميل الوقت...</div>
+
+    <div class="container">
+        <div class="project-card" style="animation-delay: 0.2s;">
+            <i class="fab fa-python" style="font-size: 2rem;"></i>
+            <h3>نظام الأتمتة الذكي</h3>
+            <p>سكربتات متطورة بلغة بايثون لإدارة المهام عبر Termux.</p>
+        </div>
+
+        <div class="project-card" style="animation-delay: 0.4s;">
+            <i class="fas fa-code" style="font-size: 2rem;"></i>
+            <h3>واجهات الويب</h3>
+            <p>تصميم مواقع متكاملة تتوافق مع جميع الشاشات.</p>
+        </div>
+
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-YE');
+            document.getElementById('clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
