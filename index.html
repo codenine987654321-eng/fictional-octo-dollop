@@ -6,92 +6,15 @@
     <title>محمد فهد - أصنع كوداً يغير الواقع</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* التنسيق الأصلي الذي اكتسح */
-        body {
-            background-color: #050a18; /* الخلفية الداكنة التي تميز تصميمك */
-            color: white;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        /* أيقونة الـ </> الشهيرة في موقعك */
-        .profile-icon {
-            width: 120px;
-            height: 120px;
-            border-radius: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            background: rgba(29, 161, 242, 0.05);
-            border: 2px solid #00d2ff;
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
-        }
-
-        .profile-icon svg {
-            width: 60px;
-            fill: #00d2ff;
-        }
-
-        h1 {
-            font-size: 45px;
-            margin: 10px 0;
-            font-weight: 800;
-        }
-
-        .subtitle {
-            color: #00d2ff;
-            font-size: 20px;
-            margin-bottom: 40px;
-            letter-spacing: 1px;
-        }
-
-        /* تنسيق الأزرار الأصلي */
-        .btn {
-            width: 320px;
-            padding: 16px 20px;
-            margin: 10px 0;
-            border-radius: 50px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: #111827;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 18px;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* الزر السماوي "الاكتساح" */
-        .btn-primary {
-            background: #00d2ff;
-            color: #000;
-            font-weight: bold;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
-            border: none;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            border-color: #00d2ff;
-        }
-
-        .footer {
-            position: absolute;
-            bottom: 20px;
-            font-size: 13px;
-            opacity: 0.6;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        body { background-color: #050a18; color: white; font-family: 'Arial', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        .profile-icon { width: 115px; height: 115px; border-radius: 30px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; background: rgba(0, 210, 255, 0.05); border: 2px solid #00d2ff; box-shadow: 0 0 35px rgba(0, 210, 255, 0.25); }
+        .profile-icon svg { width: 58px; fill: #00d2ff; }
+        h1 { font-size: 48px; margin: 10px 0; font-weight: 900; }
+        .subtitle { color: #00d2ff; font-size: 21px; margin-bottom: 45px; }
+        .btn { width: 340px; padding: 18px 25px; margin: 12px 0; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.08); background: #0f172a; color: white; text-decoration: none; display: flex; align-items: center; justify-content: space-between; font-size: 18px; font-weight: 600; transition: 0.3s ease; }
+        .btn-primary { background: #00d2ff; color: #000; box-shadow: 0 10px 25px rgba(0, 210, 255, 0.3); border: none; }
+        .btn:hover { transform: translateY(-5px); border-color: #00d2ff; }
+        .footer { position: absolute; bottom: 35px; font-size: 14px; opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -101,9 +24,9 @@
     </div>
 
     <h1>محمد فهد</h1>
-    <p class="subtitle">أصنع كوداً يغير الواقع</p>
+    <div class="subtitle">أصنع كوداً يغير الواقع</div>
 
-    <a href="chat.html" class="btn btn-primary">
+    <a href="./chat.html" class="btn btn-primary">
         <span>تواصل مع الذكاء الاصطناعي</span>
         <i class="fas fa-bolt"></i>
     </a>
@@ -113,14 +36,12 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <a href="works.html" class="btn">
+    <a href="./works.html" class="btn">
         <span>لوحة الخبرات والمهارات</span>
         <i class="fas fa-layer-group"></i>
     </a>
 
-    <div class="footer">
-        بكل فخر من اليمن 🇾🇪
-    </div>
+    <div class="footer">بكل فخر من اليمن 🇾🇪</div>
 
 </body>
 </html>
