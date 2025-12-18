@@ -1,119 +1,106 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشاريع المبرمج محمد فهد</title>
+    <title>مشاريع محمد فهد | نسخة الذكاء الاصطناعي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #00d2ff; --bg: #0f172a; --card: #1e293b; --text: #ffffff; }
-        .light-theme { --bg: #f1f5f9; --card: #ffffff; --text: #0f172a; }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; transition: 0.4s; }
-        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
-
-        /* زر المظهر */
-        .theme-toggle { position: fixed; top: 20px; left: 20px; background: var(--primary); border: none; padding: 10px; border-radius: 50%; cursor: pointer; z-index: 1000; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
+        body { background: var(--bg); color: var(--text); text-align: center; min-height: 100vh; overflow-x: hidden; }
 
         /* علم اليمن */
-        .yemen-flag {
-            width: 100px; height: 60px; margin: 20px auto;
-            display: flex; flex-direction: column;
-            animation: wave 2s infinite ease-in-out;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
+        .yemen-flag { width: 60px; height: 35px; margin: 15px auto; display: flex; flex-direction: column; border-radius: 3px; overflow: hidden; }
         .red { background: #CE1126; flex: 1; }
         .white { background: #FFFFFF; flex: 1; }
         .black { background: #000000; flex: 1; }
-        @keyframes wave { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(2deg); } }
 
-        #clock { font-size: 1.8rem; color: var(--primary); margin: 10px 0; font-weight: bold; font-family: monospace; }
+        /* منطقة الدردشة */
+        .chat-container { max-width: 400px; margin: 20px auto; background: var(--card); border-radius: 20px; padding: 15px; border: 1px solid var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #chat-display { height: 200px; overflow-y: auto; text-align: right; padding: 10px; border-bottom: 1px solid #334155; margin-bottom: 10px; font-size: 0.9rem; }
+        .user-msg { color: var(--primary); margin: 5px 0; font-weight: bold; }
+        .ai-msg { color: #25d366; margin: 5px 0; }
 
-        .container { padding: 30px 10%; }
-        h1 { font-size: 2.2rem; margin-bottom: 20px; color: var(--primary); }
-        
-        .project-card {
-            background: var(--card); padding: 25px; border-radius: 15px;
-            border-right: 5px solid var(--primary); margin-bottom: 20px;
-            text-align: right; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+        .input-area { display: flex; gap: 5px; }
+        input { flex: 1; padding: 10px; border-radius: 10px; border: none; outline: none; background: #0f172a; color: white; }
+        button.send-ai { background: var(--primary); border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; color: #000; font-weight: bold; }
 
-        .download-box { background: rgba(0, 210, 255, 0.1); border: 2px dashed var(--primary); padding: 20px; border-radius: 15px; margin-top: 30px; }
-        .download-btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: #25d366; color: white; padding: 10px 20px;
-            border-radius: 10px; text-decoration: none; margin-top: 10px; font-weight: bold;
-        }
+        /* البوت المتحرك */
+        .bot-frame { width: 60px; height: 50px; background: var(--primary); border-radius: 15px; margin: 10px auto; display: flex; justify-content: center; align-items: center; animation: float 3s infinite ease-in-out; }
+        .eye { width: 10px; height: 10px; background: white; border-radius: 50%; margin: 5px; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        .back-btn {
-            display: inline-block; padding: 12px 30px; border-radius: 50px;
-            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
-            color: white; text-decoration: none; font-weight: bold; margin-top: 30px;
-        }
-
-        /* ستايل الشخصية المتحركة */
-        .buddy-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; cursor: pointer; }
-        .bot-head {
-            width: 50px; height: 40px; background: var(--primary); border-radius: 10px;
-            position: relative; animation: float 3s infinite ease-in-out;
-        }
-        .eye { width: 8px; height: 8px; background: white; border-radius: 50%; position: absolute; top: 10px; animation: blink 2s infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+        .back-btn { display: inline-block; padding: 10px 30px; border-radius: 50px; background: var(--primary); color: #000; text-decoration: none; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
-
     <div class="yemen-flag"><div class="red"></div><div class="white"></div><div class="black"></div></div>
+    <h2>تحدث مع مساعد محمد الذكي 🤖</h2>
 
-    <h1>معرض المشاريع 🇾🇪</h1>
-    <div id="clock">00:00:00</div>
-
-    <div class="container">
-        <div class="project-card">
-            <h3><i class="fab fa-python"></i> نظام الأتمتة الذكي</h3>
-            <p>سكربتات متطورة بلغة بايثون لإدارة المهام عبر Termux.</p>
-        </div>
-
-        <div class="download-box">
-            <h3><i class="fas fa-download"></i> مركز التحميل</h3>
-            <p>حمل أحدث السكربتات والأدوات التي برمجتها مباشرة</p>
-            <a href="#" class="download-btn"><i class="fas fa-file-archive"></i> تحميل الأدوات (قريباً)</a>
-        </div>
-
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+    <div class="bot-frame">
+        <div class="eye"></div>
+        <div class="eye"></div>
     </div>
 
-    <div class="buddy-container" id="botBuddy">
-        <div class="bot-head">
-            <div class="eye" style="left: 10px;"></div>
-            <div class="eye" style="right: 10px;"></div>
-            <div style="width: 20px; height: 3px; background: white; position: absolute; bottom: 8px; left: 15px; border-radius: 2px;"></div>
+    <div class="chat-container">
+        <div id="chat-display">
+            <div class="ai-msg">مرحباً! أنا ذكاء محمد فهد الاصطناعي.. اسألني أي شيء عن محمد أو البرمجة!</div>
         </div>
-        <div style="width: 40px; height: 8px; background: rgba(0,0,0,0.1); border-radius: 50%; margin: 5px auto; filter: blur(2px);"></div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="اكتب سؤالك هنا...">
+            <button class="send-ai" onclick="askAI()">إرسال</button>
+        </div>
     </div>
+
+    <a href="index.html" class="back-btn">العودة للرئيسية</a>
 
     <script>
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').textContent = now.toLocaleTimeString('ar-YE');
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-            const icon = document.querySelector('.theme-toggle i');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
-        }
-
-        document.getElementById('botBuddy').onclick = function() {
-            alert("مرحباً! أنا رفيقك البرمجي في موقع محمد فهد. هل رأيت المشاريع الجديدة؟");
+        // مصفوفة الردود الذكية (يمكنك توسيعها كما تشاء)
+        const knowledgeBase = {
+            "من هو محمد": "محمد فهد هو مبرمج يمني مبدع، متخصص في بايثون وتطوير الويب وأدوات Termux.",
+            "محمد فهد": "محمد هو صاحب هذا الموقع ومطور السكربتات التي تراها هنا.",
+            "بايثون": "لغة بايثون هي اللغة المفضلة لمحمد، ويستخدمها في صنع أدوات الأتمتة.",
+            "اليمن": "اليمن هو أصل الحضارة، ومحمد فخر الصناعة البرمجية اليمنية 🇾🇪",
+            "هلا": "أهلاً بك! كيف يمكنني مساعدتك في استكشاف مشاريع محمد؟",
+            "شكرا": "العفو! محمد دائماً في الخدمة.",
+            "المشاريع": "محمد لديه مشاريع في الأتمتة، الحماية، وتصميم المواقع."
         };
+
+        function askAI() {
+            const inputField = document.getElementById('userInput');
+            const display = document.getElementById('chat-display');
+            const text = inputField.value.trim();
+
+            if (text === "") return;
+
+            // عرض رسالة المستخدم
+            display.innerHTML += `<div class="user-msg">أنت: ${text}</div>`;
+            inputField.value = "";
+
+            // معالجة الرد (الذكاء الاصطناعي)
+            setTimeout(() => {
+                let response = "عذراً، ما زلت أتعلم.. لكن محمد فهد مبرمج عظيم وسيعلمني الرد على هذا قريباً!";
+                
+                // البحث في قاعدة البيانات البسيطة
+                for (let key in knowledgeBase) {
+                    if (text.includes(key)) {
+                        response = knowledgeBase[key];
+                        break;
+                    }
+                }
+
+                display.innerHTML += `<div class="ai-msg">البوت: ${response}</div>`;
+                display.scrollTop = display.scrollHeight; // النزول لآخر رسالة
+            }, 500);
+        }
+
+        // إرسال عند الضغط على Enter
+        document.getElementById('userInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') askAI();
+        });
     </script>
 </body>
 </html>
+
