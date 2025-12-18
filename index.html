@@ -3,173 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>محمد فهد | المبرمج المحترف</title>
+    <title>محمد فهد | التصميم العصري</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main: #00d2ff;
-            --bg: #010409;
-            --glass: rgba(255, 255, 255, 0.03);
+            --main: #00e5ff;
+            --bg: #030712;
+            --card: #0b1120;
         }
 
-        /* تصفير كامل للفراغات */
+        /* تصفير الفراغات */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         
         body, html { 
             width: 100%; height: 100%; 
             overflow: hidden; 
-            background: var(--bg);
+            background-color: var(--bg);
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* خلفية سينمائية متحركة */
-        .bg-animate {
+        /* إضاءة خلفية ناعمة جداً */
+        .ambient-glow {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #112240 0%, #010409 100%);
+            background: radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
             z-index: -1;
         }
 
-        .glow-sphere {
-            position: absolute; width: 300px; height: 300px;
-            background: var(--main); filter: blur(150px);
-            opacity: 0.15; border-radius: 50%;
-            animation: moveSphere 15s infinite alternate;
-        }
-        @keyframes moveSphere { from { transform: translate(-50%, -50%); } to { transform: translate(50%, 50%); } }
-
-        /* الكرت الاحترافي - يملأ الشاشة بشكل متناسق */
-        .main-wrapper {
-            width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            padding: 20px;
-            perspective: 1000px;
-        }
-
-        .pro-card {
-            width: 100%; max-width: 420px;
-            background: rgba(13, 17, 23, 0.7);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 40px;
-            padding: 50px 30px;
+        /* الكرت الاحترافي بحواف ناعمة */
+        .modern-card {
+            position: relative;
+            width: 88%; max-width: 370px;
+            background: var(--card);
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            border-radius: 45px; /* حواف ناعمة جداً غير تقليدية */
+            padding: 50px 25px;
             text-align: center;
-            transition: transform 0.1s ease-out; /* حركة ناعمة مع الإصبع */
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.02);
         }
 
-        /* نقاط التحكم (ستايل MacOS فخم) */
-        .dots { display: flex; gap: 8px; position: absolute; top: 25px; right: 30px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; }
-
-        .crown-icon {
-            font-size: 4.5rem; color: var(--main);
-            margin-bottom: 25px; filter: drop-shadow(0 0 15px var(--main));
+        /* أيقونة التاج بستايل نيون */
+        .crown-box {
+            font-size: 4.2rem; color: var(--main);
+            margin-bottom: 25px;
+            filter: drop-shadow(0 10px 15px rgba(0, 229, 255, 0.3));
         }
 
-        h1 { font-size: 2.8rem; font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: 10px; }
-        .typewriter { color: var(--main); font-weight: bold; font-size: 1.2rem; min-height: 1.5em; opacity: 0.9; }
+        /* الخط الاحترافي العريض */
+        h1 { 
+            font-size: 2.8rem; 
+            font-weight: 900; /* أقصى درجات القوة للخط */
+            color: #fff; 
+            margin-bottom: 8px; 
+            letter-spacing: -1.5px; /* تقريب الحروف لتعطي طابعاً برمجياً */
+        }
 
-        .links-area { margin-top: 40px; display: grid; gap: 15px; }
+        .typewriter { 
+            color: var(--main); 
+            font-weight: 700; 
+            font-size: 1.15rem; 
+            min-height: 1.6em; 
+            margin-bottom: 35px;
+            letter-spacing: 0.5px;
+        }
 
-        .link-item {
-            text-decoration: none; color: white;
-            padding: 20px; border-radius: 22px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        /* الأزرار العصرية بحواف دائرية كاملة */
+        .btn-stack { display: grid; gap: 14px; width: 100%; }
+
+        .btn-modern {
+            text-decoration: none; color: #fff;
+            padding: 20px; 
+            border-radius: 30px; /* حواف دائرية انسيابية */
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             display: flex; align-items: center; justify-content: space-between;
-            font-weight: 700; transition: 0.3s;
+            font-weight: 700; font-size: 1rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .link-item i { font-size: 1.3rem; }
-        .primary-link { background: var(--main); color: #000; border: none; }
-        .primary-link:active { transform: scale(0.97); background: #fff; }
+        .btn-modern i { font-size: 1.2rem; opacity: 0.7; }
 
-        .footer { margin-top: 40px; opacity: 0.5; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .flag { width: 22px; height: 13px; display: flex; flex-direction: column; }
+        /* الزر الرئيسي الملون */
+        .btn-highlight {
+            background: var(--main); color: #000; border: none;
+            box-shadow: 0 15px 30px rgba(0, 229, 255, 0.2);
+        }
+
+        .btn-modern:active { transform: scale(0.94); }
+
+        /* الفوتر بلمسة بسيطة */
+        .yem-footer { 
+            margin-top: 40px; 
+            display: flex; align-items: center; justify-content: center; 
+            gap: 10px; font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.3);
+        }
+        .flag-box { width: 22px; height: 13px; display: flex; flex-direction: column; border-radius: 2px; overflow: hidden; }
         .r { background: #CE1126; flex: 1; } .w { background: #fff; flex: 1; } .b { background: #000; flex: 1; }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-animate"></div>
-    <div class="glow-sphere"></div>
+    <div class="ambient-glow"></div>
 
-    <div class="main-wrapper" id="scene">
-        <div class="pro-card" id="card">
-            <div class="dots">
-                <div class="dot" style="background: #ff5f56;" onclick="changeTheme('#ff5f56')"></div>
-                <div class="dot" style="background: #27c93f;" onclick="changeTheme('#27c93f')"></div>
-                <div class="dot" style="background: #00d2ff;" onclick="changeTheme('#00d2ff')"></div>
-            </div>
+    <div class="modern-card">
+        <div class="crown-box"><i class="fas fa-crown"></i></div>
+        
+        <p style="font-size: 0.75rem; opacity: 0.3; letter-spacing: 3px; font-weight: 700; margin-bottom: 10px;">PRO DEVELOPER</p>
+        <h1>محمد فهد</h1>
+        <div class="typewriter" id="typewriter"></div>
 
-            <div class="crown-icon"><i class="fas fa-crown"></i></div>
-            
-            <p style="text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; opacity: 0.4; margin-bottom: 5px;">Professional Developer</p>
-            <h1>محمد فهد</h1>
-            <div class="typewriter" id="typewriter"></div>
+        <div class="btn-stack">
+            <a href="projects.html" class="btn-modern btn-highlight">
+                <span>مركز المشاريع الذكية</span>
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <a href="https://wa.me/967783787656" class="btn-modern">
+                <span>تواصل للأعمال</span>
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="dashboard.html" class="btn-modern">
+                <span>لوحة الخبرات</span>
+                <i class="fas fa-layer-group"></i>
+            </a>
+        </div>
 
-            <div class="links-area">
-                <a href="projects.html" class="link-item primary-link">
-                    <span>استكشف مشاريعي الذكية</span>
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-                <a href="https://wa.me/967783787656" class="link-item">
-                    <span>تواصل معي مباشرة</span>
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="dashboard.html" class="link-item">
-                    <span>لوحة المهارات والخبرات</span>
-                    <i class="fas fa-layer-group"></i>
-                </a>
-            </div>
-
-            <div class="footer">
-                <span>بكل فخر من اليمن</span>
-                <div class="flag"><div class="r"></div><div class="w"></div><div class="b"></div></div>
-            </div>
+        <div class="yem-footer">
+            <span>YEMEN PRIDE</span>
+            <div class="flag-box"><div class="r"></div><div class="w"></div><div class="b"></div></div>
         </div>
     </div>
 
     <script>
-        const card = document.getElementById('card');
-        const scene = document.getElementById('scene');
-
-        // حركة تفاعلية فقط عند اللمس أو تحريك الماوس (احترافية)
-        scene.addEventListener('mousemove', (e) => {
-            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
-
-        // دعم اللمس للجوال لتكون الحركة ناعمة تحت إصبعك
-        scene.addEventListener('touchmove', (e) => {
-            let touch = e.touches[0];
-            let xAxis = (window.innerWidth / 2 - touch.pageX) / 20;
-            let yAxis = (window.innerHeight / 2 - touch.pageY) / 20;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
-
-        // إعادة الكرت لوضعه الطبيعي عند ترك الشاشة
-        scene.addEventListener('touchend', () => {
-            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-        });
-
-        function changeTheme(color) {
-            document.documentElement.style.setProperty('--main', color);
-        }
-
-        // تأثير الكتابة
         const textElement = document.getElementById('typewriter');
-        const phrases = ["أصمم واجهات المستقبل", "خبير أتمتة وبايثون", "مبتكر رقمي يمني"];
+        const phrases = ["أصمم واجهات المستقبل", "خبير أتمتة وبايثون", "مطور حلول برمجية"];
         let pIdx = 0, cIdx = 0;
 
         function type() {
             if (cIdx < phrases[pIdx].length) {
                 textElement.textContent += phrases[pIdx].charAt(cIdx++);
-                setTimeout(type, 80);
-            } else { setTimeout(erase, 2000); }
+                setTimeout(type, 90);
+            } else { setTimeout(erase, 2500); }
         }
         function erase() {
             if (cIdx > 0) {
@@ -181,3 +155,4 @@
     </script>
 </body>
 </html>
+
