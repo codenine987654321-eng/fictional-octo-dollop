@@ -6,12 +6,12 @@
     <title>ذكاء محمد فهد</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .chat-container { width: 95%; max-width: 450px; background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; height: 80vh; }
+        .chat-container { width: 95%; max-width: 450px; background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; height: 85vh; }
         .header { background: #007bff; color: white; padding: 20px; text-align: center; font-size: 1.2rem; font-weight: bold; }
         #chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: #fafafa; }
         .message { padding: 12px 18px; border-radius: 15px; line-height: 1.5; font-size: 1rem; max-width: 80%; }
-        .user-msg { background: #007bff; color: white; align-self: flex-start; }
-        .ai-msg { background: #e9ecef; color: #333; align-self: flex-end; border: 1px solid #dee2e6; }
+        .user-msg { background: #007bff; color: white; align-self: flex-start; border-bottom-right-radius: 2px; }
+        .ai-msg { background: #e9ecef; color: #333; align-self: flex-end; border-bottom-left-radius: 2px; border: 1px solid #dee2e6; }
         .input-area { display: flex; padding: 15px; background: white; border-top: 1px solid #eee; }
         input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; outline: none; }
         button { background: #007bff; color: white; border: none; padding: 10px 25px; margin-right: 10px; border-radius: 25px; cursor: pointer; font-weight: bold; }
@@ -22,7 +22,7 @@
 <div class="chat-container">
     <div class="header">🤖 ذكاء المبرمج محمد فهد</div>
     <div id="chat-box">
-        <div class="message ai-msg">مرحباً! أنا ذكاء اصطناعي طورني محمد فهد. كيف يمكنني مساعدتك؟</div>
+        <div class="message ai-msg">مرحباً! أنا ذكاء اصطناعي طورني محمد فهد. كيف يمكنني مساعدتك اليوم؟</div>
     </div>
     <div class="input-area">
         <input type="text" id="chat-input" placeholder="اكتب سؤالك هنا..." autocomplete="off">
@@ -45,8 +45,8 @@
         addMessage("جاري التفكير...", 'ai-msg', loadingId);
 
         try {
-            // الرابط المحدث بناءً على صورك في Hugging Face
-            const response = await fetch("https://mohamedfahad-mohammed-ai.hf.space/run/predict", {
+            // الرابط الجديد مع البروكسي لحل مشكلة الرفض
+            const response = await fetch("https://mohamedfahad-mohammed-ai.hf.space/--proxy/run/predict", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ data: [message] })
@@ -58,11 +58,11 @@
             if (result.data && result.data[0]) {
                 loadingMsg.textContent = result.data[0];
             } else {
-                loadingMsg.textContent = "اعتذر، هناك مشكلة في الرد.";
+                loadingMsg.textContent = "أنا جاهز، لكن السيرفر يحتاج ثواني للتحميل. جرب الآن مرة أخرى!";
             }
 
         } catch (error) {
-            document.getElementById(loadingId).textContent = "خطأ: تأكد أن سيرفر Hugging Face في حالة Running.";
+            document.getElementById(loadingId).textContent = "تأكد أن مساحة Hugging Face في وضع Running و Public.";
         }
     }
 
@@ -83,3 +83,4 @@
 
 </body>
 </html>
+
