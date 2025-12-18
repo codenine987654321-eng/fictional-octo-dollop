@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M-FAHAD | CYBER SECURITY HUB</title>
+    <title>أكاديمية محمد فهد | CYBER HUB</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -30,63 +30,57 @@
             position: relative;
             width: 380px;
             padding: 40px;
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(20px);
-            border-radius: 30px;
-            border: 1px solid rgba(0, 242, 255, 0.2);
+            border-radius: 35px;
+            border: 1px solid rgba(0, 242, 255, 0.3);
             text-align: center;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
         }
 
-        /* شعار الهكر المطور */
-        .hacker-icon-wrapper {
-            position: relative;
+        /* تصميم قناع الهكر بالـ SVG */
+        .hacker-mask {
             width: 100px;
             height: 100px;
             margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 242, 255, 0.05);
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
-        }
-
-        .hacker-icon-wrapper i {
-            font-size: 50px;
-            color: var(--primary);
             filter: drop-shadow(0 0 10px var(--primary));
-        }
-
-        /* إضافة كود خلف الهكر كأنه مصفوفة */
-        .hacker-icon-wrapper::after {
-            content: "1010";
-            position: absolute;
-            font-size: 10px;
-            color: var(--hacker-green);
-            top: 10px;
-            right: -10px;
-            opacity: 0.5;
-            font-family: monospace;
+            animation: float 4s ease-in-out infinite;
         }
 
         h1 {
             font-weight: 900;
-            font-size: 30px;
+            font-size: 32px;
             margin: 0;
             background: linear-gradient(to bottom, #fff, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        /* حاوية الحالة - نصوص عربية بالكامل */
+        .system-status {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 255, 65, 0.08);
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--hacker-green);
+            margin: 20px 0 35px 0;
+        }
+
         .status-text {
             color: var(--hacker-green);
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 15px;
+            font-weight: 800;
+            margin-right: 12px; /* مسافة للنص العربي */
+        }
+
+        .status-led {
+            width: 12px;
+            height: 12px;
+            background-color: var(--hacker-green);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--hacker-green);
+            animation: pulse-green 1.5s infinite;
         }
 
         .btn-list {
@@ -97,7 +91,7 @@
 
         .cyber-btn {
             font-weight: 700;
-            padding: 16px 20px;
+            padding: 18px 20px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
@@ -112,37 +106,49 @@
         .cyber-btn:hover {
             background: rgba(0, 242, 255, 0.1);
             border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.2);
+            transform: scale(1.03);
         }
 
-        /* زر الأكشن الرئيسي */
         .btn-main {
             background: var(--primary);
             color: #000 !important;
             border: none;
         }
-        .btn-main i, .btn-main span { color: #000; font-weight: 900; }
+        .btn-main span, .btn-main i { color: #000; font-weight: 900; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
         .footer-info {
             margin-top: 30px;
-            font-size: 11px;
-            opacity: 0.4;
-            letter-spacing: 2px;
+            font-size: 12px;
+            font-weight: bold;
+            color: rgba(0, 242, 255, 0.3);
         }
     </style>
 </head>
 <body>
 
     <div class="cyber-container">
-        <div class="hacker-icon-wrapper">
-            <i class="fas fa-user-secret"></i>
+        <div class="hacker-mask">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM7.5 11C8.33 11 9 10.33 9 9.5C9 8.67 8.33 8 7.5 8C6.67 8 6 8.67 6 9.5C6 10.33 6.67 11 7.5 11ZM16.5 11C17.33 11 18 10.33 18 9.5C18 8.67 17.33 8 16.5 8C15.67 8 15 8.67 15 9.5C15 10.33 15.67 11 16.5 11ZM12 18C14.11 18 15.93 16.74 16.76 14.94C16.89 14.67 16.78 14.34 16.5 14.21C16.22 14.08 15.89 14.19 15.76 14.47C15.13 15.82 13.7 16.5 12 16.5C10.3 16.5 8.87 15.82 8.24 14.47C8.11 14.19 7.78 14.08 7.5 14.21C7.22 14.34 7.11 14.67 7.24 14.94C8.07 16.74 9.89 18 12 18Z" fill="#00f2ff"/>
+            </svg>
         </div>
 
         <h1>أكاديمية محمد فهد</h1>
-        <div class="status-text">
-            <i class="fas fa-circle" style="font-size: 8px; margin-left: 5px; animation: pulse 1s infinite;"></i>
-            Ethical Hacker Mode: Active
+        
+        <div class="system-status">
+            <div class="status-led"></div>
+            <div class="status-text">نظام الاختراق الأخلاقي: متصل</div>
         </div>
 
         <div class="btn-list">
@@ -157,23 +163,16 @@
             </a>
 
             <a href="https://wa.me/967783787656" class="cyber-btn">
-                <span>تواصل للأعمال</span>
+                <span>استشارة أمنية فورية</span>
                 <i class="fab fa-whatsapp"></i>
             </a>
         </div>
 
         <div class="footer-info">
-            SECURE ACCESS | YEMEN 🇾🇪
+            اتصال مشفر | اليمن 🇾🇪
         </div>
     </div>
 
-    <style>
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-    </style>
 </body>
 </html>
 
