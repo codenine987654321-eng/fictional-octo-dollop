@@ -1,31 +1,88 @@
-async function askFahadAI() {
-    const inputField = document.getElementById('chat-input'); // تأكد أن هذا هو الـ ID لخانة الكتابة
-    const message = inputField.value;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ذكاء محمد فهد</title>
+    <style>
+        /* تنسيق بسيط واحترافي */
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .chat-container { width: 90%; max-width: 400px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; }
+        .header { background: #007bff; color: white; padding: 15px; text-align: center; font-weight: bold; }
+        #chat-box { height: 300px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .message { padding: 10px; border-radius: 10px; max-width: 80%; }
+        .user-msg { background: #007bff; color: white; align-self: flex-start; }
+        .ai-msg { background: #e4e6eb; color: black; align-self: flex-end; }
+        .input-area { display: flex; padding: 10px; border-top: 1px solid #ddd; }
+        input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; outline: none; }
+        button { background: #007bff; color: white; border: none; padding: 10px 15px; margin-right: 5px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
 
-    if (!message) return;
+<div class="chat-container">
+    <div class="header">ذكاء المبرمج محمد فهد 🤖</div>
+    <div id="chat-box">
+        <div class="message ai-msg">مرحباً! أنا ذكاء اصطناعي من صنع محمد فهد، كيف أخدمك اليوم؟</div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="chat-input" placeholder="اكتب سؤالك هنا...">
+        <button onclick="askFahadAI()">إرسال</button>
+    </div>
+</div>
 
-    // أظهر رسالة المستخدم (يمكنك استخدام دالتك القديمة هنا للعرض)
-    console.log("المستخدم قال: " + message);
+<script>
+    async function askFahadAI() {
+        const inputField = document.getElementById('chat-input');
+        const chatBox = document.getElementById('chat-box');
+        const message = inputField.value.trim();
 
-    try {
-        // إرسال السؤال للعقل في Hugging Face
-        const response = await fetch("https://mohamedfahad-mohammed-ai.hf.space/run/predict", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                data: [message]
-            })
-        });
+        if (!message) return;
 
-        const result = await response.json();
-        const aiReply = result.data[0];
+        // 1. عرض رسالة المستخدم
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message user-msg';
+        userDiv.textContent = message;
+        chatBox.appendChild(userDiv);
+        inputField.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
 
-        // هنا تضع الكود الذي يعرض aiReply داخل فقاعة الدردشة في موقعك
-        alert("ذكاء محمد فهد يقول: " + aiReply); // هذه للتجربة فقط، استبدلها بكود العرض الخاص بك
+        // 2. إظهار رسالة "جاري التفكير..."
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'message ai-msg';
+        loadingDiv.textContent = "جاري التفكير...";
+        chatBox.appendChild(loadingDiv);
 
-    } catch (error) {
-        console.error("خطأ:", error);
+        try {
+            // 3. الربط مع Hugging Face الخاص بك
+            const response = await fetch("https://mohamedfahad-mohammed-ai.hf.space/run/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    data: [message]
+                })
+            });
+
+            const result = await response.json();
+            const aiReply = result.data[0];
+
+            // 4. استبدال "جاري التفكير" برد الذكاء الاصطناعي
+            loadingDiv.textContent = aiReply;
+
+        } catch (error) {
+            loadingDiv.textContent = "عذراً، واجهت مشكلة في الاتصال بعقل محمد فهد!";
+            console.error(error);
+        }
+        
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    inputField.value = ''; // مسح الخانة بعد الإرسال
-}
+    // لتمكين الإرسال عند الضغط على زر Enter
+    document.getElementById('chat-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') askFahadAI();
+    });
+</script>
+
+</body>
+</html>
+
