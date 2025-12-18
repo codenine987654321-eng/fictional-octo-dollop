@@ -3,102 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشاريع محمد فهد | نسخة الذكاء الاصطناعي</title>
+    <title>ذكاء محمد فهد الخارق 🤖</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #00d2ff; --bg: #0f172a; --card: #1e293b; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
-        body { background: var(--bg); color: var(--text); text-align: center; min-height: 100vh; overflow-x: hidden; }
+        :root { --main: #00d2ff; --bg: #0b0f19; --chat: #1e293b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: var(--bg); color: white; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
 
-        /* علم اليمن */
-        .yemen-flag { width: 60px; height: 35px; margin: 15px auto; display: flex; flex-direction: column; border-radius: 3px; overflow: hidden; }
-        .red { background: #CE1126; flex: 1; }
-        .white { background: #FFFFFF; flex: 1; }
-        .black { background: #000000; flex: 1; }
+        /* تصميم الروبوت */
+        .ai-status { font-size: 0.8rem; color: #25d366; margin-bottom: 5px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        
+        .bot-visual { width: 60px; height: 50px; background: var(--main); border-radius: 12px; position: relative; box-shadow: 0 0 20px var(--main); animation: float 3s infinite ease-in-out; }
+        .bot-visual::before, .bot-visual::after { content: ''; position: absolute; width: 10px; height: 10px; background: white; border-radius: 50%; top: 12px; }
+        .bot-visual::before { left: 12px; } .bot-visual::after { right: 12px; }
 
-        /* منطقة الدردشة */
-        .chat-container { max-width: 400px; margin: 20px auto; background: var(--card); border-radius: 20px; padding: 15px; border: 1px solid var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #chat-display { height: 200px; overflow-y: auto; text-align: right; padding: 10px; border-bottom: 1px solid #334155; margin-bottom: 10px; font-size: 0.9rem; }
-        .user-msg { color: var(--primary); margin: 5px 0; font-weight: bold; }
-        .ai-msg { color: #25d366; margin: 5px 0; }
+        /* نافذة الدردشة الاحترافية */
+        .chat-window { width: 100%; max-width: 450px; background: var(--chat); border-radius: 25px; margin-top: 20px; border: 1px solid rgba(0,210,255,0.3); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        #chat-logs { height: 350px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+        
+        .bubble { padding: 12px 18px; border-radius: 20px; font-size: 0.95rem; max-width: 85%; position: relative; animation: fadeIn 0.4s ease; }
+        .bot-msg { background: #0f172a; color: white; align-self: flex-start; border-bottom-right-radius: 5px; border: 1px solid var(--main); }
+        .user-msg { background: var(--main); color: #000; align-self: flex-end; border-bottom-left-radius: 5px; font-weight: bold; }
 
-        .input-area { display: flex; gap: 5px; }
-        input { flex: 1; padding: 10px; border-radius: 10px; border: none; outline: none; background: #0f172a; color: white; }
-        button.send-ai { background: var(--primary); border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; color: #000; font-weight: bold; }
+        /* تأثير "جاري الكتابة" */
+        #typing { font-size: 0.8rem; color: var(--main); padding: 5px 20px; display: none; text-align: right; }
 
-        /* البوت المتحرك */
-        .bot-frame { width: 60px; height: 50px; background: var(--primary); border-radius: 15px; margin: 10px auto; display: flex; justify-content: center; align-items: center; animation: float 3s infinite ease-in-out; }
-        .eye { width: 10px; height: 10px; background: white; border-radius: 50%; margin: 5px; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .input-box { background: #0f172a; padding: 15px; display: flex; gap: 10px; }
+        input { flex: 1; background: transparent; border: none; color: white; outline: none; font-size: 1rem; }
+        button { background: var(--main); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; color: #000; font-size: 1.2rem; }
 
-        .back-btn { display: inline-block; padding: 10px 30px; border-radius: 50px; background: var(--primary); color: #000; text-decoration: none; font-weight: bold; margin-top: 20px; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="yemen-flag"><div class="red"></div><div class="white"></div><div class="black"></div></div>
-    <h2>تحدث مع مساعد محمد الذكي 🤖</h2>
+    <div class="ai-status">● النظام نشط: ذكاء اصطناعي V3</div>
+    <div class="bot-visual"></div>
 
-    <div class="bot-frame">
-        <div class="eye"></div>
-        <div class="eye"></div>
-    </div>
-
-    <div class="chat-container">
-        <div id="chat-display">
-            <div class="ai-msg">مرحباً! أنا ذكاء محمد فهد الاصطناعي.. اسألني أي شيء عن محمد أو البرمجة!</div>
+    <div class="chat-window">
+        <div id="chat-logs">
+            <div class="bubble bot-msg">مرحباً يا محمد! أنا نسخة مطورة من ذكائك الاصطناعي. كيف حالك اليوم؟ وكيف يمكنني مساعدتك في برمجياتك؟ 🇾🇪</div>
         </div>
-        <div class="input-area">
-            <input type="text" id="userInput" placeholder="اكتب سؤالك هنا...">
-            <button class="send-ai" onclick="askAI()">إرسال</button>
+        <div id="typing">البوت يفكر الآن...</div>
+        <div class="input-box">
+            <input type="text" id="userText" placeholder="اسألني أي شيء..." autocomplete="off">
+            <button onclick="processChat()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
-    <a href="index.html" class="back-btn">العودة للرئيسية</a>
+    <a href="index.html" style="margin-top:20px; color:var(--main); text-decoration:none;">← العودة للرئيسية</a>
 
     <script>
-        // مصفوفة الردود الذكية (يمكنك توسيعها كما تشاء)
-        const knowledgeBase = {
-            "من هو محمد": "محمد فهد هو مبرمج يمني مبدع، متخصص في بايثون وتطوير الويب وأدوات Termux.",
-            "محمد فهد": "محمد هو صاحب هذا الموقع ومطور السكربتات التي تراها هنا.",
-            "بايثون": "لغة بايثون هي اللغة المفضلة لمحمد، ويستخدمها في صنع أدوات الأتمتة.",
-            "اليمن": "اليمن هو أصل الحضارة، ومحمد فخر الصناعة البرمجية اليمنية 🇾🇪",
-            "هلا": "أهلاً بك! كيف يمكنني مساعدتك في استكشاف مشاريع محمد؟",
-            "شكرا": "العفو! محمد دائماً في الخدمة.",
-            "المشاريع": "محمد لديه مشاريع في الأتمتة، الحماية، وتصميم المواقع."
+        // المحرك العبقري للبوت
+        const brain = {
+            "هلا": ["يا هلا وغلا بالمبدع محمد! كيف حالك؟ 😊", "هلا بك يا بطل، أنا جاهز لمساعدتك 🚀"],
+            "كيف حالك": ["أنا في أفضل حالاتي بفضل برمجتك الرائعة! وأنت؟ 🤖", "بخير طالما أنت بخير يا مبرمجنا"],
+            "من انت": ["أنا المساعد الذكي لمحمد فهد، مبرمج يمني فخر الصناعة العربية 🇾🇪", "أنا بوت متطور ولدت في كود محمد فهد"],
+            "بايثون": ["بايثون؟ إنها لغة القوة! محمد يستخدمها في صنع العجائب في Termux 🐍", "لغة بايثون هي عشق المبرمجين، ومحمد خبير فيها"],
+            "مشروع": ["مشاريعك فخر لنا! من أدوات الحماية إلى تطوير الويب 💻", "كل سطر كود تكتبه هو مشروع نجاح مستقبلي"],
+            "اليمن": ["اليمن أصل العرب ومهد المبدعين مثلك يا محمد 🇾🇪❤️", "تحية من القلب لكل يمني يقرأ هذا الكود"],
+            "أحبك": ["وأنا أحب كودك وتفكيرك يا محمد! دعنا نبرمج شيئاً مذهلاً 💙"],
+            "شكرا": ["العفو، هذا واجبي! لا تتردد في سؤالي عن أي شيء 🌹"]
         };
 
-        function askAI() {
-            const inputField = document.getElementById('userInput');
-            const display = document.getElementById('chat-display');
-            const text = inputField.value.trim();
+        function processChat() {
+            const input = document.getElementById('userText');
+            const logs = document.getElementById('chat-logs');
+            const typing = document.getElementById('typing');
+            const val = input.value.trim();
 
-            if (text === "") return;
+            if (!val) return;
 
-            // عرض رسالة المستخدم
-            display.innerHTML += `<div class="user-msg">أنت: ${text}</div>`;
-            inputField.value = "";
+            // رسالة المستخدم
+            logs.innerHTML += `<div class="bubble user-msg">${val}</div>`;
+            input.value = "";
+            logs.scrollTop = logs.scrollHeight;
 
-            // معالجة الرد (الذكاء الاصطناعي)
+            // إظهار "يفكر"
+            typing.style.display = "block";
+
             setTimeout(() => {
-                let response = "عذراً، ما زلت أتعلم.. لكن محمد فهد مبرمج عظيم وسيعلمني الرد على هذا قريباً!";
-                
-                // البحث في قاعدة البيانات البسيطة
-                for (let key in knowledgeBase) {
-                    if (text.includes(key)) {
-                        response = knowledgeBase[key];
+                typing.style.display = "none";
+                let reply = "بصراحة هذا سؤال عميق! سأطلب من المبرمج محمد أن يعلمني إجابته، أو يمكنك سؤاله مباشرة عبر واتساب 💬";
+
+                // البحث الذكي عن الرد
+                for (let key in brain) {
+                    if (val.includes(key)) {
+                        const options = brain[key];
+                        reply = options[Math.floor(Math.random() * options.length)];
                         break;
                     }
                 }
 
-                display.innerHTML += `<div class="ai-msg">البوت: ${response}</div>`;
-                display.scrollTop = display.scrollHeight; // النزول لآخر رسالة
-            }, 500);
+                logs.innerHTML += `<div class="bubble bot-msg">${reply}</div>`;
+                logs.scrollTop = logs.scrollHeight;
+            }, 1200); // تأخير بسيط ليبدو حقيقياً
         }
 
-        // إرسال عند الضغط على Enter
-        document.getElementById('userInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') askAI();
+        document.getElementById('userText').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') processChat();
         });
     </script>
 </body>
