@@ -3,148 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أنا محمد فهد | عالمي البرمجي</title>
+    <title>محمد فهد | البوابة الرقمية الفخمة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00d2ff;
-            --accent: #3a7bd5;
-            --dark: #020617;
-            --glass: rgba(255, 255, 255, 0.03);
+            --main-color: #00d2ff;
+            --bg-dark: #020617;
+            --accent: rgba(0, 210, 255, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
         body {
-            background: var(--dark);
+            background: var(--bg-dark);
             color: white;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
 
-        /* خلفية هادئة متحركة */
-        .bg-glow {
-            position: fixed; width: 400px; height: 400px;
-            background: var(--primary);
-            filter: blur(180px);
-            border-radius: 50%;
+        /* خلفية الشبكة المتحركة */
+        .grid-bg {
+            position: absolute; width: 200%; height: 200%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(60deg) translateY(-50%);
+            animation: gridMove 20s linear infinite;
             z-index: -1;
-            opacity: 0.15;
-            animation: move 12s infinite alternate;
         }
-        @keyframes move { from { transform: translate(-30%, -30%); } to { transform: translate(30%, 30%); } }
+        @keyframes gridMove { from { transform: rotateX(60deg) translateY(-50%); } to { transform: rotateX(60deg) translateY(0%); } }
 
-        .profile-card {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
+        /* لوحة التحكم بالألوان */
+        .color-panel {
+            position: fixed; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 10px; border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; gap: 10px; z-index: 1000;
+        }
+        .color-dot {
+            width: 25px; height: 25px; border-radius: 50%; cursor: pointer; border: 2px solid transparent;
+        }
+        .color-dot:hover { transform: scale(1.2); }
+
+        /* البطاقة الرئيسية */
+        .hero-card {
+            width: 90%; max-width: 500px;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 40px;
+            padding: 50px 30px;
             text-align: center;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            animation: fadeIn 1s ease-out;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 10;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        /* هالة ضوئية خلف البطاقة */
+        .hero-card::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 120%; height: 120%;
+            background: radial-gradient(circle, var(--main-color), transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1; opacity: 0.15;
+        }
 
-        .avatar {
-            width: 100px; height: 100px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            border-radius: 25px;
-            margin: 0 auto 20px;
+        .user-icon {
+            font-size: 4rem; color: var(--main-color);
+            margin-bottom: 20px; text-shadow: 0 0 20px var(--main-color);
+        }
+
+        h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+        .typewriter { color: var(--main-color); font-weight: bold; min-height: 1.5em; font-size: 1.1rem; }
+
+        .btn-stack { margin-top: 40px; display: grid; gap: 15px; }
+
+        .btn {
+            text-decoration: none; color: white;
+            padding: 18px; border-radius: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
             display: flex; align-items: center; justify-content: center;
-            font-size: 2.5rem;
-            transform: rotate(-5deg);
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+            gap: 15px; font-weight: 700; font-size: 1rem;
+            position: relative; overflow: hidden;
+        }
+        .btn:hover {
+            background: var(--main-color); color: #000;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(var(--main-color-rgb), 0.3);
         }
 
-        h1 { font-size: 2.4rem; font-weight: 900; margin-bottom: 5px; }
-        .intro-text { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 10px; }
-        .typewriter { color: var(--primary); font-weight: bold; min-height: 1.5em; font-size: 1.2rem; }
-
-        .links-container { margin-top: 25px; display: grid; gap: 12px; }
-
-        .main-btn {
-            text-decoration: none;
-            color: white;
-            padding: 16px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-weight: bold;
-            transition: 0.4s;
+        .btn-primary {
+            background: var(--main-color); color: #000; border: none;
         }
 
-        .main-btn:hover {
-            background: var(--primary);
-            color: var(--dark);
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 210, 255, 0.3);
+        .yemen-footer {
+            margin-top: 30px; display: flex; align-items: center;
+            justify-content: center; gap: 10px; font-size: 0.8rem;
+            color: #64748b; font-weight: bold;
         }
+        .flag { width: 25px; height: 15px; border-radius: 2px; overflow: hidden; }
+        .red { background: #ce1126; height: 33.3%; }
+        .white { background: #fff; height: 33.3%; }
+        .black { background: #000; height: 33.3%; }
 
-        .cta-btn {
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: var(--dark);
-            border: none;
-            font-size: 1.1rem;
-        }
-
-        .yemen-tag {
-            margin-top: 25px;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .flag { width: 30px; height: 18px; display: flex; flex-direction: column; border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-        .red { background: #CE1126; flex: 1; }
-        .white { background: #FFFFFF; flex: 1; }
-        .black { background: #000000; flex: 1; }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+    <div class="grid-bg"></div>
 
-    <div class="profile-card">
-        <div class="avatar">
-            <i class="fas fa-terminal"></i>
-        </div>
+    <div class="color-panel">
+        <div class="color-dot" style="background: #00d2ff;" onclick="changeColor('#00d2ff')"></div>
+        <div class="color-dot" style="background: #ff0055;" onclick="changeColor('#ff0055')"></div>
+        <div class="color-dot" style="background: #00ff88;" onclick="changeColor('#00ff88')"></div>
+        <div class="color-dot" style="background: #bc13fe;" onclick="changeColor('#bc13fe')"></div>
+    </div>
+
+    <div class="hero-card">
+        <div class="user-icon"><i class="fas fa-crown"></i></div>
         
-        <p class="intro-text">مرحباً بك، أنا</p>
+        <p style="font-size: 0.9rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 5px;">مرحباً بك في عالمي</p>
         <h1>محمد فهد</h1>
         <div class="typewriter" id="typewriter"></div>
 
-        <div class="links-container">
-            <a href="projects.html" class="main-btn cta-btn">
-                <i class="fas fa-eye"></i> استعرض أعمالي وذكائي
+        <div class="btn-stack">
+            <a href="projects.html" class="btn btn-primary">
+                <i class="fas fa-code-branch"></i> استكشف مشروعاتي الذكية
             </a>
-
-            <a href="https://wa.me/967783787656" class="main-btn">
-                <i class="fab fa-whatsapp"></i> تواصل معي مباشرة
+            <a href="https://wa.me/967783787656" class="btn">
+                <i class="fab fa-whatsapp"></i> تواصل معي للأعمال
             </a>
-
-            <a href="#" class="main-btn">
-                <i class="fas fa-share-nodes"></i> تابع جديدي التقني
+            <a href="#" class="btn">
+                <i class="fas fa-fingerprint"></i> السيرة البرمجية الكاملة
             </a>
         </div>
 
-        <div class="yemen-tag">
-            <span>مبرمج يمني معتز بهويتي</span>
+        <div class="yemen-footer">
+            <span>صُنع بشغف في اليمن</span>
             <div class="flag">
                 <div class="red"></div><div class="white"></div><div class="black"></div>
             </div>
@@ -152,8 +156,21 @@
     </div>
 
     <script>
+        // تغيير الألوان ديناميكياً
+        function changeColor(color) {
+            document.documentElement.style.setProperty('--main-color', color);
+            // تأثير وميض عند تغيير اللون
+            document.querySelector('.hero-card').style.borderColor = color;
+        }
+
+        // تأثير الكتابة
         const textElement = document.getElementById('typewriter');
-        const phrases = ["أطوّر سكربتات بايثون ذكية", "أصمم تجارب ويب فريدة", "أبتكر حلولاً في Termux", "أسعى لترك أثر رقمي"];
+        const phrases = [
+            "أنا مهندس حلول برمجية ذكية",
+            "أبني واجهات بصرية احترافية",
+            "خبير في لغة بايثون والأتمتة",
+            "أحول الخيال إلى واقع رقمي"
+        ];
         let phraseIndex = 0;
         let charIndex = 0;
 
@@ -161,7 +178,7 @@
             if (charIndex < phrases[phraseIndex].length) {
                 textElement.textContent += phrases[phraseIndex].charAt(charIndex);
                 charIndex++;
-                setTimeout(type, 80);
+                setTimeout(type, 70);
             } else {
                 setTimeout(erase, 2000);
             }
@@ -171,7 +188,7 @@
             if (charIndex > 0) {
                 textElement.textContent = phrases[phraseIndex].substring(0, charIndex - 1);
                 charIndex--;
-                setTimeout(erase, 40);
+                setTimeout(erase, 30);
             } else {
                 phraseIndex = (phraseIndex + 1) % phrases.length;
                 setTimeout(type, 500);
@@ -182,3 +199,4 @@
     </script>
 </body>
 </html>
+
