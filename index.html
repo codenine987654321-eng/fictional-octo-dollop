@@ -10,6 +10,7 @@
         :root {
             --primary: #00f2ff;
             --hacker-green: #00ff41;
+            --hacker-red: #ff3e3e; /* لون التنبيه في حال العطل */
             --bg-dark: #02040a;
         }
 
@@ -32,13 +33,12 @@
             padding: 40px;
             background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(20px);
-            border-radius: 30px;
+            border-radius: 35px;
             border: 1px solid rgba(0, 242, 255, 0.2);
             text-align: center;
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
         }
 
-        /* شعار الهكر المطور */
         .hacker-icon-wrapper {
             position: relative;
             width: 100px;
@@ -50,7 +50,7 @@
             background: rgba(0, 242, 255, 0.05);
             border-radius: 50%;
             border: 2px solid var(--primary);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.2);
         }
 
         .hacker-icon-wrapper i {
@@ -59,34 +59,51 @@
             filter: drop-shadow(0 0 10px var(--primary));
         }
 
-        /* إضافة كود خلف الهكر كأنه مصفوفة */
-        .hacker-icon-wrapper::after {
-            content: "1010";
-            position: absolute;
-            font-size: 10px;
-            color: var(--hacker-green);
-            top: 10px;
-            right: -10px;
-            opacity: 0.5;
-            font-family: monospace;
-        }
-
         h1 {
             font-weight: 900;
-            font-size: 30px;
+            font-size: 32px;
             margin: 0;
             background: linear-gradient(to bottom, #fff, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        /* حاوية حالة النظام المعدلة */
+        .system-status {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 255, 65, 0.05);
+            padding: 5px 15px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            margin: 15px 0 35px 0;
+        }
+
         .status-text {
             color: var(--hacker-green);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-left: 10px; /* مسافة بين النص واللمبة */
+        }
+
+        /* اللمبة الخضراء الشغالة */
+        .status-led {
+            width: 10px;
+            height: 10px;
+            background-color: var(--hacker-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--hacker-green), 0 0 20px var(--hacker-green);
+            animation: pulse-green 1.5s infinite;
+        }
+
+        /* لتغييرها للأحمر لاحقاً، فقط استبدل الكلاس بـ status-led-red */
+        .status-led-red {
+            width: 10px;
+            height: 10px;
+            background-color: var(--hacker-red);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--hacker-red);
+            animation: pulse-red 1s infinite;
         }
 
         .btn-list {
@@ -97,7 +114,7 @@
 
         .cyber-btn {
             font-weight: 700;
-            padding: 16px 20px;
+            padding: 18px 20px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
@@ -112,23 +129,35 @@
         .cyber-btn:hover {
             background: rgba(0, 242, 255, 0.1);
             border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.2);
+            transform: scale(1.02);
         }
 
-        /* زر الأكشن الرئيسي */
         .btn-main {
             background: var(--primary);
             color: #000 !important;
             border: none;
         }
-        .btn-main i, .btn-main span { color: #000; font-weight: 900; }
+
+        .btn-main span, .btn-main i { color: #000; font-weight: 900; }
 
         .footer-info {
             margin-top: 30px;
             font-size: 11px;
             opacity: 0.4;
             letter-spacing: 2px;
+        }
+
+        /* أنيميشن النبض */
+        @keyframes pulse-green {
+            0% { transform: scale(1); box-shadow: 0 0 5px var(--hacker-green); }
+            50% { transform: scale(1.2); box-shadow: 0 0 15px var(--hacker-green); }
+            100% { transform: scale(1); box-shadow: 0 0 5px var(--hacker-green); }
+        }
+
+        @keyframes pulse-red {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -140,9 +169,10 @@
         </div>
 
         <h1>أكاديمية محمد فهد</h1>
-        <div class="status-text">
-            <i class="fas fa-circle" style="font-size: 8px; margin-left: 5px; animation: pulse 1s infinite;"></i>
-            Ethical Hacker Mode: Active
+        
+        <div class="system-status">
+            <div class="status-led"></div>
+            <div class="status-text">وضع الهكر الأخلاقي: نشط</div>
         </div>
 
         <div class="btn-list">
@@ -163,17 +193,10 @@
         </div>
 
         <div class="footer-info">
-            SECURE ACCESS | YEMEN 🇾🇪
+            SECURE ACCESS | 2024
         </div>
     </div>
 
-    <style>
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-    </style>
 </body>
 </html>
 
