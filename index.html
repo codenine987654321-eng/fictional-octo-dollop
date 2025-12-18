@@ -4,62 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ذكاء محمد فهد - الصفحة الرئيسية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            --dark-bg: #09090b;
-            --card-bg: #111116;
-            --text-main: #ffffff;
-        }
-
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Almarai', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f0f12;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-
         .container {
             text-align: center;
         }
-
         h1 {
             font-size: 2rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
-
-        .open-btn {
-            background: var(--primary-gradient);
-            color: white;
-            padding: 18px 28px;
+        button {
+            padding: 15px 25px;
+            font-size: 1rem;
             border: none;
             border-radius: 12px;
-            font-size: 1rem;
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            color: #fff;
             cursor: pointer;
             transition: 0.3s;
         }
-
-        .open-btn:hover {
+        button:hover {
             transform: scale(1.05);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-robot"></i> ذكاء محمد فهد</h1>
-        <button class="open-btn" onclick="window.location.href='ai.html'">
-            <i class="fas fa-paper-plane"></i> تحدث مع الذكاء الاصطناعي
+        <h1>ذكاء محمد فهد</h1>
+        <p>اضغط الزر للذهاب إلى صفحة الذكاء الاصطناعي</p>
+        <button onclick="window.location.href='ai.html'">
+            ابدأ المحادثة
         </button>
     </div>
 </body>
