@@ -4,89 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M-FAHAD | CYBER SECURITY HUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
             --primary: #00f2ff;
-            --accent: #7000ff;
-            --text-glow: 0 0 10px rgba(0, 242, 255, 0.7);
+            --hacker-green: #00ff41;
+            --bg-dark: #02040a;
         }
 
         body {
-            background-color: #02040a;
+            background-color: var(--bg-dark);
             color: #e2e8f0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Cairo', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             margin: 0;
             overflow: hidden;
-        }
-
-        /* تأثير الخلفية الرقمية */
-        body::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), 
-                        url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            z-index: -1;
+            background-image: radial-gradient(circle at center, #0f172a 0%, #02040a 100%);
         }
 
         .cyber-container {
             position: relative;
-            width: 400px;
+            width: 380px;
             padding: 40px;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(20px);
-            border-radius: 40px;
+            border-radius: 30px;
             border: 1px solid rgba(0, 242, 255, 0.2);
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 242, 255, 0.05);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
         }
 
-        /* الشعار المتطور */
-        .main-shield {
+        /* شعار الهكر المطور */
+        .hacker-icon-wrapper {
             position: relative;
-            font-size: 60px;
-            margin-bottom: 20px;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 242, 255, 0.05);
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+        }
+
+        .hacker-icon-wrapper i {
+            font-size: 50px;
             color: var(--primary);
-            filter: drop-shadow(0 0 15px var(--primary));
-            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+
+        /* إضافة كود خلف الهكر كأنه مصفوفة */
+        .hacker-icon-wrapper::after {
+            content: "1010";
+            position: absolute;
+            font-size: 10px;
+            color: var(--hacker-green);
+            top: 10px;
+            right: -10px;
+            opacity: 0.5;
+            font-family: monospace;
         }
 
         h1 {
-            font-size: 28px;
             font-weight: 900;
-            margin: 10px 0;
-            background: linear-gradient(to right, #fff, var(--primary));
+            font-size: 30px;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff, var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .status-text {
+            color: var(--hacker-green);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .status-bar {
-            font-size: 12px;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .status-bar span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #00ff41;
-            border-radius: 50%;
-            margin-left: 5px;
-            box-shadow: 0 0 10px #00ff41;
-            animation: blink 1.5s infinite;
-        }
-
-        /* الأزرار الهجومية */
         .btn-list {
             display: flex;
             flex-direction: column;
@@ -94,64 +96,38 @@
         }
 
         .cyber-btn {
-            position: relative;
-            padding: 15px 25px;
+            font-weight: 700;
+            padding: 16px 20px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            color: white;
+            color: #fff;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: 0.4s;
-            overflow: hidden;
-        }
-
-        .cyber-btn i {
-            color: var(--primary);
-            transition: 0.4s;
+            transition: 0.3s;
         }
 
         .cyber-btn:hover {
+            background: rgba(0, 242, 255, 0.1);
             border-color: var(--primary);
-            background: rgba(0, 242, 255, 0.05);
-            transform: translateX(-5px);
-            box-shadow: -5px 0 20px rgba(0, 242, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.2);
         }
 
-        .cyber-btn:hover i {
-            transform: scale(1.2) rotate(-10deg);
-            text-shadow: 0 0 10px var(--primary);
-        }
-
-        /* زر الإجراء الرئيسي */
-        .primary-action {
-            background: linear-gradient(45deg, var(--primary), var(--accent));
+        /* زر الأكشن الرئيسي */
+        .btn-main {
+            background: var(--primary);
+            color: #000 !important;
             border: none;
-            color: #000;
         }
-        .primary-action span, .primary-action i { color: #000; font-weight: 800; }
-        .primary-action:hover {
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
-        }
+        .btn-main i, .btn-main span { color: #000; font-weight: 900; }
 
-        /* أنيميشن */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        @keyframes blink {
-            50% { opacity: 0.3; }
-        }
-
-        .footer-tag {
+        .footer-info {
             margin-top: 30px;
             font-size: 11px;
-            color: rgba(255, 255, 255, 0.3);
+            opacity: 0.4;
             letter-spacing: 2px;
         }
     </style>
@@ -159,36 +135,45 @@
 <body>
 
     <div class="cyber-container">
-        <div class="main-shield">
+        <div class="hacker-icon-wrapper">
             <i class="fas fa-user-secret"></i>
         </div>
 
         <h1>أكاديمية محمد فهد</h1>
-        <div class="status-bar">
-            <span></span> النظام نشط | Ethical Hacker Mode
+        <div class="status-text">
+            <i class="fas fa-circle" style="font-size: 8px; margin-left: 5px; animation: pulse 1s infinite;"></i>
+            Ethical Hacker Mode: Active
         </div>
 
         <div class="btn-list">
-            <a href="projects.html" class="cyber-btn primary-action">
+            <a href="projects.html" class="cyber-btn btn-main">
                 <span>مساعد السيبراني (AI)</span>
-                <i class="fas fa-brain"></i>
+                <i class="fas fa-robot"></i>
             </a>
 
             <a href="dashboard.html" class="cyber-btn">
-                <span>لوحة التحكم والمهارات</span>
+                <span>لوحة المهارات والتحكم</span>
                 <i class="fas fa-terminal"></i>
             </a>
 
             <a href="https://wa.me/967783787656" class="cyber-btn">
-                <span>طلب استشارة أمنية</span>
+                <span>تواصل للأعمال</span>
                 <i class="fab fa-whatsapp"></i>
             </a>
         </div>
 
-        <div class="footer-tag">
-            V 2.0.5 | ENCRYPTED CONNECTION
+        <div class="footer-info">
+            SECURE ACCESS | YEMEN 🇾🇪
         </div>
     </div>
 
+    <style>
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+    </style>
 </body>
 </html>
+
