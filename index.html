@@ -10,6 +10,7 @@
         :root {
             --primary: #00f2ff;
             --hacker-green: #00ff41;
+            --hacker-red: #ff0000;
             --bg-dark: #020617;
         }
 
@@ -38,25 +39,24 @@
             box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
         }
 
-        /* تصميم قناع الهكر البرمجي (الماتركس) */
-        .mask-wrapper {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* حاوية شخصية الهكر */
+        .hacker-avatar {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 10px;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
+            animation: float 4s ease-in-out infinite;
         }
 
-        .hacker-mask-svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 15px var(--hacker-green));
-            animation: pulse-glow 3s infinite ease-in-out;
+        h1 {
+            font-weight: 900;
+            font-size: 32px;
+            margin: 5px 0;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
         }
 
-        /* حالة النظام - مميزة جداً */
+        /* حالة النظام المحدثة */
         .status-box {
             display: inline-flex;
             align-items: center;
@@ -64,7 +64,7 @@
             padding: 8px 20px;
             border-radius: 12px;
             border: 1px dashed var(--hacker-green);
-            margin: 15px 0 30px;
+            margin: 15px 0 25px;
         }
 
         .status-led {
@@ -81,15 +81,6 @@
             color: var(--hacker-green);
             font-weight: 800;
             font-size: 14px;
-            letter-spacing: 0.5px;
-        }
-
-        h1 {
-            font-weight: 900;
-            font-size: 30px;
-            margin: 0;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
         }
 
         .btn-list {
@@ -115,24 +106,24 @@
         .cyber-btn:hover {
             border-color: var(--primary);
             background: rgba(0, 242, 255, 0.1);
-            transform: translateX(-5px);
+            transform: scale(1.02);
         }
 
         .btn-ai {
-            background: linear-gradient(90deg, var(--hacker-green), #008f11);
+            background: linear-gradient(90deg, #00d2ff, #0081ff);
             border: none;
             color: #000 !important;
         }
         .btn-ai span, .btn-ai i { color: #000; font-weight: 900; }
 
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.8); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         .footer {
@@ -146,15 +137,18 @@
 <body>
 
     <div class="cyber-container">
-        <div class="mask-wrapper">
-            <svg class="hacker-mask-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path fill="none" stroke="#00ff41" stroke-width="2" d="M100,20 C60,20 30,50 30,90 C30,130 60,170 100,180 C140,170 170,130 170,90 C170,50 140,20 100,20 Z" />
-                <path fill="#00ff41" d="M70,80 L90,80 L90,85 L70,85 Z M110,80 L130,80 L130,85 L110,85 Z" />
-                <path fill="none" stroke="#00ff41" stroke-width="2" d="M80,130 Q100,150 120,130" />
-                <text x="50%" y="50%" text-anchor="middle" fill="#00ff41" font-size="8" font-family="monospace" opacity="0.4">
-                    <tspan x="100" dy="1.2em">1010110</tspan>
-                    <tspan x="100" dy="1.2em">0110101</tspan>
-                </text>
+        <div class="hacker-avatar">
+            <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <path d="M256 50L100 250L256 450L412 250L256 50Z" fill="#ff0000" opacity="0.2"/>
+                <path d="M256 80C180 80 120 150 120 230C120 280 150 350 256 450C362 350 392 280 392 230C392 150 332 80 256 80Z" fill="#1a1a1a"/>
+                <path d="M256 120C210 120 160 160 160 230C160 260 180 300 256 360C332 300 352 260 352 230C352 160 302 120 256 120Z" fill="#0a0a0a"/>
+                <ellipse cx="210" cy="220" rx="25" ry="10" fill="#ff0000" filter="blur(2px)">
+                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
+                </ellipse>
+                <ellipse cx="302" cy="220" rx="25" ry="10" fill="#ff0000" filter="blur(2px)">
+                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
+                </ellipse>
+                <path d="M210 280L256 340L302 280H210Z" fill="#1f1f1f"/>
             </svg>
         </div>
 
@@ -172,7 +166,7 @@
             </a>
 
             <a href="dashboard.html" class="cyber-btn">
-                <span>لوحة التحكم والمهارات</span>
+                <span>لوحة التحكم والمواصفات</span>
                 <i class="fas fa-code-branch"></i>
             </a>
 
@@ -183,7 +177,7 @@
         </div>
 
         <div class="footer">
-            SYSTEM SECURED | 2024
+            SYSTEM SECURED | YEMEN 🇾🇪
         </div>
     </div>
 
