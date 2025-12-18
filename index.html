@@ -4,51 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ذكاء محمد فهد - الصفحة الرئيسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
-        body { 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #0f0f12; 
-            color: #fff; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            --dark-bg: #09090b;
+            --card-bg: #111116;
+            --text-main: #ffffff;
         }
-        .container { 
-            text-align: center; 
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Almarai', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
         .open-btn {
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            background: var(--primary-gradient);
             color: white;
+            padding: 18px 28px;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
             border-radius: 12px;
+            font-size: 1rem;
             cursor: pointer;
             transition: 0.3s;
         }
-        .open-btn:hover { transform: scale(1.05); }
+
+        .open-btn:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>مرحباً بك في ذكاء محمد فهد</h1>
-    <p>اضغط الزر لفتح صفحة الذكاء الاصطناعي</p>
-    <button class="open-btn" onclick="openAIPage()">
-        <i class="fas fa-robot"></i> تحدث مع الذكاء الاصطناعي
-    </button>
-</div>
-
-<script>
-function openAIPage() {
-    // الرابط للصفحة الثانية في Hugging Face
-    window.location.href = "https://mohamedfahad-mohammed-ai.hf.space/";
-}
-</script>
-
+    <div class="container">
+        <h1><i class="fas fa-robot"></i> ذكاء محمد فهد</h1>
+        <button class="open-btn" onclick="window.location.href='ai.html'">
+            <i class="fas fa-paper-plane"></i> تحدث مع الذكاء الاصطناعي
+        </button>
+    </div>
 </body>
 </html>
