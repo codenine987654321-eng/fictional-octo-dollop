@@ -8,39 +8,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #00d2ff; --secondary: #3a7bd5; --bg-dark: #0f172a; --card-bg: #1e293b; --text: #f8fafc; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; transition: 0.3s; }
         body { background-color: var(--bg-dark); color: var(--text); overflow-x: hidden; }
 
-        /* خلفية سينمائية */
         .bg-animate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); z-index: -1; }
 
         nav { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--primary); }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); letter-spacing: 1px; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
 
-        .hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
-        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); background: linear-gradient(to right, #00d2ff, #3a7bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; color: #94a3b8; max-width: 600px; }
+        /* زر اللغة */
+        .lang-btn { background: var(--primary); color: #0f172a; border: none; padding: 5px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
 
-        section { padding: 80px 10%; }
-        h2 { text-align: center; margin-bottom: 40px; font-size: 2rem; color: var(--primary); }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; text-align: center; }
-        .card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1); }
-        .card i { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
-
-        /* صندوق التواصل والربط */
-        .contact-box { max-width: 600px; margin: auto; background: var(--card-bg); padding: 40px; border-radius: 30px; text-align: center; border: 2px solid var(--primary); box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+        .hero { height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); background: linear-gradient(to right, #00d2ff, #3a7bd5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .btn { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 18px; border-radius: 15px; text-decoration: none; color: white; font-weight: bold; margin-bottom: 15px; transition: 0.3s; font-size: 1.1rem; }
+        section { padding: 60px 10%; }
+        h2 { text-align: center; margin-bottom: 30px; color: var(--primary); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+
+        /* صندوق التحية المطور */
+        .greet-section { max-width: 600px; margin: 0 auto 40px auto; background: var(--card-bg); padding: 30px; border-radius: 25px; border: 1px dashed var(--primary); }
+        textarea { width: 100%; height: 80px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 12px; color: white; margin-top: 15px; resize: none; }
         
-        .projects-link { background: linear-gradient(45deg, #00d2ff, #3a7bd5); border: 1px solid rgba(255,255,255,0.2); }
-        .whatsapp { background: #25d366; }
+        .contact-box { max-width: 600px; margin: auto; background: var(--card-bg); padding: 30px; border-radius: 30px; text-align: center; border: 2px solid var(--primary); }
+        
+        .btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; text-decoration: none; color: white; font-weight: bold; margin-bottom: 12px; }
+        .projects-link { background: linear-gradient(45deg, #00d2ff, #3a7bd5); }
+        .whatsapp { background: #25d366; border: none; width: 100%; cursor: pointer; font-size: 1.1rem; }
         .telegram { background: #0088cc; }
-        
-        .btn:hover { transform: scale(1.03); filter: brightness(1.1); }
 
-        footer { text-align: center; padding: 40px; color: #64748b; border-top: 1px solid rgba(255,255,255,0.05); background: #0a0f1d; }
+        footer { text-align: center; padding: 30px; color: #64748b; background: #0a0f1d; }
     </style>
 </head>
 <body>
@@ -49,63 +48,69 @@
 
     <nav>
         <div class="logo">M.FAHAD</div>
-        <div style="display: flex; gap: 15px;">
-            <a href="projects.html" style="background: var(--primary); color: #0f172a; padding: 5px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">قسم المشاريع 🇾🇪</a>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="lang-btn" onclick="toggleLang()" id="lBtn">EN</button>
+            <a href="projects.html" id="pNav" style="background: var(--primary); color: #0f172a; padding: 5px 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.8rem;">المشاريع 🇾🇪</a>
         </div>
     </nav>
 
-    <section id="home" class="hero">
-        <div style="border: 3px solid var(--primary); padding: 5px; border-radius: 50%; margin-bottom: 20px;">
-            <div style="background: var(--card-bg); width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                <i class="fas fa-user-shield" style="color: var(--primary); font-size: 2.5rem;"></i>
-            </div>
-        </div>
-        <h1>محمد فهد</h1>
-        <p>مطور برمجيات شغوف بابتكار الحلول الرقمية، متخصص في بناء المواقع الحديثة وسكربتات الأتمتة الذكية.</p>
+    <section class="hero">
+        <h1 id="hName">محمد فهد</h1>
+        <p id="hDesc">مطور برمجيات شغوف بابتكار الحلول الرقمية، متخصص في بناء المواقع الحديثة وسكربتات الأتمتة الذكية.</p>
     </section>
 
-    <section id="features">
-        <h2>🚀 ما الذي أقدمه؟</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fab fa-python"></i>
-                <h3>برمجة بايثون</h3>
-                <p>تطوير أدوات وسكربتات مخصصة لبيئة Termux واندرويد بكفاءة عالية.</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-layer-group"></i>
-                <h3>تطوير الويب</h3>
-                <p>تصميم واجهات مستخدم عصرية وجذابة تتناسب مع كافة الأجهزة والمتصفحات.</p>
-            </div>
-        </div>
+    <section class="greet-section">
+        <h3 id="gTitle">أرسل تحية سريعة للمطور 💬</h3>
+        <textarea id="gMsg" placeholder="اكتب تحيتك هنا..."></textarea>
+        <button class="btn whatsapp" onclick="sendGreeting()" style="margin-top:10px;">
+            <i class="fab fa-whatsapp"></i> <span id="bText">إرسال التحية الآن</span>
+        </button>
     </section>
 
     <section id="connect">
-        <h2>📬 تواصل واستكشف أعمالي</h2>
+        <h2 id="cTitle">📬 قنوات التواصل</h2>
         <div class="contact-box">
-            
-            <a href="projects.html" class="btn projects-link">
-                <i class="fas fa-external-link-alt"></i> 
-                <span>انقر هنا لمشاهدة مشاريعي + علم اليمن</span>
-            </a>
-
-            <div style="margin: 25px 0; display: flex; align-items: center; justify-content: center; gap: 10px; color: #64748b;">
-                <hr style="flex: 1; border: 0.5px solid #334155;"> أو عبر منصات التواصل <hr style="flex: 1; border: 0.5px solid #334155;">
-            </div>
-
-            <a href="https://wa.me/967783787656" class="btn whatsapp">
-                <i class="fab fa-whatsapp"></i> واتساب: 783787656
+            <a href="projects.html" class="btn projects-link" id="pBtn">
+                <i class="fas fa-external-link-alt"></i> <span>صفحة المشاريع وعلم اليمن</span>
             </a>
             <a href="https://t.me/NewEra711" class="btn telegram">
-                <i class="fab fa-telegram-plane"></i> تليجرام: NewEra711
+                <i class="fab fa-telegram-plane"></i> Telegram: NewEra711
             </a>
         </div>
     </section>
 
     <footer>
-        <p>حقوق النشر © 2025 | صُنع بكل فخر بواسطة محمد فهد</p>
+        <p id="fText">حقوق النشر © 2025 | صُنع بواسطة محمد فهد</p>
     </footer>
 
+    <script>
+        // لغات الموقع
+        let lang = "ar";
+        const dict = {
+            ar: { hName: "محمد فهد", hDesc: "مطور برمجيات شغوف بابتكار الحلول الرقمية، متخصص في بناء المواقع الحديثة.", gTitle: "أرسل تحية سريعة للمطور 💬", bText: "إرسال التحية الآن", placeholder: "اكتب تحيتك هنا...", cTitle: "📬 قنوات التواصل", pBtn: "صفحة المشاريع وعلم اليمن", fText: "حقوق النشر © 2025 | صُنع بواسطة محمد فهد", lBtn: "EN", pNav: "المشاريع 🇾🇪" },
+            en: { hName: "Mohammad Fahad", hDesc: "Software developer passionate about creating digital solutions and modern websites.", gTitle: "Send a quick greeting 💬", bText: "Send Greeting Now", placeholder: "Type your message...", cTitle: "📬 Contact Channels", pBtn: "Projects & Yemen Flag", fText: "Copyright © 2025 | Made by Mohammad Fahad", lBtn: "AR", pNav: "Projects 🇾🇪" }
+        };
+
+        function toggleLang() {
+            lang = lang === "ar" ? "en" : "ar";
+            document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+            for (let id in dict[lang]) {
+                let el = document.getElementById(id);
+                if (el) {
+                    if (id === "gMsg") el.placeholder = dict[lang][id];
+                    else el.textContent = dict[lang][id];
+                }
+            }
+        }
+
+        // إرسال الرسالة للرقم المحدد
+        function sendGreeting() {
+            const m = document.getElementById("gMsg").value;
+            if(!m.trim()) return alert("اكتب شيئاً أولاً!");
+            window.open(`https://wa.me/967783787656?text=${encodeURIComponent("رسالة من الموقع: " + m)}`, '_blank');
+        }
+    </script>
 </body>
 </html>
+
 
