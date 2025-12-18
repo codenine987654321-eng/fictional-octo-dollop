@@ -67,15 +67,6 @@
             z-index: 10;
         }
 
-        /* هالة ضوئية خلف البطاقة */
-        .hero-card::before {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            width: 120%; height: 120%;
-            background: radial-gradient(circle, var(--main-color), transparent 70%);
-            transform: translate(-50%, -50%);
-            z-index: -1; opacity: 0.15;
-        }
-
         .user-icon {
             font-size: 4rem; color: var(--main-color);
             margin-bottom: 20px; text-shadow: 0 0 20px var(--main-color);
@@ -98,7 +89,7 @@
         .btn:hover {
             background: var(--main-color); color: #000;
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(var(--main-color-rgb), 0.3);
+            box-shadow: 0 15px 30px rgba(0, 210, 255, 0.3);
         }
 
         .btn-primary {
@@ -142,8 +133,8 @@
             <a href="https://wa.me/967783787656" class="btn">
                 <i class="fab fa-whatsapp"></i> تواصل معي للأعمال
             </a>
-            <a href="#" class="btn">
-                <i class="fas fa-fingerprint"></i> السيرة البرمجية الكاملة
+            <a href="dashboard.html" class="btn">
+                <i class="fas fa-chart-pie"></i> لوحة مهاراتي التقنية
             </a>
         </div>
 
@@ -156,14 +147,11 @@
     </div>
 
     <script>
-        // تغيير الألوان ديناميكياً
         function changeColor(color) {
             document.documentElement.style.setProperty('--main-color', color);
-            // تأثير وميض عند تغيير اللون
             document.querySelector('.hero-card').style.borderColor = color;
         }
 
-        // تأثير الكتابة
         const textElement = document.getElementById('typewriter');
         const phrases = [
             "أنا مهندس حلول برمجية ذكية",
@@ -199,4 +187,5 @@
     </script>
 </body>
 </html>
+
 
