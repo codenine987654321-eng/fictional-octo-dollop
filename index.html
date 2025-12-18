@@ -3,177 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمد فهد | البوابة الرقمية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>ذكاء محمد فهد | المساعد الذكي</title>
     <style>
         :root {
-            --primary: #00d2ff;
-            --accent: #004e92;
-            --bg: #020617;
+            --primary-color: #00a884; /* لون أخضر احترافي */
+            --bg-color: #0b141a;
+            --chat-bg: #121b22;
+            --user-bubble: #005c4b;
+            --bot-bubble: #202c33;
+            --text-main: #e9edef;
+            --text-muted: #8696a0;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        
-        body { 
-            background-color: var(--bg); 
-            color: white; 
-            min-height: 100vh;
-            overflow-x: hidden;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            height: 100vh;
+        }
+
+        /* الرأس (Header) */
+        .header {
+            background-color: var(--chat-bg);
+            padding: 12px 20px;
+            display: flex;
             align-items: center;
+            border-bottom: 1px solid #222;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* الأشكال الهندسية في الخلفية */
-        .geo-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden;
-        }
+        .header-info h1 { margin: 0; font-size: 1.1rem; color: var(--primary-color); }
+        .header-info p { margin: 2px 0 0; font-size: 0.75rem; color: var(--text-muted); }
 
-        .shape {
-            position: absolute; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            background: linear-gradient(45deg, var(--accent), transparent);
-            filter: blur(60px); opacity: 0.2;
-        }
-
-        .shape-1 { width: 400px; height: 400px; top: -100px; left: -100px; }
-        .shape-2 { width: 300px; height: 300px; bottom: -50px; right: -50px; border-radius: 50%; }
-
-        /* حاوية المحتوى المفتوحة */
-        .wrapper {
-            width: 100%; max-width: 500px;
-            padding: 40px 25px;
-            text-align: center;
-            z-index: 10;
-        }
-
-        .profile-area { margin-bottom: 40px; }
-
-        .icon-shield {
-            font-size: 4rem; color: var(--primary);
-            margin-bottom: 20px;
-            display: inline-block;
+        /* منطقة الدردشة */
+        #chat-container {
+            flex: 1;
+            overflow-y: auto;
             padding: 20px;
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: 40px; /* حواف هندسية ناعمة */
-            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+            background-blend-mode: overlay;
+            background-color: var(--bg-color);
         }
 
-        h1 { 
-            font-size: 3.2rem; font-weight: 900; 
-            letter-spacing: -1.5px; line-height: 1.1;
-            margin-bottom: 15px;
-            background: linear-gradient(to bottom, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .message {
+            max-width: 80%;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            position: relative;
+            word-wrap: break-word;
         }
 
-        .typewriter { 
-            font-size: 1.2rem; font-weight: 700;
-            color: var(--primary); min-height: 1.6em;
-            margin-bottom: 50px;
+        .user {
+            align-self: flex-start;
+            background-color: var(--user-bubble);
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
         }
 
-        /* أزرار هندسية احترافية (كبسولة) */
-        .nav-links { display: grid; gap: 16px; width: 100%; }
-
-        .nav-item {
-            text-decoration: none; color: #fff;
-            padding: 20px 35px; border-radius: 50px; /* حواف دائرية كاملة */
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; align-items: center; justify-content: center;
-            gap: 15px; font-weight: 700; font-size: 1.05rem;
-            transition: 0.4s all ease;
-            position: relative; overflow: hidden;
+        .bot {
+            align-self: flex-end;
+            background-color: var(--bot-bubble);
+            border-bottom-right-radius: 2px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
         }
 
-        .nav-item::before {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.5s;
+        /* منطقة الإدخال */
+        .input-area {
+            background-color: var(--chat-bg);
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .nav-item:active::before { left: 100%; }
-
-        .btn-glow {
-            background: var(--primary); color: #000; border: none;
-            box-shadow: 0 15px 35px rgba(0, 210, 255, 0.25);
+        #user-input {
+            flex: 1;
+            background-color: #2a3942;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 25px;
+            color: white;
+            outline: none;
+            font-size: 0.95rem;
         }
 
-        .nav-item:active { transform: scale(0.95); }
-
-        /* الفوتر */
-        footer {
-            margin-top: 60px; display: flex; align-items: center;
-            gap: 12px; opacity: 0.4; font-size: 0.85rem; font-weight: 700;
+        #send-btn {
+            background-color: var(--primary-color);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
         }
 
-        .flag { width: 22px; height: 13px; display: flex; flex-direction: column; border-radius: 2px; overflow: hidden; }
-        .r { background: #ce1126; flex: 1; }
-        .w { background: #fff; flex: 1; }
-        .b { background: #000; flex: 1; }
+        #send-btn:hover { transform: scale(1.05); }
+        #send-btn svg { fill: white; width: 22px; height: 22px; }
 
+        /* تخصيص السكرول بار */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #374045; }
     </style>
 </head>
 <body>
 
-    <div class="geo-bg">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
+    <div class="header">
+        <div class="header-info">
+            <h1>ذكاء محمد فهد</h1>
+            <p>متصل الآن | خبير البرمجة والأمن السيبراني</p>
+        </div>
     </div>
 
-    <div class="wrapper">
-        <div class="profile-area">
-            <div class="icon-shield">
-                <i class="fas fa-code"></i>
-            </div>
-            <h1>محمد فهد</h1>
-            <div class="typewriter" id="typewriter"></div>
-        </div>
+    <div id="chat-container">
+        <div class="message bot">أهلاً بك يا غالي! أنا هنا لمساعدتك في عالم البرمجة والأمن السيبراني. كيف أخدمك اليوم؟</div>
+    </div>
 
-        <nav class="nav-links">
-            <a href="projects.html" class="nav-item btn-glow">
-                <i class="fas fa-bolt"></i>
-                <span>استكشف المشاريع الذكية</span>
-            </a>
-            <a href="https://wa.me/967783787656" class="nav-item">
-                <i class="fab fa-whatsapp"></i>
-                <span>تواصل للأعمال</span>
-            </a>
-            <a href="dashboard.html" class="nav-item">
-                <i class="fas fa-layer-group"></i>
-                <span>لوحة الخبرات والمهارات</span>
-            </a>
-        </nav>
-
-        <footer>
-            <span>بكل فخر من اليمن</span>
-            <div class="flag"><div class="r"></div><div class="w"></div><div class="b"></div></div>
-        </footer>
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="اكتب رسالتك..." autocomplete="off">
+        <button id="send-btn">
+            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+        </button>
     </div>
 
     <script>
-        const textElement = document.getElementById('typewriter');
-        const phrases = ["أصنع كوداً يغير الواقع", "خبير حلول بايثون والأتمتة", "أصمم واجهات المستقبل"];
-        let pIdx = 0, cIdx = 0;
+        // إنشاء رقم فريد للجلسة الحالية لضمان عمل "الذاكرة" في السيرفر
+        const sessionId = "session_" + Math.random().toString(36).substr(2, 9);
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
 
-        function type() {
-            if (cIdx < phrases[pIdx].length) {
-                textElement.textContent += phrases[pIdx].charAt(cIdx++);
-                setTimeout(type, 80);
-            } else { setTimeout(erase, 2500); }
+        async function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // عرض رسالة المستخدم فوراً
+            addMessage(message, 'user');
+            userInput.value = '';
+
+            try {
+                // إرسال الطلب للسيرفر (app.py)
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: message,
+                        user_id: sessionId 
+                    })
+                });
+
+                const data = await response.json();
+                
+                // عرض رد الذكاء الاصطناعي
+                if (data.response) {
+                    addMessage(data.response, 'bot');
+                } else {
+                    addMessage("عذراً، حدث خطأ في استلام الرد.", 'bot');
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                addMessage("خطأ: تعذر الاتصال بالسيرفر. تأكد أن السيرفر يعمل.", 'bot');
+            }
         }
-        function erase() {
-            if (cIdx > 0) {
-                textElement.textContent = phrases[pIdx].substring(0, --cIdx);
-                setTimeout(erase, 40);
-            } else { pIdx = (pIdx + 1) % phrases.length; setTimeout(type, 500); }
+
+        function addMessage(text, side) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', side);
+            msgDiv.innerText = text;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-        window.onload = type;
+
+        // تفعيل الإرسال عند الضغط على زر Enter
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        sendBtn.addEventListener('click', sendMessage);
     </script>
 </body>
 </html>
