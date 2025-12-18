@@ -2,115 +2,89 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمد فهد | البوابة الرقمية الفخمة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <title>محمد فهد | تجربة بصرية احترافية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --main-color: #00d2ff;
             --bg-dark: #020617;
-            --accent: rgba(0, 210, 255, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        body {
+        /* يسمح بحركة طفيفة جداً */
+        html, body { 
+            margin: 0; padding: 0; 
+            width: 100%; min-height: 101vh; /* زيادة 1% للسماح بحركة رأسية بسيطة */
+            overflow-x: hidden;
             background: var(--bg-dark);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            perspective: 1000px;
+            scroll-behavior: smooth;
         }
 
-        /* خلفية الشبكة المتحركة */
+        /* الشبكة الخلفية تتحرك ببطء */
         .grid-bg {
-            position: absolute; width: 200%; height: 200%;
+            position: fixed; top: -10%; left: -10%; 
+            width: 120%; height: 120%; /* أكبر من الشاشة للسماح بالحركة */
             background-image: 
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: rotateX(60deg) translateY(-50%);
-            animation: gridMove 20s linear infinite;
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 45px 45px;
             z-index: -1;
+            transition: transform 0.2s ease-out; /* حركة ناعمة */
         }
-        @keyframes gridMove { from { transform: rotateX(60deg) translateY(-50%); } to { transform: rotateX(60deg) translateY(0%); } }
 
-        /* لوحة التحكم بالألوان */
+        /* البطاقة مع تأثير الطفو */
+        .hero-card {
+            width: 90%; max-width: 400px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 40px;
+            padding: 45px 25px;
+            text-align: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+            border-top: 5px solid var(--main-color);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            margin: 20px 0;
+        }
+
+        /* لوحة الألوان */
         .color-panel {
-            position: fixed; top: 20px; right: 20px;
+            position: fixed; top: 20px; left: 20px; /* نقلناها لليسار للتوازن */
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
-            padding: 10px; border-radius: 50px;
+            padding: 8px 15px; border-radius: 50px;
             border: 1px solid rgba(255,255,255,0.1);
             display: flex; gap: 10px; z-index: 1000;
         }
-        .color-dot {
-            width: 25px; height: 25px; border-radius: 50%; cursor: pointer; border: 2px solid transparent;
-        }
-        .color-dot:hover { transform: scale(1.2); }
+        .color-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; }
 
-        /* البطاقة الرئيسية */
-        .hero-card {
-            width: 90%; max-width: 500px;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 40px;
-            padding: 50px 30px;
-            text-align: center;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
-            position: relative;
-            z-index: 10;
-        }
-
-        .user-icon {
-            font-size: 4rem; color: var(--main-color);
-            margin-bottom: 20px; text-shadow: 0 0 20px var(--main-color);
-        }
-
-        h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+        .user-icon { font-size: 3.8rem; color: var(--main-color); margin-bottom: 15px; text-shadow: 0 0 25px var(--main-color); }
+        h1 { font-size: 2.4rem; font-weight: 900; color: #fff; margin-bottom: 5px; }
         .typewriter { color: var(--main-color); font-weight: bold; min-height: 1.5em; font-size: 1.1rem; }
 
-        .btn-stack { margin-top: 40px; display: grid; gap: 15px; }
-
+        .btn-stack { margin-top: 35px; display: grid; gap: 15px; }
         .btn {
-            text-decoration: none; color: white;
-            padding: 18px; border-radius: 20px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            display: flex; align-items: center; justify-content: center;
-            gap: 15px; font-weight: 700; font-size: 1rem;
-            position: relative; overflow: hidden;
+            text-decoration: none; color: #fff; padding: 16px; border-radius: 20px;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 700;
         }
-        .btn:hover {
-            background: var(--main-color); color: #000;
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 210, 255, 0.3);
-        }
+        .btn-primary { background: var(--main-color); color: #000; border: none; }
+        
+        /* تأثير النبض البسيط عند اللمس */
+        .btn:active { transform: scale(0.96); }
 
-        .btn-primary {
-            background: var(--main-color); color: #000; border: none;
-        }
-
-        .yemen-footer {
-            margin-top: 30px; display: flex; align-items: center;
-            justify-content: center; gap: 10px; font-size: 0.8rem;
-            color: #64748b; font-weight: bold;
-        }
-        .flag { width: 25px; height: 15px; border-radius: 2px; overflow: hidden; }
-        .red { background: #ce1126; height: 33.3%; }
-        .white { background: #fff; height: 33.3%; }
-        .black { background: #000; height: 33.3%; }
-
+        .yemen-footer { margin-top: 30px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.8rem; color: #64748b; }
+        .flag { width: 22px; height: 13px; display: flex; flex-direction: column; border-radius: 2px; overflow: hidden; }
+        .red { background: #ce1126; flex: 1; } .white { background: #fff; flex: 1; } .black { background: #000; flex: 1; }
     </style>
 </head>
 <body>
 
-    <div class="grid-bg"></div>
+    <div class="grid-bg" id="grid"></div>
 
     <div class="color-panel">
         <div class="color-dot" style="background: #00d2ff;" onclick="changeColor('#00d2ff')"></div>
@@ -119,73 +93,71 @@
         <div class="color-dot" style="background: #bc13fe;" onclick="changeColor('#bc13fe')"></div>
     </div>
 
-    <div class="hero-card">
+    <div class="hero-card" id="card">
         <div class="user-icon"><i class="fas fa-crown"></i></div>
-        
-        <p style="font-size: 0.9rem; letter-spacing: 3px; opacity: 0.6; margin-bottom: 5px;">مرحباً بك في عالمي</p>
+        <p style="font-size: 0.85rem; letter-spacing: 2px; opacity: 0.5;">أهلاً بك في فضاء</p>
         <h1>محمد فهد</h1>
         <div class="typewriter" id="typewriter"></div>
 
         <div class="btn-stack">
-            <a href="projects.html" class="btn btn-primary">
-                <i class="fas fa-code-branch"></i> استكشف مشروعاتي الذكية
-            </a>
-            <a href="https://wa.me/967783787656" class="btn">
-                <i class="fab fa-whatsapp"></i> تواصل معي للأعمال
-            </a>
-            <a href="dashboard.html" class="btn">
-                <i class="fas fa-chart-pie"></i> لوحة مهاراتي التقنية
-            </a>
+            <a href="projects.html" class="btn btn-primary"><i class="fas fa-bolt"></i> مركز المشاريع الذكية</a>
+            <a href="https://wa.me/967783787656" class="btn"><i class="fab fa-whatsapp"></i> تواصل مباشر</a>
+            <a href="dashboard.html" class="btn"><i class="fas fa-tachometer-alt"></i> لوحة المهارات</a>
         </div>
 
         <div class="yemen-footer">
-            <span>صُنع بشغف في اليمن</span>
-            <div class="flag">
-                <div class="red"></div><div class="white"></div><div class="black"></div>
-            </div>
+            <span>فخر الصناعة اليمنية</span>
+            <div class="flag"><div class="red"></div><div class="white"></div><div class="black"></div></div>
         </div>
     </div>
 
     <script>
+        const card = document.getElementById('card');
+        const grid = document.getElementById('grid');
+
+        // تأثير الطفو عند تحريك الماوس أو اللمس
+        document.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            grid.style.transform = `translate(${xAxis * 2}px, ${yAxis * 2}px)`;
+        });
+
+        // دعم اللمس للجوال
+        document.addEventListener('touchmove', (e) => {
+            let touch = e.touches[0];
+            let xAxis = (window.innerWidth / 2 - touch.pageX) / 30;
+            let yAxis = (window.innerHeight / 2 - touch.pageY) / 30;
+            
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            grid.style.transform = `translate(${xAxis * 1.5}px, ${yAxis * 1.5}px)`;
+        });
+
         function changeColor(color) {
             document.documentElement.style.setProperty('--main-color', color);
-            document.querySelector('.hero-card').style.borderColor = color;
+            card.style.borderTopColor = color;
         }
 
+        // الكتابة التلقائية
         const textElement = document.getElementById('typewriter');
-        const phrases = [
-            "أنا مهندس حلول برمجية ذكية",
-            "أبني واجهات بصرية احترافية",
-            "خبير في لغة بايثون والأتمتة",
-            "أحول الخيال إلى واقع رقمي"
-        ];
-        let phraseIndex = 0;
-        let charIndex = 0;
+        const phrases = ["أصنع كوداً يغير الواقع", "أصمم واجهات المستقبل", "خبير أتمتة وبايثون", "مبتكر يمني طموح"];
+        let pIdx = 0, cIdx = 0;
 
         function type() {
-            if (charIndex < phrases[phraseIndex].length) {
-                textElement.textContent += phrases[phraseIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, 70);
-            } else {
-                setTimeout(erase, 2000);
-            }
+            if (cIdx < phrases[pIdx].length) {
+                textElement.textContent += phrases[pIdx].charAt(cIdx++);
+                setTimeout(type, 80);
+            } else { setTimeout(erase, 2500); }
         }
-
         function erase() {
-            if (charIndex > 0) {
-                textElement.textContent = phrases[phraseIndex].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(erase, 30);
-            } else {
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                setTimeout(type, 500);
-            }
+            if (cIdx > 0) {
+                textElement.textContent = phrases[pIdx].substring(0, --cIdx);
+                setTimeout(erase, 40);
+            } else { pIdx = (pIdx + 1) % phrases.length; setTimeout(type, 500); }
         }
-
         window.onload = type;
     </script>
 </body>
 </html>
-
 
