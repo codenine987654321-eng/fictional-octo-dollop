@@ -26,7 +26,7 @@
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
         }
 
-        /* خطوط المسح الضوئي السيبرانية */
+        /* خطوط المسح السيبراني */
         .cyber-line {
             position: fixed;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
@@ -37,7 +37,6 @@
         .line-bottom { bottom: 0; right: -100%; width: 100%; height: 2px; animation: scan-h 3s linear infinite reverse; }
         @keyframes scan-h { 0% { left: -100%; } 100% { left: 100%; } }
 
-        /* الحاوية المركزية للموقع */
         .cyber-container {
             position: relative;
             width: 360px;
@@ -51,7 +50,7 @@
             z-index: 10;
         }
 
-        /* --- قسم الشعار والذكاء الاصطناعي --- */
+        /* الشعار والذكاء الاصطناعي */
         .logo-section {
             position: relative;
             margin-bottom: 20px;
@@ -76,7 +75,6 @@
             justify-content: center;
         }
 
-        /* النواة الرقمية (الشعار) */
         .cyber-core-wrapper {
             width: 85px; height: 85px;
             position: relative;
@@ -93,43 +91,24 @@
             animation: pulse 2s infinite;
         }
 
-        .outer-frame {
-            position: absolute;
-            width: 65px; height: 65px;
-            border: 2px solid var(--primary);
-            border-radius: 10px;
-            animation: rotateFrame 4s linear infinite;
-        }
-
-        .inner-frame {
-            position: absolute;
-            width: 48px; height: 48px;
-            border: 2px solid rgba(0, 242, 255, 0.3);
-            border-radius: 8px;
-            animation: rotateFrame 3s linear infinite reverse;
-        }
+        .outer-frame { position: absolute; width: 65px; height: 65px; border: 2px solid var(--primary); border-radius: 10px; animation: rotateFrame 4s linear infinite; }
+        .inner-frame { position: absolute; width: 48px; height: 48px; border: 2px solid rgba(0, 242, 255, 0.3); border-radius: 8px; animation: rotateFrame 3s linear infinite reverse; }
 
         @keyframes rotateFrame { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes pulse { 0%, 100% { transform: rotate(45deg) scale(1); opacity: 1; } 50% { transform: rotate(45deg) scale(0.8); opacity: 0.7; } }
 
-        /* الاسم والوصف */
         h1 { font-weight: 900; font-size: 32px; margin: 0; color: #fff; text-shadow: 0 0 15px var(--primary); }
         .tagline { font-size: 10px; color: var(--primary); letter-spacing: 1.5px; margin-top: 5px; font-weight: bold; opacity: 0.9; }
 
-        /* حالة النظام بالعربي */
         .status-box {
             display: inline-flex; align-items: center; background: rgba(0, 255, 65, 0.05);
             padding: 6px 18px; border-radius: 12px; border: 1px solid var(--hacker-green);
             margin: 20px 0 25px;
         }
         .status-text { color: var(--hacker-green); font-weight: 800; font-size: 12px; }
-        .status-led { 
-            width: 9px; height: 9px; background: var(--hacker-green); 
-            border-radius: 50%; margin-right: 12px;
-            box-shadow: 0 0 12px var(--hacker-green); animation: blink 1.2s infinite; 
-        }
+        .status-led { width: 9px; height: 9px; background: var(--hacker-green); border-radius: 50%; margin-right: 12px; box-shadow: 0 0 12px var(--hacker-green); animation: blink 1.2s infinite; }
 
-        /* قائمة الأزرار الرئيسية */
+        /* الأزرار */
         .btn-list { display: flex; flex-direction: column; gap: 12px; }
         .cyber-btn {
             font-weight: 700; padding: 15px 22px; background: rgba(255, 255, 255, 0.02);
@@ -138,35 +117,23 @@
             transition: 0.3s; font-size: 14px; cursor: pointer;
         }
         .cyber-btn:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); transform: translateY(-2px); color: var(--primary); }
-        .cyber-btn i { transition: 0.4s; }
-        .cyber-btn:hover i { transform: rotate(15deg) scale(1.1); }
         
-        /* تصميم خاص لزر شاهد أكثر */
+        /* مظهر خاص لزر شاهد أكثر */
         .btn-more {
             border-color: var(--hacker-green);
             color: var(--hacker-green);
             background: rgba(0, 255, 65, 0.05);
+            margin-top: 5px;
         }
-        .btn-more:hover {
-            background: rgba(0, 255, 65, 0.15);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-            border-color: var(--hacker-green);
-            color: var(--hacker-green);
-        }
+        .btn-more:hover { background: rgba(0, 255, 65, 0.15); border-color: var(--hacker-green); }
 
-        /* القائمة المنسدلة */
         .sub-btn-list { max-height: 0; overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; gap: 8px; }
         .sub-btn-list.active { max-height: 200px; margin-top: 10px; }
-        .sub-btn { 
-            background: rgba(0, 242, 255, 0.05); padding: 12px; border-radius: 12px; 
-            color: #fff; text-decoration: none; font-size: 13px; display: flex; gap: 12px; 
-            border: 1px dashed rgba(0, 242, 255, 0.2); transition: 0.3s;
-        }
+        .sub-btn { background: rgba(0, 242, 255, 0.05); padding: 12px; border-radius: 12px; color: #fff; text-decoration: none; font-size: 13px; display: flex; gap: 12px; border: 1px dashed rgba(0, 242, 255, 0.2); transition: 0.3s; }
         .sub-btn:hover { background: rgba(0, 242, 255, 0.15); border-style: solid; border-color: var(--primary); transform: translateX(-5px); }
 
         .footer { margin-top: 30px; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 4px; font-weight: bold; }
         
-        /* أنيميشن تبديل النصوص في الفقاعة */
         .ai-text-anim::before { animation: changeText 10s linear infinite; content: ""; }
         @keyframes changeText {
             0%, 30% { content: "أهلاً بك في عالمي"; }
@@ -184,9 +151,7 @@
     <div class="cyber-container">
         
         <div class="logo-section">
-            <div class="ai-bubble">
-                <span class="ai-text-anim"></span>
-            </div>
+            <div class="ai-bubble"><span class="ai-text-anim"></span></div>
             <div class="cyber-core-wrapper">
                 <div class="outer-frame"></div>
                 <div class="inner-frame"></div>
@@ -211,7 +176,7 @@
                     <i class="fas fa-chevron-down" id="chevron"></i>
                 </button>
                 <div class="sub-btn-list" id="subList">
-                    <a href="skills.html" class="sub-btn"><i class="fas fa-terminal"></i> لوحة المهارات</a>
+                    <a href="dashboard.html" class="sub-btn"><i class="fas fa-terminal"></i> لوحة المهارات</a>
                     <a href="https://wa.me/967783787656" class="sub-btn"><i class="fab fa-whatsapp"></i> استشارة تقنية</a>
                 </div>
             </div>
