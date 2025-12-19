@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -13,9 +12,9 @@
             --hacker-green: #00ff41;
             --danger-red: #ff003c;
             --bg-dark: #020617;
-            --instagram: #e1306c;
-            --telegram: #0088cc;
             --whatsapp: #25d366;
+            --telegram: #0088cc;
+            --instagram: #e1306c;
         }
 
         body {
@@ -31,21 +30,20 @@
             overflow-x: hidden;
         }
 
-        /* --- نافذة التحذير ونافذة الدعم --- */
-        .warning-overlay, .support-overlay {
+        /* --- النوافذ المنبثقة (تحذير، دعم، محاكاة) --- */
+        .overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.96);
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 10000;
             backdrop-filter: blur(20px);
-            display: none; /* مخفية افتراضياً */
         }
 
-        .warning-card, .support-card {
+        .custom-card {
             width: 90%;
             max-width: 400px;
             background: rgba(15, 23, 42, 0.95);
@@ -57,48 +55,23 @@
             animation: emerge 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .support-card h3 { margin-bottom: 25px; font-weight: 900; color: #fff; }
-
-        .support-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .support-item {
+        .sim-options { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        
+        .sim-btn {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            padding: 15px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.05);
-            text-decoration: none;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 15px;
             color: #fff;
-            font-size: 12px;
-            font-weight: bold;
+            text-decoration: none;
             transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .support-item:hover { transform: scale(1.05); background: rgba(255,255,255,0.1); }
-        .support-item i { font-size: 24px; }
-
-        /* ألوان الأيقونات */
-        .wa { color: var(--whatsapp); border-color: var(--whatsapp); }
-        .tg { color: var(--telegram); border-color: var(--telegram); }
-        .ig { color: var(--instagram); border-color: var(--instagram); }
-        .ml { color: var(--primary); border-color: var(--primary); }
-
-        .btn-close-support {
-            margin-top: 25px;
-            background: transparent;
-            color: #aaa;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            text-decoration: underline;
-        }
+        .sim-btn:hover { background: rgba(0, 255, 65, 0.1); border-color: var(--hacker-green); transform: scale(1.02); }
+        .sim-btn i { font-size: 24px; color: var(--hacker-green); }
 
         /* --- محتوى الصفحة الرئيسي --- */
         .more-page-container { width: 100%; max-width: 450px; text-align: center; transition: 0.8s; }
@@ -131,42 +104,42 @@
 </head>
 <body>
 
-    <div id="warningOverlay" class="warning-overlay" style="display: flex;">
-        <div class="warning-card" style="border-color: var(--danger-red);">
-            <i class="fas fa-radiation-alt main-icon" style="color: var(--danger-red); font-size: 50px; margin-bottom: 15px;"></i>
-            <h2>تنبيه: دخول محدود</h2>
-            <p>نظام <b>شيفرة 9</b> تحت الصيانة حالياً لبعض الأقسام.</p>
-            <div style="color: var(--hacker-green); margin: 15px 0;">ملاحظة: <b>مختبر الاختراق</b> متاح الآن.</div>
-            <button onclick="closeWarning()" style="background: var(--danger-red); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer;">متابعة</button>
-        </div>
-    </div>
-
-    <div id="supportOverlay" class="support-overlay">
-        <div class="support-card">
-            <h3>مركز المساعدة التقنية</h3>
-            <div class="support-options">
-                <a href="https://wa.me/967783787656" class="support-item wa" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>واتساب</span>
+    <div id="simOverlay" class="overlay">
+        <div class="custom-card">
+            <i class="fas fa-microchip" style="font-size: 40px; color: var(--hacker-green); margin-bottom: 10px;"></i>
+            <h3>اختر نوع المحاكاة</h3>
+            <div class="sim-options">
+                <a href="lab.html" class="sim-btn">
+                    <i class="fas fa-user-secret"></i>
+                    <div style="text-align: right;">
+                        <div style="font-weight: bold;">محاكاة الاختراق</div>
+                        <div style="font-size: 10px; color: #888;">النظام الكلاسيكي (المصفوفة)</div>
+                    </div>
                 </a>
-                <a href="https://t.me/NewEra711" class="support-item tg" target="_blank">
-                    <i class="fab fa-telegram-plane"></i>
-                    <span>تلجرام</span>
-                </a>
-                <a href="https://instagram.com/mfhd03189" class="support-item ig" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                    <span>انستغرام</span>
-                </a>
-                <a href="mailto:zamuhammad.9005@gmail.com" class="support-item ml">
-                    <i class="fas fa-envelope"></i>
-                    <span>البريد</span>
+                <a href="vulnerabilities.html" class="sim-btn">
+                    <i class="fas fa-bug"></i>
+                    <div style="text-align: right;">
+                        <div style="font-weight: bold;">محاكاة الثغرات</div>
+                        <div style="font-size: 10px; color: #888;">هجمات SQL و CCTV و Brute Force</div>
+                    </div>
                 </a>
             </div>
-            <button class="btn-close-support" onclick="toggleSupport(false)">إلغاء الأمر</button>
+            <button onclick="toggleSim(false)" style="margin-top:20px; background:none; border:none; color:#666; cursor:pointer; text-decoration:underline;">إغلاق</button>
         </div>
     </div>
 
-    <div id="mainContent" class="more-page-container content-blur">
+    <div id="supportOverlay" class="overlay">
+        <div class="custom-card">
+            <h3>مركز المساعدة</h3>
+            <div class="sim-options">
+                <a href="https://wa.me/967783787656" class="sim-btn"><i class="fab fa-whatsapp"></i><span>واتساب</span></a>
+                <a href="https://t.me/NewEra711" class="sim-btn"><i class="fab fa-telegram"></i><span>تلجرام</span></a>
+            </div>
+            <button onclick="toggleSupport(false)" style="margin-top:20px; background:none; border:none; color:#666; cursor:pointer;">إلغاء</button>
+        </div>
+    </div>
+
+    <div id="mainContent" class="more-page-container">
         <div class="header-section">
             <i class="fas fa-th-large"></i>
             <h2 style="margin-top:15px; font-weight:900;">قائمة الأنظمة</h2>
@@ -177,29 +150,27 @@
             <a href="dashboard.html" class="cyber-card"><i class="fas fa-terminal"></i><span>لوحة المهارات</span></a>
             <a href="#" class="cyber-card"><i class="fas fa-graduation-cap"></i><span>دورات البرمجة</span></a>
             <a href="#" class="cyber-card"><i class="fas fa-book-open"></i><span>مقالات تقنية</span></a>
-            <a href="lab.html" class="cyber-card" style="border-color: var(--hacker-green);"><i class="fas fa-flask" style="color: var(--hacker-green);"></i><span style="color: var(--hacker-green);">مختبر الاختراق</span></a>
+            
+            <div class="cyber-card" onclick="toggleSim(true)" style="border-color: var(--hacker-green);">
+                <i class="fas fa-flask" style="color: var(--hacker-green);"></i>
+                <span style="color: var(--hacker-green);">المحاكاة</span>
+            </div>
             
             <div class="cyber-card" onclick="toggleSupport(true)">
                 <i class="fas fa-headset"></i>
                 <span>الدعم الفني</span>
             </div>
         </div>
-
-        <a href="index.html" style="display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; margin-top: 40px; opacity: 0.6;">
-            <i class="fas fa-chevron-right"></i> الرجوع للواجهة الرئيسية
-        </a>
     </div>
 
     <script>
-        function closeWarning() {
-            document.getElementById('warningOverlay').style.display = 'none';
-            document.getElementById('mainContent').classList.remove('content-blur');
+        function toggleSim(show) {
+            document.getElementById('simOverlay').style.display = show ? 'flex' : 'none';
         }
-
         function toggleSupport(show) {
-            const overlay = document.getElementById('supportOverlay');
-            overlay.style.display = show ? 'flex' : 'none';
+            document.getElementById('supportOverlay').style.display = show ? 'flex' : 'none';
         }
     </script>
 </body>
 </html>
+
