@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M-FAHAD | CIPHER 9</title>
+    <title>CIPHER 9 | شيفرة 9</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -26,19 +26,17 @@
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
         }
 
-        /* خطوط المسح الضوئي في الخلفية */
+        /* خطوط المسح الضوئي */
         .cyber-line {
             position: fixed;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
             z-index: 1000;
-            opacity: 0.6;
+            opacity: 0.4;
         }
         .line-top { top: 0; left: -100%; width: 100%; height: 2px; animation: scan-h 3s linear infinite; }
         .line-bottom { bottom: 0; right: -100%; width: 100%; height: 2px; animation: scan-h 3s linear infinite reverse; }
-
         @keyframes scan-h { 0% { left: -100%; } 100% { left: 100%; } }
 
-        /* الحاوية الرئيسية */
         .cyber-container {
             position: relative;
             width: 360px;
@@ -51,7 +49,7 @@
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
         }
 
-        /* --- الشعار الجديد (النواة الرقمية) --- */
+        /* --- قسم الشعار والذكاء الاصطناعي --- */
         .logo-section {
             position: relative;
             margin-bottom: 20px;
@@ -68,85 +66,92 @@
             border-radius: 10px;
             font-size: 11px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
-        }
-
-        .cyber-core-wrapper {
-            width: 80px;
-            height: 80px;
-            position: relative;
+            min-height: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .cyber-core-wrapper {
+            width: 85px; height: 85px;
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
             margin-bottom: 15px;
         }
 
         .core-center {
-            width: 30px;
-            height: 30px;
+            width: 32px; height: 32px;
             background: var(--primary);
             border-radius: 4px;
             transform: rotate(45deg);
-            box-shadow: 0 0 20px var(--primary);
+            box-shadow: 0 0 25px var(--primary);
             animation: pulse 2s infinite;
         }
 
         .outer-frame {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 65px; height: 65px;
             border: 2px solid var(--primary);
-            border-radius: 8px;
+            border-radius: 10px;
             animation: rotateFrame 4s linear infinite;
         }
 
         .inner-frame {
             position: absolute;
-            width: 45px;
-            height: 45px;
+            width: 48px; height: 48px;
             border: 2px solid rgba(0, 242, 255, 0.3);
-            border-radius: 6px;
+            border-radius: 8px;
             animation: rotateFrame 3s linear infinite reverse;
         }
 
         @keyframes rotateFrame { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes pulse { 0%, 100% { transform: rotate(45deg) scale(1); opacity: 1; } 50% { transform: rotate(45deg) scale(0.8); opacity: 0.7; } }
 
-        /* النصوص */
-        h1 { font-weight: 900; font-size: 28px; margin: 0; color: #fff; text-shadow: 0 0 10px var(--primary); }
-        .tagline { font-size: 10px; color: var(--primary); letter-spacing: 1px; margin-top: 5px; font-weight: bold; opacity: 0.8; }
+        /* الاسم والتاج لاين */
+        h1 { font-weight: 900; font-size: 32px; margin: 0; color: #fff; text-shadow: 0 0 15px var(--primary); }
+        .tagline { font-size: 10px; color: var(--primary); letter-spacing: 1.5px; margin-top: 5px; font-weight: bold; opacity: 0.9; }
 
+        /* حالة النظام (بالعربي بجانب اللمبة) */
         .status-box {
             display: inline-flex; align-items: center; background: rgba(0, 255, 65, 0.05);
-            padding: 5px 15px; border-radius: 10px; border: 1px solid var(--hacker-green);
-            margin: 15px 0 25px;
+            padding: 6px 18px; border-radius: 12px; border: 1px solid var(--hacker-green);
+            margin: 20px 0 25px;
         }
-        .status-led { width: 8px; height: 8px; background: var(--hacker-green); border-radius: 50%; margin-left: 10px; box-shadow: 0 0 10px var(--hacker-green); animation: blink 1.2s infinite; }
-        .status-text { color: var(--hacker-green); font-weight: 800; font-size: 11px; }
+        .status-text { color: var(--hacker-green); font-weight: 800; font-size: 12px; letter-spacing: 0.5px; }
+        .status-led { 
+            width: 9px; height: 9px; background: var(--hacker-green); 
+            border-radius: 50%; margin-right: 12px; /* المسافة بين النص واللمبة */
+            box-shadow: 0 0 12px var(--hacker-green); animation: blink 1.2s infinite; 
+        }
 
-        /* الأزرار الموحدة */
-        .btn-list { display: flex; flex-direction: column; gap: 10px; }
+        /* قائمة الأزرار */
+        .btn-list { display: flex; flex-direction: column; gap: 12px; }
         .cyber-btn {
-            font-weight: 700; padding: 14px 20px; background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 242, 255, 0.2); border-radius: 15px;
+            font-weight: 700; padding: 15px 22px; background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 242, 255, 0.2); border-radius: 18px;
             color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: space-between;
-            transition: 0.3s; font-size: 14px;
+            transition: 0.3s; font-size: 14px; cursor: pointer;
         }
-        .cyber-btn:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.08); transform: translateY(-2px); color: var(--primary); }
+        .cyber-btn:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); transform: translateY(-2px); color: var(--primary); }
         
-        /* خيارات إضافية */
         .sub-btn-list { max-height: 0; overflow: hidden; transition: 0.4s; display: flex; flex-direction: column; gap: 8px; }
         .sub-btn-list.active { max-height: 200px; margin-top: 10px; }
-        .sub-btn { background: rgba(0, 242, 255, 0.05); padding: 10px; border-radius: 10px; color: #fff; text-decoration: none; font-size: 12px; display: flex; gap: 10px; border: 1px dashed rgba(0, 242, 255, 0.2); }
+        .sub-btn { 
+            background: rgba(0, 242, 255, 0.05); padding: 12px; border-radius: 12px; 
+            color: #fff; text-decoration: none; font-size: 13px; display: flex; gap: 12px; 
+            border: 1px dashed rgba(0, 242, 255, 0.2); 
+        }
 
-        .footer { margin-top: 25px; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 3px; }
+        .footer { margin-top: 30px; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 4px; }
         
-        .ai-text-anim::before { content: "أهلاً وسهلاً بك"; animation: changeText 9s linear infinite; }
+        /* الترحيب المتغير */
+        .ai-text-anim::before { animation: changeText 10s linear infinite; content: ""; }
         @keyframes changeText {
-            0%, 30% { content: "أهلاً وسهلاً بك"; }
-            36%, 63% { content: "كيف حالك اليوم؟"; }
-            69%, 97% { content: "صلي على محمد ﷺ"; }
+            0%, 30% { content: "أهلاً بك في عالمي"; }
+            35%, 65% { content: "كيف حالك اليوم؟"; }
+            70%, 100% { content: "صلي على محمد ﷺ"; }
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
@@ -167,13 +172,13 @@
                 <div class="inner-frame"></div>
                 <div class="core-center"></div>
             </div>
-            <h1>محمد فهد</h1>
+            <h1>شيفرة 9</h1>
             <div class="tagline">DECIPHERING THE UNKNOWN | SECURING THE FUTURE</div>
         </div>
 
         <div class="status-box">
+            <div class="status-text">حالة النظام: نشط</div>
             <div class="status-led"></div>
-            <div class="status-text">STATUS: ACTIVE HUB</div>
         </div>
 
         <div class="btn-list">
