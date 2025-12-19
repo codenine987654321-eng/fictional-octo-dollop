@@ -3,108 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Nine | نظام الدخول المشفر</title>
+    <title>Code Nine | Secure Login</title>
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow: hidden; background-color: #050505;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; background-color: black;
+            font-family: 'Segoe UI', sans-serif;
         }
-        /* خلفية برمجية متحركة */
-        .bg-codes {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            color: rgba(66, 133, 244, 0.08); font-size: 13px;
-            z-index: -1; white-space: nowrap;
-            animation: moveCodes 25s linear infinite;
+
+        /* حاوية الخلفية المتحركة */
+        #matrix-canvas {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; z-index: -1;
         }
-        @keyframes moveCodes {
-            from { transform: translateY(0); }
-            to { transform: translateY(-50%); }
-        }
-        /* تصميم الصندوق الزجاجي */
+
+        /* صندوق الدخول الزجاجي */
         .login-box {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 85%; max-width: 380px; padding: 40px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px; backdrop-filter: blur(15px);
-            text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.7); /* خلفية سوداء شفافة */
+            border: 1px solid #00ff41; /* إطار أخضر برمجى */
+            border-radius: 15px; backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
         }
+
         .logo {
-            font-size: 38px; font-weight: 900;
-            background: linear-gradient(45deg, #4285F4, #34A853);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 5px; letter-spacing: 2px;
+            font-size: 42px; font-weight: 900;
+            color: #00ff41; text-shadow: 0 0 10px #00ff41;
+            margin-bottom: 10px; letter-spacing: 3px;
         }
-        .tagline { color: #666; font-size: 13px; margin-bottom: 35px; }
-        /* زر جوجل المطور */
+
+        .tagline { color: #00ff41; font-size: 14px; margin-bottom: 35px; opacity: 0.8; }
+
         .google-btn {
             display: flex; align-items: center; justify-content: center;
-            gap: 12px; width: 100%; padding: 14px;
-            background: white; border: none; border-radius: 10px;
+            gap: 12px; width: 100%; padding: 15px;
+            background: white; border: none; border-radius: 8px;
             color: #333; font-size: 16px; font-weight: bold;
-            cursor: pointer; transition: all 0.3s ease;
+            cursor: pointer; transition: 0.3s;
         }
-        .google-btn:hover { background: #f8f8f8; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(66,133,244,0.3); }
-        .error-msg { color: #ff4d4d; font-size: 12px; margin-top: 15px; display: none; }
+
+        .google-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
 <body>
 
-    <div class="bg-codes">
-        // PROTOCOL: SECURE_LOGIN <br>
-        // STATUS: ENCRYPTED <br>
-        const system = "Code Nine"; <br>
-        function checkAuth() { return sessionOnly; } <br>
-        // <br>
-        await firebase.auth().setPersistence('session'); <br>
-    </div>
+    <canvas id="matrix-canvas"></canvas>
 
     <div class="login-box">
         <div class="logo">CODE NINE</div>
-        <div class="tagline">بوابة الدخول الآمن للمبرمجين</div>
+        <div class="tagline">SYSTEM ACCESS TERMINAL</div>
         
         <button id="googleLoginBtn" class="google-btn">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
-            الدخول عبر حساب جوجل
+            تسجيل دخول المبرمجين
         </button>
-        <div id="errorMessage" class="error-msg">حدث خطأ أثناء تسجيل الدخول، حاول مجدداً.</div>
     </div>
 
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-      import { getAuth, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        // --- أولاً: كود خلفية الماتريكس المتحركة ---
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
 
-      // إعدادات مشروعك الدقيقة
-      const firebaseConfig = {
-        apiKey: "AIzaSyAPBXmzW3GdPGJxaWnXULv9e57EReJjJ1g",
-        authDomain: "code-nine.firebaseapp.com",
-        projectId: "code-nine",
-        appId: "1:1034109951826:web:67fb31ee383d6165f5a48b"
-      };
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const provider = new GoogleAuthProvider();
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
 
-      document.getElementById('googleLoginBtn').onclick = async () => {
-        const errorDiv = document.getElementById('errorMessage');
-        errorDiv.style.display = 'none';
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#00ff41"; // لون الماتريكس الأخضر
+            ctx.font = fontSize + "px monospace";
 
-        try {
-          // دقة وكفاءة: ضبط الجلسة لتنتهي بإغلاق المتصفح
-          await setPersistence(auth, browserSessionPersistence);
-          const result = await signInWithPopup(auth, provider);
-          
-          // نجاح الدخول
-          window.location.href = "index.html"; 
-        } catch (error) {
-          console.error("Auth Error:", error.code);
-          errorDiv.innerText = "تنبيه: " + error.message;
-          errorDiv.style.display = 'block';
+            drops.forEach((y, i) => {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, y * fontSize);
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
         }
-      };
+        setInterval(drawMatrix, 35);
+
+        // --- ثانياً: كود Firebase للدخول ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPBXmzW3GdPGJxaWnXULv9e57EReJjJ1g",
+            authDomain: "code-nine.firebaseapp.com",
+            projectId: "code-nine",
+            appId: "1:1034109951826:web:67fb31ee383d6165f5a48b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        document.getElementById('googleLoginBtn').onclick = async () => {
+            try {
+                await setPersistence(auth, browserSessionPersistence);
+                await signInWithPopup(auth, provider);
+                window.location.href = "index.html";
+            } catch (error) {
+                alert("خطأ: " + error.message);
+            }
+        };
     </script>
 </body>
 </html>
