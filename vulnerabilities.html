@@ -3,180 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام التصدي للثغرات | CIPHER 9</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>المحاكاة القصوى | CIPHER 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Cairo:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root { --neon: #00ff41; --bg: #000; --danger: #ff003c; --cyan: #00f2ff; --yellow: #facc15; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Cairo', sans-serif; margin: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        
-        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.1; }
+        :root { --neon: #00ff41; --danger: #ff003c; --bg: #050505; --cyan: #00f2ff; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Fira Code', monospace; overflow: hidden; height: 100vh; }
 
-        /* الشاشة الأولية */
-        #alarm-screen {
-            position: fixed; z-index: 1000; background: #000;
-            width: 100%; height: 100%; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
+        #matrix-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.1; }
+
+        /* شاشة الأكواد الرئيسية */
+        #terminal {
+            position: absolute; top: 10px; left: 10px; right: 10px; bottom: 80px;
+            overflow-y: auto; padding: 20px; font-size: 13px; line-height: 1.6;
+            z-index: 5; scroll-behavior: smooth;
         }
 
-        .alert-card { border: 2px solid var(--danger); padding: 50px; border-radius: 5px; background: rgba(255,0,60,0.05); }
-
-        /* التيرمنال المطور */
-        .terminal-wrapper { z-index: 100; width: 95%; max-width: 1000px; display: none; flex-direction: column; height: 90vh; }
-        
-        #terminal-body {
-            background: rgba(5, 5, 5, 0.95); border: 1px solid #222; flex-grow: 1; padding: 25px;
-            overflow-y: auto; font-family: 'Fira Code', monospace; font-size: 13px; line-height: 1.5;
-            border-bottom: none;
+        /* المساعد العائم */
+        #cyber-assistant {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 1000; background: rgba(0, 0, 0, 0.9); border: 2px solid var(--cyan);
+            padding: 25px; border-radius: 20px; text-align: center;
+            box-shadow: 0 0 30px var(--cyan); display: none; width: 320px;
+            animation: pulse-cyan 2s infinite;
         }
 
-        .control-panel {
-            background: #0a0a0a; border: 1px solid #222; padding: 20px;
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;
-        }
+        @keyframes pulse-cyan { 0% { box-shadow: 0 0 10px var(--cyan); } 50% { box-shadow: 0 0 40px var(--cyan); } 100% { box-shadow: 0 0 10px var(--cyan); } }
 
-        .btn-action {
-            background: transparent; border: 1px solid var(--neon); color: var(--neon);
-            padding: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; font-family: 'Cairo';
+        .cmd-btn {
+            background: var(--cyan); color: #000; border: none; padding: 12px 20px;
+            margin-top: 15px; cursor: pointer; font-weight: bold; border-radius: 8px;
+            font-family: 'Fira Code'; width: 100%; transition: 0.3s;
         }
-        .btn-action:disabled { border-color: #333; color: #333; cursor: not-allowed; }
-        .btn-action.active { box-shadow: 0 0 15px var(--neon); background: rgba(0, 255, 65, 0.1); }
+        .cmd-btn:hover { background: #fff; transform: scale(1.05); }
 
-        .log-entry { margin-bottom: 8px; border-right: 2px solid transparent; padding-right: 10px; }
-        .danger { color: var(--danger); border-right-color: var(--danger); }
-        .success { color: var(--neon); border-right-color: var(--neon); }
-        .warning { color: var(--yellow); border-right-color: var(--yellow); }
-        .info { color: var(--cyan); border-right-color: var(--cyan); }
-        
-        .code-block { background: rgba(255,255,255,0.03); padding: 10px; margin: 5px 0; display: block; color: #aaa; }
+        /* التنبيهات الحمراء */
+        .alert-flash { color: var(--danger); font-weight: bold; text-transform: uppercase; border: 1px solid var(--danger); padding: 5px; margin: 10px 0; display: inline-block; animation: blink 0.5s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
+
+        .code-success { color: var(--neon); }
+        .code-comment { color: #555; }
+        .code-keyword { color: var(--danger); }
+
+        /* شريط التقدم السفلي */
+        #progress-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: #111; z-index: 2000; }
+        #progress-bar { width: 0%; height: 100%; background: var(--neon); transition: 0.4s; box-shadow: 0 0 15px var(--neon); }
+
+        /* أصوات */
+        .hidden-audio { display: none; }
     </style>
 </head>
 <body>
 
-    <audio id="alarmSound" src="https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3" loop></audio>
+    <audio id="bgSfx" loop src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <audio id="typeSfx" src="https://www.soundjay.com/communication/sounds/typewriter-key-1.mp3"></audio>
+    <audio id="alertSfx" src="https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3"></audio>
 
-    <canvas id="matrix-canvas"></canvas>
+    <canvas id="matrix-bg"></canvas>
 
-    <div id="alarm-screen">
-        <div class="alert-card">
-            <i class="fas fa-user-shield" style="font-size: 70px; color: var(--danger); margin-bottom: 20px;"></i>
-            <h1 style="font-weight: 900;">تهديد أمني مكتشف: هجوم متعدد الطبقات</h1>
-            <p>السيرفرات المسؤولة عن <b>شيفرة 9</b> تتعرض للاختراق الآن.</p>
-            <p style="color: var(--yellow);">تنبيه: لا تغادر الصفحة، مهمتك التصدي للثغرات قبل سحب قاعدة البيانات.</p>
-            <button onclick="initiateDefense()" style="background: var(--danger); color: white; border: none; padding: 15px 50px; font-weight: 900; cursor: pointer; margin-top: 20px; letter-spacing: 2px;">بـدء الـتـصـدي</button>
-        </div>
+    <div id="terminal">
+        <div class="code-comment"># CIPHER 9 - ADVANCED DEFENSE SYSTEM v4.0.2</div>
+        <div class="code-comment"># INITIALIZING KERNEL MODULES...</div>
     </div>
 
-    <div class="terminal-wrapper" id="main-ui">
-        <div id="terminal-body"></div>
-        <div class="control-panel">
-            <button id="btn-sql" class="btn-action" onclick="defendSQL()">[1] سد ثغرة SQL</button>
-            <button id="btn-brute" class="btn-action" onclick="defendBrute()" disabled>[2] كسر هجوم Brute Force</button>
-            <button id="btn-final" class="btn-action" onclick="defendFinal()" disabled>[3] التطهير النهائي</button>
-        </div>
+    <div id="cyber-assistant">
+        <i class="fas fa-robot" style="font-size: 40px; color: var(--cyan); margin-bottom: 15px;"></i>
+        <div id="assistant-msg" style="color: #fff; margin-bottom: 10px; font-family: 'Cairo';">كشف اختراق في الطبقة 7!</div>
+        <div id="next-code" style="font-size: 11px; color: var(--cyan); background: #111; padding: 10px; border-radius: 5px;"></div>
+        <button id="execute-btn" class="cmd-btn" onclick="nextStep()">تنفيذ الكود المضاد</button>
     </div>
+
+    <div id="progress-container"><div id="progress-bar"></div></div>
 
     <script>
-        const body = document.getElementById('terminal-body');
-        const alarm = document.getElementById('alarmSound');
+        const terminal = document.getElementById('terminal');
+        const assistant = document.getElementById('cyber-assistant');
+        const assistantMsg = document.getElementById('assistant-msg');
+        const nextCodeDisplay = document.getElementById('next-code');
+        const progressBar = document.getElementById('progress-bar');
+        const typeSfx = document.getElementById('typeSfx');
+        const alertSfx = document.getElementById('alertSfx');
 
-        async function log(text, type = 'info', delay = 300) {
+        let currentStep = 0;
+        const totalSteps = 20;
+
+        const missions = [
+            { msg: "كشف محاولة حقن SQL!", code: "sqlmap -u 'target.php?id=1' --dbs", logs: ["Searching for vulnerability...", "Injection point found at 'id'", "Extracting DB names..."] },
+            { msg: "تشفير الاتصالات الصادرة", code: "openssl genrsa -out cipher9.key 2048", logs: ["Generating RSA private key...", "Success. Exporting certificate..."] },
+            { msg: "تفعيل جدار حماية IPTables", code: "iptables -A INPUT -p tcp --dport 80 -j DROP", logs: ["Filtering incoming traffic...", "Blocking unauthorized ports."] },
+            { msg: "فحص الذاكرة من الـ Rootkits", code: "chkrootkit -l", logs: ["Scanning /sbin...", "Scanning /usr/bin...", "Clean."] },
+            { msg: "حقن كود بايثون مضاد", code: "python3 defender.py --kill-all", logs: ["Importing socket...", "Killing suspicious processes..."] },
+            { msg: "تجاوز بروكسي المهاجم", code: "proxychains nmap -sT 192.168.1.1", logs: ["Chains: DNS-request...", "Chain: OK! Scanning target..."] },
+            { msg: "كسر تشفير MD5 للمهاجم", code: "hashcat -m 0 -a 0 hash.txt wordlist.txt", logs: ["Initializing OpenCL...", "Guessing... Found: admin@2025"] },
+            { msg: "حماية ملفات الـ System", code: "chmod 600 /etc/shadow", logs: ["Restricting access to shadow file...", "Permissions updated."] },
+            { msg: "فحص الـ Traffic الوارد", code: "tcpdump -i eth0 -n", logs: ["Listening on eth0...", "Captured 45 packets..."] },
+            { msg: "إغلاق الثغرة الأمنية XSS", code: "htmlspecialchars($input, ENT_QUOTES);", logs: ["Sanitizing HTML input...", "Neutralizing scripts."] },
+            { msg: "تتبع مسار المهاجم", code: "traceroute -n 8.8.8.8", logs: ["Hops detected: 12", "Locating source..."] },
+            { msg: "تفعيل الـ Honeypot", code: "docker run -d pentest/cowrie", logs: ["Deploying fake SSH server...", "Redirecting attacker..."] },
+            { msg: "تحليل ملفات الـ Access Log", code: "grep '404' access.log | cut -d ' ' -f 1", logs: ["Filtering failed requests...", "Identifying IP patterns."] },
+            { msg: "تشفير قاعدة البيانات", code: "AES_ENCRYPT('secret_data', 'key')", logs: ["Encrypting sensitive columns...", "Done."] },
+            { msg: "تطهير الـ RAM", code: "sync; echo 3 > /proc/sys/vm/drop_caches", logs: ["Clearing buffer cache...", "System memory freed."] },
+            { msg: "تفعيل الـ IDS", code: "snort -v -c /etc/snort/snort.conf", logs: ["Intrusion Detection System active...", "Alerting on anomalies."] },
+            { msg: "منع هجمات الـ DoS", code: "limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;", logs: ["Limiting requests per second...", "Global limit applied."] },
+            { msg: "تأمين بروتوكول SSH", code: "sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config", logs: ["Disabling root login...", "Restarting SSH service."] },
+            { msg: "فحص الـ Backdoor", code: "netstat -tulpn", logs: ["Scanning listening ports...", "Unknown port 4444 found! KILLING."] },
+            { msg: "الضربة القاضية للمهاجم", code: "shred -u /attacker/payload.bin", logs: ["Overwriting file with random data...", "Attacker payload destroyed."] }
+        ];
+
+        async function writeToTerminal(text, type = 'normal') {
             const div = document.createElement('div');
-            div.className = `log-entry ${type}`;
-            div.innerHTML = `[SYSTEM-LOG] ${text}`;
-            body.appendChild(div);
-            body.scrollTop = body.scrollHeight;
-            return new Promise(r => setTimeout(r, delay));
+            if (type === 'danger') div.className = 'alert-flash';
+            if (type === 'success') div.className = 'code-success';
+            div.innerHTML = text;
+            terminal.appendChild(div);
+            terminal.scrollTop = terminal.scrollHeight;
+            typeSfx.currentTime = 0;
+            typeSfx.play().catch(()=>{});
         }
 
-        function initiateDefense() {
-            document.getElementById('alarm-screen').style.display = 'none';
-            document.getElementById('main-ui').style.display = 'flex';
-            alarm.play(); alarm.volume = 0.15;
-            startPhase1();
+        async function playLogs(logArray) {
+            for (let l of logArray) {
+                await writeToTerminal(`[INFO] ${l}`);
+                // إضافة رموز عشوائية بين الأسطر لزيادة الواقعية
+                if (Math.random() > 0.5) {
+                    await writeToTerminal(`0x${Math.random().toString(16).substr(2,8)}: SYSCALL_READY`, 'code-comment');
+                }
+                await new Promise(r => setTimeout(r, 100));
+            }
         }
 
-        async function startPhase1() {
-            await log("جارٍ بدء فحص الحزم (Packet Sniffing)...", 'info');
-            await log("كشف هجوم 'حقن قواعد البيانات' (SQL Injection) من IP خارجي.", 'danger');
-            await log("المهاجم يستخدم الكود التالي في محرك البحث:", 'warning');
-            await log("<span class='code-block'>SELECT * FROM users WHERE id = '' OR '1'='1'; --</span>", 'info');
-            await log("شرح الثغرة: المهاجم يحاول جعل الشرط دائماً صحيحاً (True) لتخطي كلمة المرور.", 'info');
-            await log("تحذير: المهاجم نجح في استعراض جدول 'المديرين' (Admins).", 'danger', 1000);
-            await log("قم بالضغط على [سد ثغرة SQL] لتغيير طريقة معالجة البيانات!", 'warning');
-            document.getElementById('btn-sql').classList.add('active');
+        function showAssistant() {
+            if (currentStep >= totalSteps) {
+                finishGame();
+                return;
+            }
+            const m = missions[currentStep];
+            assistantMsg.innerText = m.msg;
+            nextCodeDisplay.innerText = m.code;
+            assistant.style.display = 'block';
+            alertSfx.play().catch(()=>{});
         }
 
-        async function defendSQL() {
-            document.getElementById('btn-sql').classList.remove('active');
-            document.getElementById('btn-sql').disabled = true;
-            await log("جارٍ استبدال الاستعلامات العادية بـ (Prepared Statements)...", 'success');
-            await log("<span class='code-block'>$stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');<br>$stmt->execute(['email' => $user_input]);</span>", 'info');
-            await log("تم عزل إدخالات المستخدم تماماً عن محرك SQL.", 'success');
-            await log("تم سد ثغرة SQL Injection بنجاح.", 'success', 1000);
+        async function nextStep() {
+            assistant.style.display = 'none';
+            const m = missions[currentStep];
             
-            await log("المهاجم ينتقل للمرحلة الثانية: هجوم تخمين كلمات المرور (Brute Force)...", 'danger');
-            await log("جارٍ رصد 500 محاولة دخول فاشلة في الدقيقة لحساب 'admin'.", 'danger');
-            await log("المهاجم يستخدم قائمة كلمات مرور (Wordlist) ضخمة.", 'info');
-            await log("قم بتفعيل [كسر هجوم Brute Force] لتطبيق سياسة الأمان!", 'warning');
-            document.getElementById('btn-brute').disabled = false;
-            document.getElementById('btn-brute').classList.add('active');
+            await writeToTerminal(`$ ${m.code}`, 'success');
+            await playLogs(m.logs);
+            
+            currentStep++;
+            progressBar.style.width = (currentStep / totalSteps) * 100 + "%";
+            
+            setTimeout(showAssistant, 1200);
         }
 
-        async function defendBrute() {
-            document.getElementById('btn-brute').classList.remove('active');
-            document.getElementById('btn-brute').disabled = true;
-            await log("تفعيل بروتوكول 'Account Lockout Threshold'...", 'success');
-            await log("تم تحديد الحد الأقصى للمحاولات بـ 5 محاولات فقط.", 'info');
-            await log("تفعيل نظام 'التحقق الثنائي' (2FA) لجميع حسابات الإدارة.", 'success');
-            await log("جارٍ حظر جميع الطلبات القادمة من نطاق IP المهاجم...", 'success');
-            await log("تم تعطيل هجوم Brute Force بنجاح.", 'success', 1000);
-            
-            await log("المرحلة النهائية: المهاجم يحاول زرع (Web Shell) للتحكم بالسيرفر!", 'danger');
-            await log("تم اكتشاف ملف مشبوه مرفوع بصيغة: backdoor.php", 'danger');
-            await log("المهاجم يحاول الوصول لصلاحيات الجذر (Root Access).", 'danger');
-            await log("قم بتشغيل [التطهير النهائي] لمسح الملفات الخبيثة واستعادة النظام!", 'warning');
-            document.getElementById('btn-final').disabled = false;
-            document.getElementById('btn-final').classList.add('active');
-        }
-
-        async function defendFinal() {
-            document.getElementById('btn-final').classList.remove('active');
-            document.getElementById('btn-final').disabled = true;
-            await log("جارٍ تشغيل الماسح الأمني (Malware Scanner)...", 'info');
-            await log("تم العثور على الملف: /var/www/html/uploads/backdoor.php", 'warning');
-            await log("إجراء المسح: [ rm -rf backdoor.php ]", 'danger');
-            await log("تم حذف ملف الاختراق بنجاح.", 'success');
-            await log("جارٍ إعادة تعيين جميع جلسات الاتصال (Sessions)...", 'info');
-            await log("جارٍ تحديث الجدران النارية (Firewall) بقواعد جديدة.", 'success');
-            await log("--------------------------------------------------", 'info');
-            await log("تـم تـأمـيـن الـسـيـرفـر بـالـكـامـل.", 'success', 1000);
-            await log("لقد تعلمت اليوم: حماية SQL، صد التخمين، وتنظيف السيرفر من الملفات الخبيثة.", 'info', 2000);
-            
-            alarm.pause();
+        function finishGame() {
+            writeToTerminal("--------------------------------------------------", 'success');
+            writeToTerminal("MISSION ACCOMPLISHED: SYSTEM SECURED", 'success');
+            writeToTerminal("THANK YOU, OPERATOR. CIPHER 9 IS ONLINE.", 'success');
             setTimeout(() => {
-                alert("إنجاز عظيم! لقد صمدت أمام أعنف الهجمات وأنقذت 'شيفرة 9'.");
+                alert("تم صد 20 هجوماً بنجاح! أنت الآن جاهز للمستوى المتقدم.");
                 window.location.href = "more.html";
-            }, 1000);
+            }, 2000);
         }
 
-        // كود الماتريكس (خلفية)
-        const canvas = document.getElementById('matrix-canvas');
+        // البداية
+        window.onload = () => {
+            document.getElementById('bgSfx').play().catch(()=>{});
+            setTimeout(showAssistant, 2000);
+        };
+
+        // مصفوفة الماتريكس
+        const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const columns = canvas.width / 20;
-        const drops = Array(Math.floor(columns)).fill(1);
-        function draw() {
+        const drops = Array(Math.floor(canvas.width/20)).fill(1);
+        function drawMatrix() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#00ff41";
             for(let i=0; i<drops.length; i++) {
-                ctx.fillText(Math.floor(Math.random()*2), i*20, drops[i]*20);
+                ctx.fillText(String.fromCharCode(Math.random()*128), i*20, drops[i]*20);
                 if(drops[i]*20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
-        setInterval(draw, 33);
+        setInterval(drawMatrix, 50);
     </script>
 </body>
 </html>
