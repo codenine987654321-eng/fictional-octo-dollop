@@ -10,8 +10,8 @@
         :root {
             --primary: #00f2ff;
             --hacker-green: #00ff41;
-            --hacker-red: #ff0000;
             --bg-dark: #020617;
+            --glow: 0 0 15px rgba(0, 242, 255, 0.4);
         }
 
         body {
@@ -27,6 +27,21 @@
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
         }
 
+        /* --- تأثير الإطارات المتحركة (السيبرانية) --- */
+        .cyber-line {
+            position: fixed;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            z-index: 1000;
+        }
+        .line-top { top: 0; left: -100%; width: 100%; height: 2px; animation: scan-h 4s linear infinite; }
+        .line-bottom { bottom: 0; right: -100%; width: 100%; height: 2px; animation: scan-h 4s linear infinite reverse; }
+        .line-left { left: 0; top: -100%; width: 2px; height: 100%; background: linear-gradient(180deg, transparent, var(--primary), transparent); animation: scan-v 4s linear infinite; }
+        .line-right { right: 0; bottom: -100%; width: 2px; height: 100%; background: linear-gradient(180deg, transparent, var(--primary), transparent); animation: scan-v 4s linear infinite reverse; }
+
+        @keyframes scan-h { 0% { left: -100%; } 100% { left: 100%; } }
+        @keyframes scan-v { 0% { top: -100%; } 100% { top: 100%; } }
+
+        /* --- الحاوية الرئيسية --- */
         .cyber-container {
             position: relative;
             width: 380px;
@@ -34,125 +49,96 @@
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(25px);
             border-radius: 40px;
-            border: 1px solid rgba(0, 242, 255, 0.2);
+            border: 1px solid rgba(0, 242, 255, 0.1);
             text-align: center;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 242, 255, 0.05);
         }
 
+        /* أزرار اللغة */
+        .lang-switcher { position: absolute; top: 25px; left: 25px; display: flex; gap: 5px; z-index: 100; }
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.2);
+            color: var(--primary); padding: 3px 10px; border-radius: 8px; font-size: 10px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .lang-btn:hover { background: var(--primary); color: #000; box-shadow: var(--glow); }
+
         .hacker-avatar {
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 5px;
-            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
+            width: 130px; height: 130px; margin: 0 auto 5px;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.3));
             animation: float 4s ease-in-out infinite;
         }
 
-        h1 {
-            font-weight: 900;
-            font-size: 28px;
-            margin: 5px 0;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
-        }
+        h1 { font-weight: 900; font-size: 28px; margin: 5px 0; color: #fff; text-shadow: 0 0 15px var(--primary); }
 
         .status-box {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(0, 255, 65, 0.05);
-            padding: 6px 15px;
-            border-radius: 12px;
-            border: 1px dashed var(--hacker-green);
+            display: inline-flex; align-items: center; background: rgba(0, 255, 65, 0.03);
+            padding: 6px 15px; border-radius: 12px; border: 1px solid var(--hacker-green);
             margin: 10px 0 20px;
         }
+        .status-led { width: 8px; height: 8px; background: var(--hacker-green); border-radius: 50%; margin-left: 10px; box-shadow: 0 0 10px var(--hacker-green); animation: blink 1.2s infinite; }
+        .status-text { color: var(--hacker-green); font-weight: 800; font-size: 12px; letter-spacing: 1px; }
 
-        .status-led {
-            width: 10px;
-            height: 10px;
-            background: var(--hacker-green);
-            border-radius: 50%;
-            margin-left: 10px;
-            box-shadow: 0 0 15px var(--hacker-green);
-            animation: blink 1.2s infinite;
-        }
-
-        .status-text {
-            color: var(--hacker-green);
-            font-weight: 800;
-            font-size: 13px;
-        }
-
-        .btn-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        /* --- توحيد الأزرار بلون واحد وهيبة عالية --- */
+        .btn-list { display: flex; flex-direction: column; gap: 12px; }
         .cyber-btn {
-            font-weight: 700;
-            padding: 14px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 700; padding: 15px 20px;
+            background: rgba(0, 242, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.2);
             border-radius: 15px;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: 0.4s;
-            font-size: 14px;
+            color: #fff; text-decoration: none;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: 0.3s all ease; font-size: 14px;
+            position: relative; overflow: hidden;
         }
+        
+        .cyber-btn i { color: var(--primary); text-shadow: var(--glow); }
 
         .cyber-btn:hover {
             border-color: var(--primary);
             background: rgba(0, 242, 255, 0.1);
-            transform: scale(1.02);
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+            color: var(--primary);
         }
 
-        /* زر الرؤية الجديد */
-        .btn-vision {
-            border-color: rgba(0, 242, 255, 0.4);
-            background: rgba(0, 242, 255, 0.05);
+        /* إضافة لمعة خفيفة تمشي على الزر عند الحرك */
+        .cyber-btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.1), transparent);
+            transition: 0.5s;
         }
+        .cyber-btn:hover::before { left: 100%; }
 
-        .btn-ai {
-            background: linear-gradient(90deg, #00d2ff, #0081ff);
-            border: none;
-            color: #000 !important;
-        }
-        .btn-ai span, .btn-ai i { color: #000; font-weight: 900; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 10px;
-            color: rgba(255,255,255,0.2);
-            letter-spacing: 2px;
-        }
+        .footer { margin-top: 25px; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 3px; }
+        
+        #google_translate_element, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
     </style>
 </head>
 <body>
 
+    <div class="cyber-line line-top"></div>
+    <div class="cyber-line line-bottom"></div>
+    <div class="cyber-line line-left"></div>
+    <div class="cyber-line line-right"></div>
+
     <div class="cyber-container">
+        <div class="lang-switcher">
+            <button class="lang-btn" onclick="changeLang('ar')">AR</button>
+            <button class="lang-btn" onclick="changeLang('en')">EN</button>
+        </div>
+
         <div class="hacker-avatar">
             <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                 <path d="M256 50L100 250L256 450L412 250L256 50Z" fill="#ff0000" opacity="0.2"/>
                 <path d="M256 80C180 80 120 150 120 230C120 280 150 350 256 450C362 350 392 280 392 230C392 150 332 80 256 80Z" fill="#1a1a1a"/>
                 <path d="M256 120C210 120 160 160 160 230C160 260 180 300 256 360C332 300 352 260 352 230C352 160 302 120 256 120Z" fill="#0a0a0a"/>
-                <ellipse cx="210" cy="220" rx="25" ry="10" fill="#ff0000" filter="blur(2px)">
-                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
-                </ellipse>
-                <ellipse cx="302" cy="220" rx="25" ry="10" fill="#ff0000" filter="blur(2px)">
-                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
-                </ellipse>
+                <ellipse cx="210" cy="220" rx="25" ry="10" fill="#ff0000" filter="blur(2px)"><animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" /></ellipse>
+                <ellipse cx="302" cy="220" rx="25" ry="10" fill="#ff0000" filter="blur(2px)"><animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" /></ellipse>
                 <path d="M210 280L256 340L302 280H210Z" fill="#1f1f1f"/>
             </svg>
         </div>
@@ -161,16 +147,16 @@
         
         <div class="status-box">
             <div class="status-led"></div>
-            <div class="status-text">وضع الهكر الأخلاقي: نشط</div>
+            <div class="status-text">STATUS: ACTIVE HUB</div>
         </div>
 
         <div class="btn-list">
-            <a href="vision.html" class="cyber-btn btn-vision">
+            <a href="vision.html" class="cyber-btn">
                 <span>رؤية شيفرة 9</span>
                 <i class="fas fa-eye"></i>
             </a>
 
-            <a href="projects.html" class="cyber-btn btn-ai">
+            <a href="projects.html" class="cyber-btn">
                 <span>مساعد الذكاء الاصطناعي</span>
                 <i class="fas fa-microchip"></i>
             </a>
@@ -186,11 +172,31 @@
             </a>
         </div>
 
-        <div class="footer">
-            SYSTEM SECURED | YEMEN 🇾🇪
-        </div>
+        <div class="footer">CIPHER 9 | YEMEN SECURED</div>
     </div>
 
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'ar', includedLanguages: 'ar,en', autoDisplay: false}, 'google_translate_element');
+        }
+        function changeLang(lang) {
+            localStorage.setItem('preferredLang', lang);
+            const select = document.querySelector('.goog-te-combo');
+            if (select) { select.value = lang; select.dispatchEvent(new Event('change')); }
+        }
+        window.addEventListener('load', function() {
+            const savedLang = localStorage.getItem('preferredLang');
+            if (savedLang && savedLang !== 'ar') {
+                setTimeout(() => {
+                    const select = document.querySelector('.goog-te-combo');
+                    if (select) { select.value = savedLang; select.dispatchEvent(new Event('change')); }
+                }, 1000);
+            }
+        });
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
 
