@@ -10,6 +10,7 @@
         :root {
             --primary: #00f2ff;
             --hacker-green: #00ff41;
+            --danger-red: #ff003c;
             --bg-dark: #020617;
         }
 
@@ -23,27 +24,75 @@
             min-height: 100vh;
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
             padding: 40px 20px;
+            overflow-x: hidden;
         }
 
+        /* --- نافذة التحذير الأحمر --- */
+        .warning-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.96);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(20px);
+        }
+
+        .warning-card {
+            width: 90%;
+            max-width: 420px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid var(--danger-red);
+            border-radius: 30px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 0, 60, 0.4);
+            animation: emerge 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .warning-card i.main-icon {
+            font-size: 70px;
+            color: var(--danger-red);
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 15px var(--danger-red));
+            animation: pulse-red 1.5s infinite;
+        }
+
+        .warning-card h2 { color: #fff; font-weight: 900; margin-bottom: 15px; }
+
+        .btn-confirm {
+            background: var(--danger-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .btn-confirm:hover { background: #fff; color: var(--danger-red); }
+
+        /* --- محتوى الصفحة الرئيسي --- */
         .more-page-container {
             width: 100%;
             max-width: 450px;
             text-align: center;
+            transition: 0.8s;
         }
 
+        .content-blur { filter: blur(15px); pointer-events: none; }
+
         .header-section { margin-bottom: 30px; }
-        .header-section i {
-            font-size: 50px;
-            color: var(--primary);
-            text-shadow: 0 0 20px var(--primary);
-        }
-        h2 { font-weight: 900; color: #fff; margin: 10px 0; }
+        .header-section i { font-size: 50px; color: var(--primary); text-shadow: 0 0 20px var(--primary); }
 
         .grid-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .cyber-card {
@@ -57,27 +106,24 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s;
+            position: relative;
         }
 
-        .cyber-card i { font-size: 28px; color: var(--primary); }
-        .cyber-card span { font-size: 13px; font-weight: bold; }
-        
         .cyber-card:hover {
             border-color: var(--primary);
             background: rgba(0, 242, 255, 0.05);
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0, 242, 255, 0.2);
         }
 
-        /* تمييز الأزرار التي ستعمل قريباً */
+        .cyber-card i { font-size: 28px; color: var(--primary); }
+        .cyber-card span { font-size: 13px; font-weight: bold; }
+
         .status-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            position: absolute;
-            top: 15px; right: 15px;
+            width: 8px; height: 8px; background: var(--hacker-green);
+            border-radius: 50%; position: absolute; top: 15px; right: 15px;
+            box-shadow: 0 0 10px var(--hacker-green);
         }
-        .online { background: var(--hacker-green); box-shadow: 0 0 10px var(--hacker-green); }
 
         .back-home {
             display: inline-flex;
@@ -85,62 +131,72 @@
             gap: 10px;
             color: #fff;
             text-decoration: none;
-            font-size: 14px;
             margin-top: 40px;
             opacity: 0.6;
+            font-size: 14px;
         }
+
+        /* أنيميشن */
+        @keyframes emerge { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulse-red { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); opacity: 0.8; } }
     </style>
 </head>
 <body>
 
-    <div class="more-page-container">
+    <div id="warningOverlay" class="warning-overlay">
+        <div class="warning-card">
+            <i class="fas fa-radiation-alt main-icon"></i>
+            <h2>دخول محظور !</h2>
+            <p>
+                نظام <b>شيفرة 9</b> يكتشف عمليات صيانة نشطة. <br>
+                هذا القسم ما زال تحت الإنشاء والتشفير البرمجي. <br>
+                <span style="color: var(--danger-red); font-weight: bold;">سيتم توفير الأنظمة الكاملة قريباً.</span>
+            </p>
+            <button class="btn-confirm" onclick="closeWarning()">إغلاق التنبيه ومتابعة</button>
+        </div>
+    </div>
+
+    <div id="mainContent" class="more-page-container content-blur">
         
         <div class="header-section">
             <i class="fas fa-th-large"></i>
-            <h2>قائمة الأنظمة</h2>
-            <p style="color: var(--primary); font-size: 11px;">اختر النظام الذي تود الوصول إليه</p>
+            <h2 style="margin-top:15px; font-weight:900;">قائمة الأنظمة</h2>
+            <p style="color: var(--primary); font-size: 11px;">CIPHER 9 OPERATIONAL PANEL</p>
         </div>
 
         <div class="grid-layout">
-            
-            <a href="tools.html" class="cyber-card" style="position: relative;">
-                <div class="status-dot online"></div>
+            <a href="tools.html" class="cyber-card">
+                <div class="status-dot"></div>
                 <i class="fas fa-tools"></i>
                 <span>مكتبة الأدوات</span>
             </a>
-
-            <a href="courses.html" class="cyber-card">
-                <i class="fas fa-graduation-cap"></i>
-                <span>دورات البرمجة</span>
-            </a>
-
-            <a href="articles.html" class="cyber-card">
-                <i class="fas fa-book-open"></i>
-                <span>مقالات تقنية</span>
-            </a>
-
-            <a href="lab.html" class="cyber-card">
-                <i class="fas fa-flask"></i>
-                <span>مختبر الاختراق</span>
-            </a>
-
-            <a href="community.html" class="cyber-card">
-                <i class="fas fa-users"></i>
-                <span>المجتمع التقني</span>
-            </a>
-
-            <a href="support.html" class="cyber-card">
-                <i class="fas fa-headset"></i>
-                <span>الدعم الفني</span>
-            </a>
-
+            <a href="dashboard.html" class="cyber-card"><i class="fas fa-terminal"></i><span>لوحة المهارات</span></a>
+            <a href="#" class="cyber-card"><i class="fas fa-graduation-cap"></i><span>دورات البرمجة</span></a>
+            <a href="#" class="cyber-card"><i class="fas fa-book-open"></i><span>مقالات تقنية</span></a>
+            <a href="#" class="cyber-card"><i class="fas fa-flask"></i><span>مختبر الاختراق</span></a>
+            <a href="#" class="cyber-card"><i class="fas fa-headset"></i><span>الدعم الفني</span></a>
         </div>
 
         <a href="index.html" class="back-home">
-            <i class="fas fa-chevron-right"></i>
-            الرجوع للواجهة الرئيسية
+            <i class="fas fa-chevron-right"></i> الرجوع للواجهة الرئيسية
         </a>
     </div>
 
+    <script>
+        function closeWarning() {
+            const overlay = document.getElementById('warningOverlay');
+            const content = document.getElementById('mainContent');
+            
+            overlay.style.transition = "0.5s";
+            overlay.style.opacity = "0";
+            overlay.style.transform = "scale(1.1)";
+            
+            setTimeout(() => {
+                overlay.style.display = "none";
+                content.classList.remove('content-blur');
+            }, 500);
+        }
+    </script>
 </body>
 </html>
+
