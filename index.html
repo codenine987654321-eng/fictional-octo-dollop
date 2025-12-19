@@ -141,6 +141,19 @@
         .cyber-btn i { transition: 0.4s; }
         .cyber-btn:hover i { transform: rotate(15deg) scale(1.1); }
         
+        /* تصميم خاص لزر شاهد أكثر */
+        .btn-more {
+            border-color: var(--hacker-green);
+            color: var(--hacker-green);
+            background: rgba(0, 255, 65, 0.05);
+        }
+        .btn-more:hover {
+            background: rgba(0, 255, 65, 0.15);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            border-color: var(--hacker-green);
+            color: var(--hacker-green);
+        }
+
         /* القائمة المنسدلة */
         .sub-btn-list { max-height: 0; overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; gap: 8px; }
         .sub-btn-list.active { max-height: 200px; margin-top: 10px; }
@@ -202,6 +215,11 @@
                     <a href="https://wa.me/967783787656" class="sub-btn"><i class="fab fa-whatsapp"></i> استشارة تقنية</a>
                 </div>
             </div>
+
+            <a href="more.html" class="cyber-btn btn-more">
+                <span>شاهد أكثر</span>
+                <i class="fas fa-arrow-left"></i>
+            </a>
         </div>
 
         <div class="footer">CIPHER 9 | YEMEN 🇾🇪</div>
