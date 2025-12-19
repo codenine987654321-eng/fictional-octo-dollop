@@ -3,133 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز محاكاة الثغرات | CIPHER 9</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>دفاع الأنظمة | CIPHER 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root { --neon: #00ff41; --bg: #020617; --terminal-bg: #050505; --cyan: #00f2ff; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Cairo', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        :root { --neon: #00ff41; --bg: #000; --danger: #ff003c; --cyan: #00f2ff; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Cairo', sans-serif; margin: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         
-        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.2; }
+        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.15; }
 
-        .vulnerability-center { z-index: 10; width: 90%; max-width: 800px; text-align: center; }
-        
-        .header { margin-bottom: 30px; }
-        .header i { font-size: 50px; text-shadow: 0 0 20px var(--neon); }
-
-        /* شاشة التيرمنال */
-        #terminal {
-            background: var(--terminal-bg);
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: right;
-            font-family: 'Fira Code', monospace;
-            height: 350px;
-            overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            display: none;
-            margin-top: 20px;
+        /* شاشة الإنذار الأولية */
+        #alarm-screen {
+            position: fixed; z-index: 1000; background: rgba(0,0,0,0.95);
+            width: 100%; height: 100%; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
         }
 
-        .log-line { margin: 5px 0; font-size: 14px; border-right: 2px solid var(--neon); padding-right: 10px; }
-        .success { color: var(--neon); }
-        .warning { color: #facc15; }
-        .danger { color: #ff003c; }
-        .info { color: var(--cyan); }
+        .alert-box { border: 3px solid var(--danger); padding: 40px; border-radius: 20px; box-shadow: 0 0 50px var(--danger); animation: blink-red 1s infinite; }
+        @keyframes blink-red { 0%, 100% { border-color: var(--danger); } 50% { border-color: transparent; } }
 
-        .selection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .vuln-card {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            padding: 20px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.3s;
+        /* شاشة العمليات */
+        .terminal-container { z-index: 100; width: 90%; max-width: 900px; display: none; }
+        #terminal-content {
+            background: #050505; border: 1px solid #333; height: 400px; padding: 20px;
+            overflow-y: auto; font-family: 'Fira Code', monospace; font-size: 14px; border-radius: 15px 15px 0 0;
         }
-        .vuln-card:hover { border-color: var(--neon); background: rgba(0, 255, 65, 0.05); transform: translateY(-5px); }
-        .vuln-card i { font-size: 30px; margin-bottom: 10px; }
-        .vuln-card h3 { margin: 0; font-size: 16px; }
 
-        .back-btn { margin-top: 30px; color: #666; text-decoration: none; font-size: 14px; display: inline-block; }
+        .action-bar {
+            background: #111; padding: 15px; border-radius: 0 0 15px 15px;
+            display: flex; gap: 10px; justify-content: center; border: 1px solid #333;
+        }
+
+        .code-btn {
+            background: transparent; border: 1px solid var(--cyan); color: var(--cyan);
+            padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; transition: 0.3s;
+        }
+        .code-btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 15px var(--cyan); }
+
+        .log-line { margin: 4px 0; }
+        .danger-text { color: var(--danger); font-weight: bold; }
+        .success-text { color: var(--neon); }
     </style>
 </head>
 <body>
 
+    <audio id="alarmSfx" src="https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3" loop></audio>
+    <audio id="typeSfx" src="https://www.soundjay.com/communication/sounds/typewriter-key-1.mp3"></audio>
+
     <canvas id="matrix-canvas"></canvas>
 
-    <div class="vulnerability-center">
-        <div id="setup-view">
-            <div class="header">
-                <i class="fas fa-microchip"></i>
-                <h2>مختبر محاكاة الثغرات</h2>
-                <p>اختر نوع الهجوم لبدء عملية الاختراق التجريبية</p>
-            </div>
-
-            <div class="selection-grid">
-                <div class="vuln-card" onclick="runSimulation('SQLi')">
-                    <i class="fas fa-database"></i>
-                    <h3>SQL Injection</h3>
-                </div>
-                <div class="vuln-card" onclick="runSimulation('Brute')">
-                    <i class="fas fa-key"></i>
-                    <h3>Brute Force</h3>
-                </div>
-                <div class="vuln-card" onclick="runSimulation('XSS')">
-                    <i class="fas fa-code"></i>
-                    <h3>XSS Attack</h3>
-                </div>
-                <div class="vuln-card" onclick="runSimulation('CCTV')">
-                    <i class="fas fa-video"></i>
-                    <h3>CCTV Bypass</h3>
-                </div>
-            </div>
-            <a href="more.html" class="back-btn"><i class="fas fa-arrow-right"></i> العودة لمركز القيادة</a>
+    <div id="alarm-screen">
+        <div class="alert-box">
+            <i class="fas fa-exclamation-triangle" style="font-size: 80px; color: var(--danger);"></i>
+            <h1 style="color: #fff; font-weight: 900; margin-top: 20px;">! تـنبيه أمني عاجـل !</h1>
+            <p style="font-size: 20px;">حاسوبك يتعرض لمحاولة اختراق خارجي الآن.</p>
+            <p style="color: var(--danger); font-weight: bold;">مهمتك: فحص الثغرات وتفعيل بروتوكولات التصدي.</p>
+            <button onclick="startMission()" style="background: var(--danger); color: #fff; border: none; padding: 15px 40px; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 20px;">بـدء صـد الهجـوم</button>
         </div>
+    </div>
 
-        <div id="terminal"></div>
+    <div class="terminal-container" id="mission-ui">
+        <div id="terminal-content"></div>
+        <div class="action-bar">
+            <button class="code-btn" onclick="fireWall()">[ تفعيل Firewall ]</button>
+            <button class="code-btn" onclick="antiSql()">[ تشفير SQL Queries ]</button>
+            <button class="code-btn" onclick="blockIp()">[ حظر الـ IP المهاجم ]</button>
+        </div>
     </div>
 
     <script>
-        const terminal = document.getElementById('terminal');
-        const setupView = document.getElementById('setup-view');
+        const terminal = document.getElementById('terminal-content');
+        const alarm = document.getElementById('alarmSfx');
+        const typeSfx = document.getElementById('typeSfx');
 
-        async function addLog(text, type = 'info', delay = 600) {
+        function startMission() {
+            document.getElementById('alarm-screen').style.display = 'none';
+            document.getElementById('mission-ui').style.display = 'block';
+            alarm.play();
+            alarm.volume = 0.2;
+            runAttackScenario();
+        }
+
+        async function writeLog(text, type = 'normal') {
             const line = document.createElement('div');
-            line.className = `log-line ${type}`;
-            line.innerHTML = `[${new Date().toLocaleTimeString()}] ${text}`;
+            line.className = 'log-line ' + (type === 'danger' ? 'danger-text' : (type === 'success' ? 'success-text' : ''));
+            line.innerHTML = `> ${text}`;
             terminal.appendChild(line);
             terminal.scrollTop = terminal.scrollHeight;
-            return new Promise(r => setTimeout(r, delay));
+            typeSfx.currentTime = 0;
+            typeSfx.play().catch(()=>{});
+            return new Promise(r => setTimeout(r, 400));
         }
 
-        async function runSimulation(type) {
-            setupView.style.display = 'none';
-            terminal.style.display = 'block';
+        async function runAttackScenario() {
+            await writeLog("جارٍ فحص الاتصالات الواردة...", "normal");
+            await writeLog("تنبيه: محاولة حقن SQL مكتشفة من IP 192.168.1.105", "danger");
+            await writeLog("الهجوم يستخدم ثغرة: ' OR 1=1 -- ", "danger");
+            await writeLog("تنبيه: محاولة الوصول لجدول users_passwords...", "danger");
+            await writeLog("النظام في خطر! اضغط على 'تشفير SQL Queries' فوراً!", "warning");
+        }
 
-            if (type === 'SQLi') {
-                await addLog("جارٍ تحديد الهدف: https://target-db.com/login.php", 'info');
-                await addLog("اختبار ثغرة الحقن ' OR 1=1 --", 'warning');
-                await addLog("تم تجاوز جدار الحماية بنجاح!", 'success');
-                await addLog("سحب بيانات المستخدمين...", 'info');
-                await addLog("ID: 1 | User: Admin | Pass: $2y$10$O...", 'success');
-                await addLog("ID: 2 | User: M_Fahad | Pass: $2y$12$R...", 'success');
-            } else if (type === 'CCTV') {
-                await addLog("جارٍ البحث عن كاميرات IP في النطاق...", 'info');
-                await addLog("تم العثور على 14 كاميرا نشطة.", 'warning');
-                await addLog("جارٍ كسر بروتوكول RTSP...", 'danger');
-                await addLog("تم الوصول للكاميرا الرئيسية (مدخل الشركة).", 'success');
-                await addLog("بث حي: [تغذية مرئية نشطة]", 'success');
-            }
-            // يمكن إضافة المزيد من المحاكات هنا بنفس الطريقة
+        async function antiSql() {
+            await writeLog("-------------------------------------------");
+            await writeLog("جارٍ تطبيق PDO Prepared Statements...", "success");
+            await writeLog("تم تحييد ثغرة SQL Injection بنجاح.", "success");
+            await writeLog("المهاجم يحاول الآن تغيير استراتيجيته إلى Brute Force...", "danger");
+            await writeLog("اضغط على 'تفعيل Firewall' لصد الهجوم.", "warning");
+        }
 
+        async function fireWall() {
+            await writeLog("-------------------------------------------");
+            await writeLog("جارٍ تشغيل جدار حماية CIPHER-9...", "success");
+            await writeLog("تم اكتشاف 1000 محاولة دخول في الثانية.", "danger");
+            await writeLog("تم تفعيل بروتوكول Rate Limiting.", "success");
+            await writeLog("اضغط على 'حظر الـ IP' لإنهاء العملية.", "warning");
+        }
+
+        async function blockIp() {
+            await writeLog("-------------------------------------------");
+            await writeLog("جارٍ سحب هوية المهاجم (Doxing)...", "info");
+            await writeLog("IP: 192.168.1.105 | Location: Unknown Proxy", "normal");
+            await writeLog("تم حظر المهاجم نهائياً من السيرفر.", "success");
+            alarm.pause();
+            
             setTimeout(() => {
-                alert("تمت المحاكاة بنجاح!");
-                location.reload(); // للعودة للاختيار
-            }, 5000);
+                alert("تم صد الاختراق بنجاح يا بطل! لقد أنقذت البيانات.");
+                window.location.href = "more.html";
+            }, 1000);
         }
 
-        // كود الماتريكس في الخلفية
+        // كود الماتريكس
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -149,3 +152,4 @@
     </script>
 </body>
 </html>
+
