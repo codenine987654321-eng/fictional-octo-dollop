@@ -19,58 +19,65 @@
             z-index: 5; scroll-behavior: smooth;
         }
 
-        /* المساعد العائم */
+        /* المساعد العائم المطور */
         #cyber-assistant {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            z-index: 1000; background: rgba(0, 0, 0, 0.9); border: 2px solid var(--cyan);
-            padding: 25px; border-radius: 20px; text-align: center;
-            box-shadow: 0 0 30px var(--cyan); display: none; width: 320px;
-            animation: pulse-cyan 2s infinite;
+            position: fixed; bottom: 50px; left: 20px; z-index: 1000;
+            background: rgba(15, 15, 15, 0.95); border: 1px solid rgba(0, 242, 255, 0.5);
+            padding: 15px; border-radius: 12px; width: 260px; display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease-in-out;
         }
 
-        @keyframes pulse-cyan { 0% { box-shadow: 0 0 10px var(--cyan); } 50% { box-shadow: 0 0 40px var(--cyan); } 100% { box-shadow: 0 0 10px var(--cyan); } }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .helper-text {
+            color: #fff; font-size: 13px; margin-bottom: 8px; font-family: 'Cairo';
+            line-height: 1.4; border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            padding-bottom: 8px; text-align: right;
+        }
 
         .cmd-btn {
-            background: var(--cyan); color: #000; border: none; padding: 12px 20px;
-            margin-top: 15px; cursor: pointer; font-weight: bold; border-radius: 8px;
-            font-family: 'Fira Code'; width: 100%; transition: 0.3s;
+            background: transparent; color: var(--cyan); border: 1px solid var(--cyan);
+            padding: 8px; cursor: pointer; font-size: 11px; font-family: 'Fira Code';
+            width: 100%; border-radius: 5px; transition: 0.3s;
         }
-        .cmd-btn:hover { background: #fff; transform: scale(1.05); }
+        .cmd-btn:hover { background: var(--cyan); color: #000; }
 
-        /* التنبيهات الحمراء */
-        .alert-flash { color: var(--danger); font-weight: bold; text-transform: uppercase; border: 1px solid var(--danger); padding: 5px; margin: 10px 0; display: inline-block; animation: blink 0.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
-
+        .alert-flash { color: var(--danger); font-weight: bold; border: 1px solid var(--danger); padding: 5px; margin: 10px 0; display: inline-block; }
         .code-success { color: var(--neon); }
         .code-comment { color: #555; }
-        .code-keyword { color: var(--danger); }
 
-        /* شريط التقدم السفلي */
-        #progress-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 5px; background: #111; z-index: 2000; }
-        #progress-bar { width: 0%; height: 100%; background: var(--neon); transition: 0.4s; box-shadow: 0 0 15px var(--neon); }
-
-        /* أصوات */
-        .hidden-audio { display: none; }
+        #progress-container { position: fixed; bottom: 0; left: 0; width: 100%; height: 4px; background: #111; z-index: 2000; }
+        #progress-bar { width: 0%; height: 100%; background: var(--cyan); transition: 0.4s; }
     </style>
 </head>
 <body>
 
-    <audio id="bgSfx" loop src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <audio id="popInSfx" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="popOutSfx" src="https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3"></audio>
     <audio id="typeSfx" src="https://www.soundjay.com/communication/sounds/typewriter-key-1.mp3"></audio>
-    <audio id="alertSfx" src="https://assets.mixkit.co/active_storage/sfx/951/951-preview.mp3"></audio>
 
     <canvas id="matrix-bg"></canvas>
 
     <div id="terminal">
-        <div class="code-comment"># CIPHER 9 - ADVANCED DEFENSE SYSTEM v4.0.2</div>
-        <div class="code-comment"># INITIALIZING KERNEL MODULES...</div>
+        <div class="code-comment"># CIPHER 9 - DEFENSE PROTOCOL v5.0</div>
+        <div class="code-comment"># SECURE KERNEL INITIALIZED...</div>
     </div>
 
     <div id="cyber-assistant">
-        <i class="fas fa-robot" style="font-size: 40px; color: var(--cyan); margin-bottom: 15px;"></i>
-        <div id="assistant-msg" style="color: #fff; margin-bottom: 10px; font-family: 'Cairo';">كشف اختراق في الطبقة 7!</div>
-        <div id="next-code" style="font-size: 11px; color: var(--cyan); background: #111; padding: 10px; border-radius: 5px;"></div>
-        <button id="execute-btn" class="cmd-btn" onclick="nextStep()">تنفيذ الكود المضاد</button>
+        <div style="text-align: left; margin-bottom: 5px;">
+            <i class="fas fa-robot" style="color: var(--cyan); font-size: 20px;"></i>
+        </div>
+        <div id="assistant-msg" class="helper-text">
+            جاري فحص النظام... استعد.
+        </div>
+        <div id="next-code" style="display: none;"></div> 
+        <button id="execute-btn" class="cmd-btn" onclick="nextStep()">
+            <i class="fas fa-terminal"></i> تنفيذ الكود المضاد
+        </button>
     </div>
 
     <div id="progress-container"><div id="progress-bar"></div></div>
@@ -81,33 +88,34 @@
         const assistantMsg = document.getElementById('assistant-msg');
         const nextCodeDisplay = document.getElementById('next-code');
         const progressBar = document.getElementById('progress-bar');
+        const popIn = document.getElementById('popInSfx');
+        const popOut = document.getElementById('popOutSfx');
         const typeSfx = document.getElementById('typeSfx');
-        const alertSfx = document.getElementById('alertSfx');
 
         let currentStep = 0;
         const totalSteps = 20;
 
         const missions = [
-            { msg: "كشف محاولة حقن SQL!", code: "sqlmap -u 'target.php?id=1' --dbs", logs: ["Searching for vulnerability...", "Injection point found at 'id'", "Extracting DB names..."] },
-            { msg: "تشفير الاتصالات الصادرة", code: "openssl genrsa -out cipher9.key 2048", logs: ["Generating RSA private key...", "Success. Exporting certificate..."] },
-            { msg: "تفعيل جدار حماية IPTables", code: "iptables -A INPUT -p tcp --dport 80 -j DROP", logs: ["Filtering incoming traffic...", "Blocking unauthorized ports."] },
-            { msg: "فحص الذاكرة من الـ Rootkits", code: "chkrootkit -l", logs: ["Scanning /sbin...", "Scanning /usr/bin...", "Clean."] },
-            { msg: "حقن كود بايثون مضاد", code: "python3 defender.py --kill-all", logs: ["Importing socket...", "Killing suspicious processes..."] },
-            { msg: "تجاوز بروكسي المهاجم", code: "proxychains nmap -sT 192.168.1.1", logs: ["Chains: DNS-request...", "Chain: OK! Scanning target..."] },
-            { msg: "كسر تشفير MD5 للمهاجم", code: "hashcat -m 0 -a 0 hash.txt wordlist.txt", logs: ["Initializing OpenCL...", "Guessing... Found: admin@2025"] },
-            { msg: "حماية ملفات الـ System", code: "chmod 600 /etc/shadow", logs: ["Restricting access to shadow file...", "Permissions updated."] },
-            { msg: "فحص الـ Traffic الوارد", code: "tcpdump -i eth0 -n", logs: ["Listening on eth0...", "Captured 45 packets..."] },
-            { msg: "إغلاق الثغرة الأمنية XSS", code: "htmlspecialchars($input, ENT_QUOTES);", logs: ["Sanitizing HTML input...", "Neutralizing scripts."] },
-            { msg: "تتبع مسار المهاجم", code: "traceroute -n 8.8.8.8", logs: ["Hops detected: 12", "Locating source..."] },
-            { msg: "تفعيل الـ Honeypot", code: "docker run -d pentest/cowrie", logs: ["Deploying fake SSH server...", "Redirecting attacker..."] },
-            { msg: "تحليل ملفات الـ Access Log", code: "grep '404' access.log | cut -d ' ' -f 1", logs: ["Filtering failed requests...", "Identifying IP patterns."] },
-            { msg: "تشفير قاعدة البيانات", code: "AES_ENCRYPT('secret_data', 'key')", logs: ["Encrypting sensitive columns...", "Done."] },
-            { msg: "تطهير الـ RAM", code: "sync; echo 3 > /proc/sys/vm/drop_caches", logs: ["Clearing buffer cache...", "System memory freed."] },
-            { msg: "تفعيل الـ IDS", code: "snort -v -c /etc/snort/snort.conf", logs: ["Intrusion Detection System active...", "Alerting on anomalies."] },
-            { msg: "منع هجمات الـ DoS", code: "limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;", logs: ["Limiting requests per second...", "Global limit applied."] },
-            { msg: "تأمين بروتوكول SSH", code: "sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config", logs: ["Disabling root login...", "Restarting SSH service."] },
-            { msg: "فحص الـ Backdoor", code: "netstat -tulpn", logs: ["Scanning listening ports...", "Unknown port 4444 found! KILLING."] },
-            { msg: "الضربة القاضية للمهاجم", code: "shred -u /attacker/payload.bin", logs: ["Overwriting file with random data...", "Attacker payload destroyed."] }
+            { msg: "هجوم حقن SQL مكتشف! استعمل أداة الفحص.", code: "sqlmap -u 'site.com/login.php' --risk=3", logs: ["Payload: ' OR 1=1 --", "Vulnerability Confirmed!", "Dumping database schema..."] },
+            { msg: "المهاجم يتخطى الفلتر، شفر البيانات فوراً.", code: "openssl aes-256-cbc -a -salt -in db.sql", logs: ["Encrypting user_table...", "Key generated: ****-****"] },
+            { msg: "حظر عنوان IP المهاجم نهائياً.", code: "iptables -A INPUT -s 185.22.41.1 -j DROP", logs: ["IP 185.22.41.1 blocked.", "Dropping all packets from source."] },
+            { msg: "فحص العمليات المشبوهة في الخلفية.", code: "ps aux | grep 'netcat'", logs: ["Searching for reverse shells...", "PID 4022 found (nc -e /bin/sh)"] },
+            { msg: "قتل عملية الاختراق النشطة.", code: "kill -9 4022", logs: ["Process 4022 terminated.", "Connection closed."] },
+            { msg: "تأمين ملفات النظام الحساسة.", code: "chattr +i /etc/passwd", logs: ["Setting immutable bit...", "File is now read-only for root."] },
+            { msg: "تفعيل نظام كشف التسلل (IDS).", code: "snort -A console -q -c /etc/snort.conf", logs: ["Rules loaded: 4502", "Monitoring traffic in real-time..."] },
+            { msg: "المهاجم يحاول تخمين كلمة السر (Brute Force).", code: "fail2ban-client set sshd banip 10.0.0.5", logs: ["300 failed attempts detected.", "Banning IP for 24 hours."] },
+            { msg: "فحص ملفات الـ Log عن محاولات سابقة.", code: "tail -n 100 /var/log/auth.log", logs: ["Analyzing logs...", "No other breaches found."] },
+            { msg: "تنظيف الذاكرة المؤقتة لمنع سحب البيانات.", code: "swapoff -a && swapon -a", logs: ["Clearing swap partition...", "Memory sanitized."] },
+            { msg: "تحديث جدار الحماية (Firewall).", code: "ufw enable && ufw deny 22", logs: ["UFW is active.", "SSH port 22 closed."] },
+            { msg: "تشفير الـ Cookies لمنع سرقة الجلسات.", code: "Set-Cookie: ID=abc; HttpOnly; Secure", logs: ["Updating header policy...", "Session hijacking protected."] },
+            { msg: "البحث عن ملفات Backdoor مرفوعة.", code: "find /var/www/ -name '*.php' | xargs grep 'eval'", logs: ["Scanning uploads...", "Backdoor found in image.php!"] },
+            { msg: "حذف الملف الخبيث نهائياً.", code: "rm -rf /var/www/html/uploads/shell.php", logs: ["File shredded.", "Integrity check: OK."] },
+            { msg: "تفعيل التحقق الثنائي (2FA) للمشرفين.", code: "google-authenticator --time-based", logs: ["Generating QR Code...", "Two-factor active."] },
+            { msg: "إغلاق الثغرات المفتوحة في نظام الـ DNS.", code: "rndc flush", logs: ["Flushing DNS cache...", "Poisoning attempt failed."] },
+            { msg: "منع هجمات الـ Clickjacking.", code: "Header set X-Frame-Options DENY", logs: ["Setting frame policy...", "Protected."] },
+            { msg: "تحليل الحزم المشبوهة (Deep Packet Inspection).", code: "wireshark -k -i eth0", logs: ["Capturing raw packets...", "Protocol anomaly detected."] },
+            { msg: "تغيير مفاتيح الـ SSH للمستخدمين.", code: "ssh-keygen -t ed25519 -f ~/.ssh/id_new", logs: ["New keys generated.", "Old keys revoked."] },
+            { msg: "الخطوة الأخيرة: تطهير النظام بالكامل.", code: "systemctl restart cipher9-secure", logs: ["Rebooting defense core...", "ALL SYSTEMS GREEN. SAFE."] }
         ];
 
         async function writeToTerminal(text, type = 'normal') {
@@ -123,12 +131,11 @@
 
         async function playLogs(logArray) {
             for (let l of logArray) {
-                await writeToTerminal(`[INFO] ${l}`);
-                // إضافة رموز عشوائية بين الأسطر لزيادة الواقعية
-                if (Math.random() > 0.5) {
-                    await writeToTerminal(`0x${Math.random().toString(16).substr(2,8)}: SYSCALL_READY`, 'code-comment');
+                await writeToTerminal(`[SYSTEM] ${l}`);
+                if (Math.random() > 0.4) {
+                    await writeToTerminal(`0x${Math.random().toString(16).substr(2,8)}: MEM_BLOCK_SECURE`, 'code-comment');
                 }
-                await new Promise(r => setTimeout(r, 100));
+                await new Promise(r => setTimeout(r, 80));
             }
         }
 
@@ -138,39 +145,38 @@
                 return;
             }
             const m = missions[currentStep];
-            assistantMsg.innerText = m.msg;
+            assistantMsg.innerHTML = `<span style="color: var(--cyan);">● مهمة دفاعية:</span><br>${m.msg}`;
             nextCodeDisplay.innerText = m.code;
+
             assistant.style.display = 'block';
-            alertSfx.play().catch(()=>{});
+            popIn.play().catch(()=>{}); 
         }
 
         async function nextStep() {
+            popOut.play().catch(()=>{});
             assistant.style.display = 'none';
-            const m = missions[currentStep];
             
-            await writeToTerminal(`$ ${m.code}`, 'success');
+            const m = missions[currentStep];
+            await writeToTerminal(`root@cipher9:~# ${m.code}`, 'success');
             await playLogs(m.logs);
             
             currentStep++;
             progressBar.style.width = (currentStep / totalSteps) * 100 + "%";
             
-            setTimeout(showAssistant, 1200);
+            setTimeout(showAssistant, 800);
         }
 
         function finishGame() {
             writeToTerminal("--------------------------------------------------", 'success');
-            writeToTerminal("MISSION ACCOMPLISHED: SYSTEM SECURED", 'success');
-            writeToTerminal("THANK YOU, OPERATOR. CIPHER 9 IS ONLINE.", 'success');
+            writeToTerminal("تم تأمين النظام بنجاح. جميع الثغرات مغلقة.", 'success');
             setTimeout(() => {
-                alert("تم صد 20 هجوماً بنجاح! أنت الآن جاهز للمستوى المتقدم.");
+                alert("عمل جبار! لقد أثبت كفاءتك في حماية الأنظمة.");
                 window.location.href = "more.html";
-            }, 2000);
+            }, 1500);
         }
 
-        // البداية
         window.onload = () => {
-            document.getElementById('bgSfx').play().catch(()=>{});
-            setTimeout(showAssistant, 2000);
+            setTimeout(showAssistant, 1500);
         };
 
         // مصفوفة الماتريكس
