@@ -28,123 +28,123 @@
         .lab-container { position: relative; z-index: 10; text-align: center; width: 90%; max-width: 600px; }
 
         #ai-text { 
-            font-size: 22px; font-weight: bold; margin-bottom: 40px; min-height: 80px; 
+            font-size: 20px; font-weight: bold; margin-bottom: 40px; min-height: 80px; 
             text-shadow: 0 0 10px var(--neon-green); 
             line-height: 1.6;
+            font-family: 'Fira Code', monospace;
         }
 
         .btn-terminal { 
             display: none; padding: 15px 30px; font-family: 'Fira Code', monospace; 
-            font-size: 18px; border: 2px solid var(--neon-red); 
+            font-size: 16px; border: 2px solid var(--neon-red); 
             background: rgba(255, 0, 60, 0.05); color: var(--neon-red); 
-            border-radius: 12px; cursor: pointer; transition: 0.3s; 
-            box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); margin: 10px; 
+            border-radius: 8px; cursor: pointer; transition: 0.3s; 
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); margin: 10px;
+            text-transform: uppercase;
         }
 
-        .btn-terminal:hover { 
-            background: var(--neon-red); color: #000; 
-            box-shadow: 0 0 30px var(--neon-red); 
-        }
-
+        .btn-terminal:hover { background: var(--neon-red); color: #000; box-shadow: 0 0 30px var(--neon-red); }
         .btn-green { border-color: var(--neon-green); color: var(--neon-green); background: rgba(0, 255, 65, 0.05); }
-        .btn-green:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 30px var(--neon-green); }
-
+        .btn-green:hover { background: var(--neon-green); color: #000; }
         .btn-blue { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 242, 255, 0.05); }
-        .btn-blue:hover { background: var(--cyan); color: #000; box-shadow: 0 0 30px var(--cyan); }
+        .btn-blue:hover { background: var(--cyan); color: #000; }
 
         #success-msg { 
             display: none; position: fixed; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.95); 
-            padding: 40px; border-radius: 30px; border: 2px solid var(--neon-green); 
-            z-index: 100; text-align: center; box-shadow: 0 0 50px var(--neon-green);
+            transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.98); 
+            padding: 40px; border-radius: 20px; border: 1px solid var(--neon-green); 
+            z-index: 100; text-align: center; box-shadow: 0 0 50px rgba(0, 255, 65, 0.2);
         }
 
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .fa-robot { animation: pulse 2s infinite; color: var(--neon-green); filter: drop-shadow(0 0 10px var(--neon-green)); }
+        .fa-robot { font-size: 50px; margin-bottom: 20px; color: var(--neon-green); filter: drop-shadow(0 0 10px var(--neon-green)); }
     </style>
 </head>
 <body>
 
-    <audio id="ambientSound" src="https://www.soundjay.com/free-music/sounds/ambient-noise-01.mp3" loop></audio>
-    <audio id="glitchSound" src="https://www.soundjay.com/buttons/sounds/button-29.mp3"></audio>
-    <audio id="typeSound" src="https://www.soundjay.com/communication/sounds/typewriter-key-1.mp3"></audio>
-    <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
+    <audio id="ambientSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" loop></audio>
+    <audio id="clickSound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="accessSound" src="https://assets.mixkit.co/active_storage/sfx/2552/2552-preview.mp3"></audio>
+    <audio id="typingSfx" src="https://www.soundjay.com/communication/sounds/typewriter-key-1.mp3"></audio>
 
     <canvas id="matrix-canvas"></canvas>
 
     <div class="lab-container">
-        <div id="ai-avatar"><i class="fas fa-robot" style="font-size: 60px;"></i></div>
-        <div id="ai-text">جاري مزامنة الترددات... اضغط في أي مكان لتفعيل النظام الصوتي.</div>
+        <div id="ai-avatar"><i class="fas fa-user-secret"></i></div>
+        <div id="ai-text">INITIALIZING SYSTEM...</div>
         
-        <button id="btn1" class="btn-terminal" onclick="step2()">$ apt update</button>
-        <button id="btn2" class="btn-terminal btn-green" onclick="step3()">$ git clone cipher9_tool</button>
-        <button id="btn3" class="btn-terminal btn-blue" onclick="startHacking()">$ python hack.py</button>
+        <button id="btn1" class="btn-terminal" onclick="step2()">EXECUTE: APT_UPDATE</button>
+        <button id="btn2" class="btn-terminal btn-green" onclick="step3()">FETCH: REMOTE_EXPLOIT</button>
+        <button id="btn3" class="btn-terminal btn-blue" onclick="startHacking()">RUN: INJECTION_SCRIPT</button>
     </div>
 
     <div id="success-msg">
-        <i class="fas fa-user-shield" style="font-size: 60px; color: var(--neon-green); margin-bottom: 20px;"></i>
-        <h1 style="color: #fff;">تم الاختراق بنجاح!</h1>
-        <p>هذا ليس اختراقاً حقيقياً، ولكنه تجربة محاكاة مبهرة من <b>شيفرة 9</b>.</p>
+        <i class="fas fa-check-circle" style="font-size: 50px; color: var(--neon-green); margin-bottom: 20px;"></i>
+        <h1 style="color: #fff; letter-spacing: 2px;">SUCCESS: ACCESS_GRANTED</h1>
+        <p style="color: #888;">تمت محاكاة الاختراق بنجاح عبر بروتوكولات <b>CIPHER 9</b></p>
         <br>
-        <a href="index.html" style="color: var(--neon-green); text-decoration: none; border: 1px solid; padding: 10px 25px; border-radius: 10px; font-weight: bold;">إنهاء الاتصال</a>
+        <a href="index.html" style="color: var(--neon-green); text-decoration: none; border: 1px solid; padding: 10px 30px; border-radius: 5px; font-size: 14px;">RETURN TO BASE</a>
     </div>
 
     <script>
         const aiText = document.getElementById('ai-text');
         const ambient = document.getElementById('ambientSound');
-        const glitch = document.getElementById('glitchSound');
-        const type = document.getElementById('typeSound');
-        const success = document.getElementById('successSound');
+        const click = document.getElementById('clickSound');
+        const access = document.getElementById('accessSound');
+        const typing = document.getElementById('typingSfx');
 
-        ambient.volume = 0.15; // ضبط مستوى الوشيش ليكون هادئاً
+        ambient.volume = 0.2;
 
         function playSfx(audio) {
             audio.currentTime = 0;
             audio.play().catch(e => {});
         }
 
-        // بدء الصوت المحيطي عند أول ضغطة للمستخدم
-        document.body.onclick = function() {
-            ambient.play();
-        };
+        // تشغيل الوشيش بمجرد التفاعل مع الصفحة
+        document.body.onclick = () => { if(ambient.paused) ambient.play(); };
 
-        // دالة الكتابة المطورة لحل مشكلة الحروف العربية (تظهر الجملة قطعة واحدة وبسرعة)
-        function typeEffect(text) {
-            aiText.innerHTML = ""; 
-            aiText.style.direction = "rtl";
-            aiText.innerHTML = text; // العرض المباشر يمنع تقطع الحروف
+        // دالة الكتابة المحسنة (تظهر النص مباشرة مع صوت نقرة واحدة لتجنب بطء الحروف العربية)
+        function updateStatus(text, sfxType = "click") {
+            aiText.style.opacity = 0;
+            setTimeout(() => {
+                aiText.innerHTML = `> ${text}`;
+                aiText.style.opacity = 1;
+                if(sfxType === "click") playSfx(click);
+                else playSfx(access);
+            }, 200);
         }
 
+        // البداية
         setTimeout(() => {
-            typeEffect("النظام جاهز للعمل. الوشيش الذي تسمعه هو ضجيج السيرفرات البعيدة. اضغط الزر الأحمر لبدء التحديث.");
+            updateStatus("النظام متصل. اضغط EXECUTE لتحديث المستودعات الأمنية.");
             document.getElementById('btn1').style.display = 'inline-block';
-            playSfx(glitch);
-        }, 2000);
+        }, 1500);
 
         function step2() {
-            playSfx(type);
             document.getElementById('btn1').style.display = 'none';
-            typeEffect("تم التحديث بصمت.. الآن قم بسحب الأداة المشفرة عبر الزر الأخضر.");
-            document.getElementById('btn2').style.display = 'inline-block';
+            updateStatus("تم تحديث المسارات. بانتظار سحب أداة الاختراق...");
+            setTimeout(() => {
+                document.getElementById('btn2').style.display = 'inline-block';
+            }, 600);
         }
 
         function step3() {
-            playSfx(type);
             document.getElementById('btn2').style.display = 'none';
-            typeEffect("الهدف في المرمى. اضغط الزر الأزرق لتنفيذ الكود النهائي وترقب الشاشة.");
-            document.getElementById('btn3').style.display = 'inline-block';
+            updateStatus("الأداة محملة في الذاكرة المؤقتة. جاهز للحقن النهائي.");
+            setTimeout(() => {
+                document.getElementById('btn3').style.display = 'inline-block';
+            }, 600);
         }
 
         function startHacking() {
-            playSfx(success);
+            playSfx(access);
             document.getElementById('btn3').style.display = 'none';
             document.getElementById('ai-avatar').style.display = 'none';
-            typeEffect("جاري اختراق الحواجز الرقمية...");
+            updateStatus("جاري تجاوز الجدران النارية... استعد.");
             
             setTimeout(() => {
                 aiText.style.display = 'none';
                 startMatrix();
-            }, 1200);
+            }, 1500);
         }
 
         function startMatrix() {
@@ -153,11 +153,10 @@
             canvas.style.display = 'block';
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             
-            const alphabet = "010101010101";
+            const alphabet = "0101100101011010";
             const fontSize = 16;
             const columns = canvas.width / fontSize;
-            const drops = [];
-            for (let x = 0; x < columns; x++) drops[x] = 1;
+            const drops = Array(Math.floor(columns)).fill(1);
 
             function draw() {
                 ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
@@ -171,14 +170,13 @@
                     drops[i]++;
                 }
             }
-            let matrixTimer = setInterval(draw, 33);
+            setInterval(draw, 33);
 
             setTimeout(() => { 
                 document.getElementById('success-msg').style.display = 'block';
-                playSfx(success);
-            }, 5000);
+                playSfx(access);
+            }, 4500);
         }
     </script>
 </body>
 </html>
-
