@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز القيادة | CIPHER 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --hacker-green: #00ff41;
+            --bg-dark: #020617;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            padding: 40px 20px;
+        }
+
+        .more-page-container {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .header-section { margin-bottom: 30px; }
+        .header-section i {
+            font-size: 50px;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary);
+        }
+        h2 { font-weight: 900; color: #fff; margin: 10px 0; }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .cyber-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cyber-card i { font-size: 28px; color: var(--primary); }
+        .cyber-card span { font-size: 13px; font-weight: bold; }
+        
+        .cyber-card:hover {
+            border-color: var(--primary);
+            background: rgba(0, 242, 255, 0.05);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 242, 255, 0.2);
+        }
+
+        /* تمييز الأزرار التي ستعمل قريباً */
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px; right: 15px;
+        }
+        .online { background: var(--hacker-green); box-shadow: 0 0 10px var(--hacker-green); }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 40px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="more-page-container">
+        
+        <div class="header-section">
+            <i class="fas fa-th-large"></i>
+            <h2>قائمة الأنظمة</h2>
+            <p style="color: var(--primary); font-size: 11px;">اختر النظام الذي تود الوصول إليه</p>
+        </div>
+
+        <div class="grid-layout">
+            
+            <a href="tools.html" class="cyber-card" style="position: relative;">
+                <div class="status-dot online"></div>
+                <i class="fas fa-tools"></i>
+                <span>مكتبة الأدوات</span>
+            </a>
+
+            <a href="courses.html" class="cyber-card">
+                <i class="fas fa-graduation-cap"></i>
+                <span>دورات البرمجة</span>
+            </a>
+
+            <a href="articles.html" class="cyber-card">
+                <i class="fas fa-book-open"></i>
+                <span>مقالات تقنية</span>
+            </a>
+
+            <a href="lab.html" class="cyber-card">
+                <i class="fas fa-flask"></i>
+                <span>مختبر الاختراق</span>
+            </a>
+
+            <a href="community.html" class="cyber-card">
+                <i class="fas fa-users"></i>
+                <span>المجتمع التقني</span>
+            </a>
+
+            <a href="support.html" class="cyber-card">
+                <i class="fas fa-headset"></i>
+                <span>الدعم الفني</span>
+            </a>
+
+        </div>
+
+        <a href="index.html" class="back-home">
+            <i class="fas fa-chevron-right"></i>
+            الرجوع للواجهة الرئيسية
+        </a>
+    </div>
+
+</body>
+</html>
