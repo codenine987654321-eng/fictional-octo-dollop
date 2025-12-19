@@ -1,53 +1,59 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Nine | Secure Login</title>
+    <title>شيفرة 9 | Code Nine</title>
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             overflow: hidden; background-color: black;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* حاوية الخلفية المتحركة */
+        /* جعل الكانفاس يغطي كامل مساحة الرؤية خلف العناصر */
         #matrix-canvas {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; z-index: -1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* خلف الصندوق */
         }
 
-        /* صندوق الدخول الزجاجي */
+        /* صندوق الدخول */
         .login-box {
-            position: absolute; top: 50%; left: 50%;
+            position: relative;
+            z-index: 10; /* فوق الأكواد */
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            width: 85%; max-width: 380px; padding: 40px;
-            background: rgba(0, 0, 0, 0.7); /* خلفية سوداء شفافة */
-            border: 1px solid #00ff41; /* إطار أخضر برمجى */
-            border-radius: 15px; backdrop-filter: blur(10px);
+            width: 85%;
+            max-width: 400px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff41;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
             text-align: center;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
         }
 
         .logo {
-            font-size: 42px; font-weight: 900;
-            color: #00ff41; text-shadow: 0 0 10px #00ff41;
-            margin-bottom: 10px; letter-spacing: 3px;
+            font-size: 35px; font-weight: 900;
+            color: #00ff41; text-shadow: 0 0 15px #00ff41;
+            margin-bottom: 5px;
         }
 
-        .tagline { color: #00ff41; font-size: 14px; margin-bottom: 35px; opacity: 0.8; }
+        .welcome-msg { color: #fff; font-size: 18px; direction: rtl; }
+        .welcome-msg-en { color: #00ff41; font-size: 14px; margin-bottom: 30px; opacity: 0.8; }
 
         .google-btn {
             display: flex; align-items: center; justify-content: center;
             gap: 12px; width: 100%; padding: 15px;
-            background: white; border: none; border-radius: 8px;
+            background: white; border: none; border-radius: 10px;
             color: #333; font-size: 16px; font-weight: bold;
             cursor: pointer; transition: 0.3s;
-        }
-
-        .google-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
     </style>
 </head>
@@ -57,43 +63,59 @@
 
     <div class="login-box">
         <div class="logo">CODE NINE</div>
-        <div class="tagline">SYSTEM ACCESS TERMINAL</div>
+        <div class="welcome-msg">مرحباً بك في موقعنا شيفرة 9</div>
+        <div class="welcome-msg-en">Welcome to Code Nine Terminal</div>
         
         <button id="googleLoginBtn" class="google-btn">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
-            تسجيل دخول المبرمجين
+            تسجيل الدخول | Login
         </button>
     </div>
 
     <script type="module">
-        // --- أولاً: كود خلفية الماتريكس المتحركة ---
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00ff41"; // لون الماتريكس الأخضر
-            ctx.font = fontSize + "px monospace";
-
-            drops.forEach((y, i) => {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, y * fontSize);
-                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            });
+        // تحديث حجم الشاشة بدقة متناهية
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // إعادة حساب الأعمدة عند تغيير الحجم لضمان ملء الشاشة
+            columns = Math.floor(canvas.width / 15); 
+            drops = Array(columns).fill(0);
         }
-        setInterval(drawMatrix, 35);
 
-        // --- ثانياً: كود Firebase للدخول ---
+        let columns, drops;
+        resize();
+        window.addEventListener('resize', resize);
+
+        const letters = "CODE9MOHAMMEDFAHAD01010101";
+
+        function draw() {
+            // تأثير التلاشي التدريجي للخلفية
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#00ff41";
+            ctx.font = "15px monospace";
+
+            // رسم الأكواد في كل عمود عبر الشاشة بالكامل
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                // الضرب في 15 يضمن توزيع الأعمدة بالتساوي على كامل العرض
+                ctx.fillText(text, i * 15, drops[i] * 15);
+
+                // إذا وصل الكود لنهاية الشاشة، يرجع للبداية بشكل عشوائي
+                if (drops[i] * 15 > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 35);
+
+        // كود Firebase (تأكد من بقاء بياناتك كما هي)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -114,7 +136,7 @@
                 await signInWithPopup(auth, provider);
                 window.location.href = "index.html";
             } catch (error) {
-                alert("خطأ: " + error.message);
+                alert("Error: " + error.message);
             }
         };
     </script>
