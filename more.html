@@ -10,11 +10,11 @@
         :root {
             --primary: #00f2ff;
             --hacker-green: #00ff41;
-            --danger-red: #ff003c;
             --bg-dark: #020617;
             --whatsapp: #25d366;
             --telegram: #0088cc;
             --instagram: #e1306c;
+            --email: #ea4335;
         }
 
         body {
@@ -30,7 +30,6 @@
             overflow-x: hidden;
         }
 
-        /* --- النوافذ المنبثقة (تحذير، دعم، محاكاة) --- */
         .overlay {
             position: fixed;
             top: 0; left: 0;
@@ -55,8 +54,33 @@
             animation: emerge 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        .support-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 12px; 
+            margin-top: 20px; 
+        }
+
+        .sup-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            border-radius: 15px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .sup-item:hover { transform: translateY(-3px); background: rgba(255,255,255,0.08); border-color: var(--primary); }
+        .sup-item i { font-size: 24px; }
+
         .sim-options { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        
         .sim-btn {
             display: flex;
             align-items: center;
@@ -69,15 +93,9 @@
             text-decoration: none;
             transition: 0.3s;
         }
-
         .sim-btn:hover { background: rgba(0, 255, 65, 0.1); border-color: var(--hacker-green); transform: scale(1.02); }
-        .sim-btn i { font-size: 24px; color: var(--hacker-green); }
 
-        /* --- محتوى الصفحة الرئيسي --- */
-        .more-page-container { width: 100%; max-width: 450px; text-align: center; transition: 0.8s; }
-        .content-blur { filter: blur(15px); pointer-events: none; }
-        .header-section i { font-size: 50px; color: var(--primary); text-shadow: 0 0 20px var(--primary); }
-
+        .more-page-container { width: 100%; max-width: 450px; text-align: center; }
         .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
 
         .cyber-card {
@@ -94,10 +112,8 @@
             transition: 0.4s;
             cursor: pointer;
         }
-
         .cyber-card:hover { border-color: var(--primary); transform: translateY(-5px); }
         .cyber-card i { font-size: 28px; color: var(--primary); }
-        .cyber-card span { font-size: 13px; font-weight: bold; }
 
         @keyframes emerge { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     </style>
@@ -110,14 +126,14 @@
             <h3>اختر نوع المحاكاة</h3>
             <div class="sim-options">
                 <a href="lab.html" class="sim-btn">
-                    <i class="fas fa-user-secret"></i>
+                    <i class="fas fa-user-secret" style="color: var(--hacker-green);"></i>
                     <div style="text-align: right;">
                         <div style="font-weight: bold;">محاكاة الاختراق</div>
-                        <div style="font-size: 10px; color: #888;">النظام الكلاسيكي (المصفوفة)</div>
+                        <div style="font-size: 10px; color: #888;">النظام الكلاسيكي</div>
                     </div>
                 </a>
                 <a href="vulnerabilities.html" class="sim-btn">
-                    <i class="fas fa-bug"></i>
+                    <i class="fas fa-bug" style="color: var(--hacker-green);"></i>
                     <div style="text-align: right;">
                         <div style="font-weight: bold;">محاكاة الثغرات</div>
                         <div style="font-size: 10px; color: #888;">هجمات SQL و CCTV و Brute Force</div>
@@ -130,12 +146,28 @@
 
     <div id="supportOverlay" class="overlay">
         <div class="custom-card">
+            <i class="fas fa-headset" style="font-size: 40px; color: var(--primary); margin-bottom: 10px;"></i>
             <h3>مركز المساعدة</h3>
-            <div class="sim-options">
-                <a href="https://wa.me/967783787656" class="sim-btn"><i class="fab fa-whatsapp"></i><span>واتساب</span></a>
-                <a href="https://t.me/NewEra711" class="sim-btn"><i class="fab fa-telegram"></i><span>تلجرام</span></a>
+            <p style="font-size: 12px; color: #888;">تواصل معنا عبر القنوات الرسمية:</p>
+            <div class="support-grid">
+                <a href="https://wa.me/967783787656" class="sup-item">
+                    <i class="fab fa-whatsapp" style="color: var(--whatsapp);"></i>
+                    <span>واتساب</span>
+                </a>
+                <a href="https://t.me/NewEra711" class="sup-item">
+                    <i class="fab fa-telegram" style="color: var(--telegram);"></i>
+                    <span>تلجرام</span>
+                </a>
+                <a href="https://www.instagram.com/mfhd03189?igsh=b2FkdjBsZnlzN3M1" class="sup-item">
+                    <i class="fab fa-instagram" style="color: var(--instagram);"></i>
+                    <span>انستقرام</span>
+                </a>
+                <a href="mailto:mf128919@gmail.com" class="sup-item">
+                    <i class="fas fa-envelope" style="color: var(--email);"></i>
+                    <span>الإيميل</span>
+                </a>
             </div>
-            <button onclick="toggleSupport(false)" style="margin-top:20px; background:none; border:none; color:#666; cursor:pointer;">إلغاء</button>
+            <button onclick="toggleSupport(false)" style="margin-top:25px; background:none; border:none; color:#666; cursor:pointer; text-decoration:underline;">إغلاق</button>
         </div>
     </div>
 
@@ -150,12 +182,10 @@
             <a href="dashboard.html" class="cyber-card"><i class="fas fa-terminal"></i><span>لوحة المهارات</span></a>
             <a href="#" class="cyber-card"><i class="fas fa-graduation-cap"></i><span>دورات البرمجة</span></a>
             <a href="#" class="cyber-card"><i class="fas fa-book-open"></i><span>مقالات تقنية</span></a>
-            
             <div class="cyber-card" onclick="toggleSim(true)" style="border-color: var(--hacker-green);">
                 <i class="fas fa-flask" style="color: var(--hacker-green);"></i>
                 <span style="color: var(--hacker-green);">المحاكاة</span>
             </div>
-            
             <div class="cyber-card" onclick="toggleSupport(true)">
                 <i class="fas fa-headset"></i>
                 <span>الدعم الفني</span>
@@ -164,12 +194,8 @@
     </div>
 
     <script>
-        function toggleSim(show) {
-            document.getElementById('simOverlay').style.display = show ? 'flex' : 'none';
-        }
-        function toggleSupport(show) {
-            document.getElementById('supportOverlay').style.display = show ? 'flex' : 'none';
-        }
+        function toggleSim(show) { document.getElementById('simOverlay').style.display = show ? 'flex' : 'none'; }
+        function toggleSupport(show) { document.getElementById('supportOverlay').style.display = show ? 'flex' : 'none'; }
     </script>
 </body>
 </html>
