@@ -11,10 +11,6 @@
             --primary: #00f2ff;
             --hacker-green: #00ff41;
             --bg-dark: #020617;
-            --whatsapp: #25d366;
-            --telegram: #0088cc;
-            --instagram: #e1306c;
-            --email: #ea4335;
         }
 
         body {
@@ -26,8 +22,7 @@
             justify-content: center;
             min-height: 100vh;
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
-            padding: 40px 20px;
-            overflow-x: hidden;
+            padding: 20px;
         }
 
         .overlay {
@@ -43,65 +38,60 @@
         }
 
         .custom-card {
-            width: 90%;
-            max-width: 400px;
+            width: 95%;
+            max-width: 420px;
             background: rgba(15, 23, 42, 0.95);
             border: 2px solid var(--primary);
-            border-radius: 30px;
-            padding: 35px 25px;
+            border-radius: 25px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
-            animation: emerge 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .support-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 12px; 
-            margin-top: 20px; 
-        }
-
-        .sup-item {
+        /* تنسيق حقول الإدخال */
+        .report-form {
+            margin-top: 15px;
+            text-align: right;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 8px;
+            gap: 10px;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,242,255,0.2);
+            border-radius: 10px;
+            color: #fff;
+            padding: 12px;
+            font-family: 'Cairo';
+            font-size: 13px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
+        }
+
+        .send-btn {
+            width: 100%;
             padding: 15px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(0, 242, 255, 0.1);
-            border-radius: 15px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            transition: 0.3s;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 900;
+            cursor: pointer;
+            font-family: 'Cairo';
+            margin-top: 10px;
         }
-
-        .sup-item:hover { transform: translateY(-3px); background: rgba(255,255,255,0.08); border-color: var(--primary); }
-        .sup-item i { font-size: 24px; }
-
-        .sim-options { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-        .sim-btn {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(0, 255, 65, 0.3);
-            border-radius: 15px;
-            color: #fff;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .sim-btn:hover { background: rgba(0, 255, 65, 0.1); border-color: var(--hacker-green); transform: scale(1.02); }
-
-        .more-page-container { width: 100%; max-width: 450px; text-align: center; }
-        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
 
         .cyber-card {
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid rgba(0, 242, 255, 0.1);
-            padding: 20px;
+            padding: 25px;
             border-radius: 20px;
             color: #fff;
             text-decoration: none;
@@ -109,94 +99,93 @@
             flex-direction: column;
             align-items: center;
             gap: 12px;
-            transition: 0.4s;
             cursor: pointer;
         }
-        .cyber-card:hover { border-color: var(--primary); transform: translateY(-5px); }
-        .cyber-card i { font-size: 28px; color: var(--primary); }
-
-        @keyframes emerge { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-    <div id="simOverlay" class="overlay">
-        <div class="custom-card">
-            <i class="fas fa-microchip" style="font-size: 40px; color: var(--hacker-green); margin-bottom: 10px;"></i>
-            <h3>اختر نوع المحاكاة</h3>
-            <div class="sim-options">
-                <a href="lab.html" class="sim-btn">
-                    <i class="fas fa-user-secret" style="color: var(--hacker-green);"></i>
-                    <div style="text-align: right;">
-                        <div style="font-weight: bold;">محاكاة الاختراق</div>
-                        <div style="font-size: 10px; color: #888;">النظام الكلاسيكي</div>
-                    </div>
-                </a>
-                <a href="vulnerabilities.html" class="sim-btn">
-                    <i class="fas fa-bug" style="color: var(--hacker-green);"></i>
-                    <div style="text-align: right;">
-                        <div style="font-weight: bold;">محاكاة الثغرات</div>
-                        <div style="font-size: 10px; color: #888;">هجمات SQL و CCTV و Brute Force</div>
-                    </div>
-                </a>
-            </div>
-            <button onclick="toggleSim(false)" style="margin-top:20px; background:none; border:none; color:#666; cursor:pointer; text-decoration:underline;">إغلاق</button>
-        </div>
-    </div>
-
     <div id="supportOverlay" class="overlay">
         <div class="custom-card">
-            <i class="fas fa-headset" style="font-size: 40px; color: var(--primary); margin-bottom: 10px;"></i>
-            <h3>مركز المساعدة</h3>
-            <p style="font-size: 12px; color: #888;">تواصل معنا عبر القنوات الرسمية:</p>
-            <div class="support-grid">
-                <a href="https://wa.me/967783787656" class="sup-item">
-                    <i class="fab fa-whatsapp" style="color: var(--whatsapp);"></i>
-                    <span>واتساب</span>
-                </a>
-                <a href="https://t.me/NewEra711" class="sup-item">
-                    <i class="fab fa-telegram" style="color: var(--telegram);"></i>
-                    <span>تلجرام</span>
-                </a>
-                <a href="https://www.instagram.com/mfhd03189?igsh=b2FkdjBsZnlzN3M1" class="sup-item">
-                    <i class="fab fa-instagram" style="color: var(--instagram);"></i>
-                    <span>انستقرام</span>
-                </a>
-                <a href="mailto:mf128919@gmail.com" class="sup-item">
-                    <i class="fas fa-envelope" style="color: var(--email);"></i>
-                    <span>الإيميل</span>
-                </a>
+            <h3 style="margin: 0; color: var(--primary);">نظام البلاغات المباشر</h3>
+            <p style="font-size: 12px; color: #888; margin-bottom: 15px;">سيتم إرسال رسالتك مباشرة إلى الإدارة</p>
+            
+            <div class="report-form">
+                <div class="input-group">
+                    <input type="text" id="senderName" placeholder="اسم المرسل (إجباري) *" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="senderEmail" placeholder="البريد الإلكتروني (اختياري)">
+                </div>
+                <div class="input-group">
+                    <textarea id="reportContent" placeholder="اكتب تفاصيل البلاغ أو المشكلة هنا..." style="height: 100px;"></textarea>
+                </div>
+                <button onclick="secureSend()" id="mainSendBtn" class="send-btn">إرسال البلاغ الآن</button>
+                <div id="statusResult" style="font-size: 12px; margin-top: 10px;"></div>
             </div>
-            <button onclick="toggleSupport(false)" style="margin-top:25px; background:none; border:none; color:#666; cursor:pointer; text-decoration:underline;">إغلاق</button>
+
+            <button onclick="toggleSupport(false)" style="margin-top:15px; background:none; border:none; color:#666; cursor:pointer; text-decoration:underline;">إلغاء والعودة</button>
         </div>
     </div>
 
-    <div id="mainContent" class="more-page-container">
-        <div class="header-section">
-            <i class="fas fa-th-large"></i>
-            <h2 style="margin-top:15px; font-weight:900;">قائمة الأنظمة</h2>
-        </div>
-
-        <div class="grid-layout">
-            <a href="tools.html" class="cyber-card"><i class="fas fa-tools"></i><span>مكتبة الأدوات</span></a>
-            <a href="dashboard.html" class="cyber-card"><i class="fas fa-terminal"></i><span>لوحة المهارات</span></a>
-            <a href="#" class="cyber-card"><i class="fas fa-graduation-cap"></i><span>دورات البرمجة</span></a>
-            <a href="#" class="cyber-card"><i class="fas fa-book-open"></i><span>مقالات تقنية</span></a>
-            <div class="cyber-card" onclick="toggleSim(true)" style="border-color: var(--hacker-green);">
-                <i class="fas fa-flask" style="color: var(--hacker-green);"></i>
-                <span style="color: var(--hacker-green);">المحاكاة</span>
-            </div>
-            <div class="cyber-card" onclick="toggleSupport(true)">
-                <i class="fas fa-headset"></i>
-                <span>الدعم الفني</span>
-            </div>
+    <div style="text-align: center;">
+        <h2 style="font-weight: 900;">مركز القيادة</h2>
+        <div class="cyber-card" onclick="toggleSupport(true)" style="width: 200px; margin: 20px auto;">
+            <i class="fas fa-headset" style="font-size: 40px; color: var(--primary);"></i>
+            <span>فتح الدعم الفني</span>
         </div>
     </div>
 
     <script>
-        function toggleSim(show) { document.getElementById('simOverlay').style.display = show ? 'flex' : 'none'; }
-        function toggleSupport(show) { document.getElementById('supportOverlay').style.display = show ? 'flex' : 'none'; }
+        function toggleSupport(show) {
+            document.getElementById('supportOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        async function secureSend() {
+            const name = document.getElementById('senderName').value.trim();
+            const email = document.getElementById('senderEmail').value.trim() || "غير محدد";
+            const content = document.getElementById('reportContent').value.trim();
+            const btn = document.getElementById('mainSendBtn');
+            const status = document.getElementById('statusResult');
+
+            // تحقق من الحقول الإجبارية
+            if (!name || !content) {
+                status.innerHTML = "<span style='color: #ff003c;'>يرجى ملء الاسم وتفاصيل البلاغ!</span>";
+                return;
+            }
+
+            // بياناتك (قم بوضعها هنا)
+            const b_t = "7582867324:AAFOCc87ZpHp2pl8esBqIH1DyAL36sfEm5Q"; 
+            const c_i = "ضـع_آيـدي_حـسـابـك_هـنـا"; 
+
+            btn.disabled = true;
+            btn.innerText = "جاري التشفير والإرسال...";
+
+            const fullMessage = `🚨 *بلاغ جديد*\n\n👤 *المرسل:* ${name}\n📧 *الإيميل:* ${email}\n📝 *البلاغ:* ${content}`;
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${b_t}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: c_i, text: fullMessage, parse_mode: "Markdown" })
+                });
+
+                if (response.ok) {
+                    status.innerHTML = "<span style='color: var(--hacker-green);'>✅ تم الإرسال بنجاح! شكراً لك.</span>";
+                    document.getElementById('senderName').value = "";
+                    document.getElementById('senderEmail').value = "";
+                    document.getElementById('reportContent').value = "";
+                    setTimeout(() => toggleSupport(false), 2000); // إغلاق تلقائي بعد النجاح
+                } else {
+                    status.innerHTML = "<span style='color: #ff003c;'>❌ فشل الإرسال. تأكد من الإعدادات.</span>";
+                }
+            } catch (e) {
+                status.innerHTML = "<span style='color: #ff003c;'>❌ خطأ في الاتصال.</span>";
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "إرسال البلاغ الآن";
+            }
+        }
     </script>
 </body>
 </html>
-
