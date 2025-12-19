@@ -3,71 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Nine | Login</title>
+    <title>Code Nine | نظام الدخول المشفر</title>
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             overflow: hidden; background-color: #050505;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        /* خلفية برمجية متحركة */
         .bg-codes {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            color: rgba(66, 133, 244, 0.1); font-size: 14px;
+            color: rgba(66, 133, 244, 0.08); font-size: 13px;
             z-index: -1; white-space: nowrap;
-            animation: moveCodes 20s linear infinite;
+            animation: moveCodes 25s linear infinite;
         }
         @keyframes moveCodes {
             from { transform: translateY(0); }
             to { transform: translateY(-50%); }
         }
+        /* تصميم الصندوق الزجاجي */
         .login-box {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%; max-width: 400px; padding: 40px;
+            width: 85%; max-width: 380px; padding: 40px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px; backdrop-filter: blur(15px);
-            text-align: center; box-shadow: 0 0 30px rgba(66, 133, 244, 0.2);
+            border-radius: 20px; backdrop-filter: blur(15px);
+            text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
-        .logo-title {
-            font-size: 40px; font-weight: 900;
-            background: linear-gradient(45deg, #4285F4, #00f2fe);
+        .logo {
+            font-size: 38px; font-weight: 900;
+            background: linear-gradient(45deg, #4285F4, #34A853);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 5px; letter-spacing: 2px;
         }
+        .tagline { color: #666; font-size: 13px; margin-bottom: 35px; }
+        /* زر جوجل المطور */
         .google-btn {
             display: flex; align-items: center; justify-content: center;
-            gap: 15px; width: 100%; padding: 15px;
-            background: rgba(255, 255, 255, 0.9); border: none;
-            border-radius: 12px; color: #000; font-size: 18px;
-            font-weight: bold; cursor: pointer; transition: 0.3s;
+            gap: 12px; width: 100%; padding: 14px;
+            background: white; border: none; border-radius: 10px;
+            color: #333; font-size: 16px; font-weight: bold;
+            cursor: pointer; transition: all 0.3s ease;
         }
-        .google-btn:hover { transform: scale(1.03); background: #fff; }
+        .google-btn:hover { background: #f8f8f8; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(66,133,244,0.3); }
+        .error-msg { color: #ff4d4d; font-size: 12px; margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
 
     <div class="bg-codes">
-        &lt;code&gt; { auth: "session_only"; system: "CODE NINE"; } &lt;/code&gt; <br>
-        // Security Protocol Active <br>
-        if (sessionClose) { clearAuth(); } <br>
-        // Developed by Mohammed Fahad <br>
+        // PROTOCOL: SECURE_LOGIN <br>
+        // STATUS: ENCRYPTED <br>
+        const system = "Code Nine"; <br>
+        function checkAuth() { return sessionOnly; } <br>
+        // <br>
+        await firebase.auth().setPersistence('session'); <br>
     </div>
 
     <div class="login-box">
-        <div class="logo-title">CODE NINE</div>
-        <div style="color: #888; margin-bottom: 40px;">نظام دخول مؤقت وآمن</div>
+        <div class="logo">CODE NINE</div>
+        <div class="tagline">بوابة الدخول الآمن للمبرمجين</div>
         
         <button id="googleLoginBtn" class="google-btn">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22">
-            تسجيل الدخول
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
+            الدخول عبر حساب جوجل
         </button>
+        <div id="errorMessage" class="error-msg">حدث خطأ أثناء تسجيل الدخول، حاول مجدداً.</div>
     </div>
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
       import { getAuth, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+      // إعدادات مشروعك الدقيقة
       const firebaseConfig = {
         apiKey: "AIzaSyAPBXmzW3GdPGJxaWnXULv9e57EReJjJ1g",
         authDomain: "code-nine.firebaseapp.com",
@@ -79,17 +88,22 @@
       const auth = getAuth(app);
       const provider = new GoogleAuthProvider();
 
-      document.getElementById('googleLoginBtn').onclick = () => {
-        // تحديد نوع الجلسة لتنتهي بإغلاق المتصفح
-        setPersistence(auth, browserSessionPersistence)
-          .then(() => {
-            return signInWithPopup(auth, provider);
-          })
-          .then((result) => {
-            window.location.href = "index.html"; 
-          }).catch((err) => {
-            console.error("خطأ:", err.message);
-          });
+      document.getElementById('googleLoginBtn').onclick = async () => {
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.style.display = 'none';
+
+        try {
+          // دقة وكفاءة: ضبط الجلسة لتنتهي بإغلاق المتصفح
+          await setPersistence(auth, browserSessionPersistence);
+          const result = await signInWithPopup(auth, provider);
+          
+          // نجاح الدخول
+          window.location.href = "index.html"; 
+        } catch (error) {
+          console.error("Auth Error:", error.code);
+          errorDiv.innerText = "تنبيه: " + error.message;
+          errorDiv.style.display = 'block';
+        }
       };
     </script>
 </body>
