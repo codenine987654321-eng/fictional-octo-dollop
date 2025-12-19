@@ -7,21 +7,66 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ... (نفس التنسيقات السابقة بدون تغيير) ... */
-        :root { --neon-green: #00ff41; --neon-red: #ff003c; --bg-dark: #000000; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: var(--bg-dark); color: var(--neon-green); font-family: 'Cairo', sans-serif; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        :root { 
+            --neon-green: #00ff41; 
+            --neon-red: #ff003c; 
+            --bg-dark: #000000; 
+            --cyan: #00f2ff;
+        }
+
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            background-color: var(--bg-dark); 
+            color: var(--neon-green); 
+            font-family: 'Cairo', sans-serif; 
+            overflow: hidden; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+        }
+
         #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 1; }
+
         .lab-container { position: relative; z-index: 10; text-align: center; width: 90%; max-width: 600px; }
-        #ai-text { font-size: 22px; font-weight: bold; margin-bottom: 40px; min-height: 60px; text-shadow: 0 0 10px var(--neon-green); }
-        .btn-terminal { display: none; padding: 15px 30px; font-family: 'Fira Code', monospace; font-size: 18px; border: 2px solid var(--neon-red); background: transparent; color: var(--neon-red); border-radius: 10px; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(255, 0, 60, 0.3); margin: 10px; }
-        .btn-terminal:hover { background: var(--neon-red); color: #000; box-shadow: 0 0 30px var(--neon-red); }
-        .btn-green { border-color: var(--neon-green); color: var(--neon-green); }
-        #success-msg { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.9); padding: 40px; border-radius: 30px; border: 2px solid var(--neon-green); z-index: 100; text-align: center; }
+
+        #ai-text { 
+            font-size: 22px; font-weight: bold; margin-bottom: 40px; min-height: 80px; 
+            text-shadow: 0 0 10px var(--neon-green); 
+            line-height: 1.6;
+        }
+
+        .btn-terminal { 
+            display: none; padding: 15px 30px; font-family: 'Fira Code', monospace; 
+            font-size: 18px; border: 2px solid var(--neon-red); 
+            background: rgba(255, 0, 60, 0.05); color: var(--neon-red); 
+            border-radius: 12px; cursor: pointer; transition: 0.3s; 
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); margin: 10px; 
+        }
+
+        .btn-terminal:hover { 
+            background: var(--neon-red); color: #000; 
+            box-shadow: 0 0 30px var(--neon-red); 
+        }
+
+        .btn-green { border-color: var(--neon-green); color: var(--neon-green); background: rgba(0, 255, 65, 0.05); }
+        .btn-green:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 30px var(--neon-green); }
+
+        .btn-blue { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 242, 255, 0.05); }
+        .btn-blue:hover { background: var(--cyan); color: #000; box-shadow: 0 0 30px var(--cyan); }
+
+        #success-msg { 
+            display: none; position: fixed; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.95); 
+            padding: 40px; border-radius: 30px; border: 2px solid var(--neon-green); 
+            z-index: 100; text-align: center; box-shadow: 0 0 50px var(--neon-green);
+        }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .fa-robot { animation: pulse 2s infinite; color: var(--neon-green); filter: drop-shadow(0 0 10px var(--neon-green)); }
     </style>
 </head>
 <body>
 
-    <audio id="beepSound" src="https://www.soundjay.com/buttons/sounds/button-29.mp3"></audio>
+    <audio id="ambientSound" src="https://www.soundjay.com/free-music/sounds/ambient-noise-01.mp3" loop></audio>
+    <audio id="glitchSound" src="https://www.soundjay.com/buttons/sounds/button-29.mp3"></audio>
     <audio id="typeSound" src="https://www.soundjay.com/communication/sounds/typewriter-key-1.mp3"></audio>
     <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
 
@@ -29,69 +74,77 @@
 
     <div class="lab-container">
         <div id="ai-avatar"><i class="fas fa-robot" style="font-size: 60px;"></i></div>
-        <div id="ai-text">جاري الاتصال...</div>
+        <div id="ai-text">جاري مزامنة الترددات... اضغط في أي مكان لتفعيل النظام الصوتي.</div>
+        
         <button id="btn1" class="btn-terminal" onclick="step2()">$ apt update</button>
         <button id="btn2" class="btn-terminal btn-green" onclick="step3()">$ git clone cipher9_tool</button>
-        <button id="btn3" class="btn-terminal" style="border-color: #00f2ff; color: #00f2ff;" onclick="startHacking()">$ python hack.py</button>
+        <button id="btn3" class="btn-terminal btn-blue" onclick="startHacking()">$ python hack.py</button>
     </div>
 
     <div id="success-msg">
-        <h1 style="color: #fff;">تم الاختراق!</h1>
-        <p>تجربة محاكاة مبهرة من <b>شيفرة 9</b></p>
-        <a href="index.html" style="color: var(--neon-green); text-decoration: none; border: 1px solid; padding: 5px 15px;">خروج</a>
+        <i class="fas fa-user-shield" style="font-size: 60px; color: var(--neon-green); margin-bottom: 20px;"></i>
+        <h1 style="color: #fff;">تم الاختراق بنجاح!</h1>
+        <p>هذا ليس اختراقاً حقيقياً، ولكنه تجربة محاكاة مبهرة من <b>شيفرة 9</b>.</p>
+        <br>
+        <a href="index.html" style="color: var(--neon-green); text-decoration: none; border: 1px solid; padding: 10px 25px; border-radius: 10px; font-weight: bold;">إنهاء الاتصال</a>
     </div>
 
     <script>
         const aiText = document.getElementById('ai-text');
-        const beep = document.getElementById('beepSound');
+        const ambient = document.getElementById('ambientSound');
+        const glitch = document.getElementById('glitchSound');
         const type = document.getElementById('typeSound');
         const success = document.getElementById('successSound');
 
-        // تشغيل الصوت عند كل حركة
-        function playSound(audio) {
+        ambient.volume = 0.15; // ضبط مستوى الوشيش ليكون هادئاً
+
+        function playSfx(audio) {
             audio.currentTime = 0;
-            audio.play().catch(e => console.log("تحتاج للتفاعل مع الصفحة أولاً"));
+            audio.play().catch(e => {});
+        }
+
+        // بدء الصوت المحيطي عند أول ضغطة للمستخدم
+        document.body.onclick = function() {
+            ambient.play();
+        };
+
+        // دالة الكتابة المطورة لحل مشكلة الحروف العربية (تظهر الجملة قطعة واحدة وبسرعة)
+        function typeEffect(text) {
+            aiText.innerHTML = ""; 
+            aiText.style.direction = "rtl";
+            aiText.innerHTML = text; // العرض المباشر يمنع تقطع الحروف
         }
 
         setTimeout(() => {
-            typeEffect("أهلاً بك. اضغط الزر الأحمر لبدء التحديث.");
+            typeEffect("النظام جاهز للعمل. الوشيش الذي تسمعه هو ضجيج السيرفرات البعيدة. اضغط الزر الأحمر لبدء التحديث.");
             document.getElementById('btn1').style.display = 'inline-block';
-            playSound(beep);
-        }, 1500);
+            playSfx(glitch);
+        }, 2000);
 
         function step2() {
-            playSound(type);
+            playSfx(type);
             document.getElementById('btn1').style.display = 'none';
-            typeEffect("جيد. الآن اضغط الزر الأخضر لسحب الأداة.");
+            typeEffect("تم التحديث بصمت.. الآن قم بسحب الأداة المشفرة عبر الزر الأخضر.");
             document.getElementById('btn2').style.display = 'inline-block';
         }
 
         function step3() {
-            playSound(type);
+            playSfx(type);
             document.getElementById('btn2').style.display = 'none';
-            typeEffect("الأداة جاهزة. اضغط الأزرق لتنفيذ الهجوم!");
+            typeEffect("الهدف في المرمى. اضغط الزر الأزرق لتنفيذ الكود النهائي وترقب الشاشة.");
             document.getElementById('btn3').style.display = 'inline-block';
         }
 
         function startHacking() {
-            playSound(success);
+            playSfx(success);
             document.getElementById('btn3').style.display = 'none';
-            typeEffect("جاري الاختراق...");
+            document.getElementById('ai-avatar').style.display = 'none';
+            typeEffect("جاري اختراق الحواجز الرقمية...");
+            
             setTimeout(() => {
                 aiText.style.display = 'none';
                 startMatrix();
-            }, 1500);
-        }
-
-        function typeEffect(text) {
-            aiText.innerHTML = "";
-            let i = 0;
-            let timer = setInterval(() => {
-                if (i < text.length) {
-                    aiText.innerHTML += text.charAt(i);
-                    i++;
-                } else { clearInterval(timer); }
-            }, 40);
+            }, 1200);
         }
 
         function startMatrix() {
@@ -99,7 +152,8 @@
             const ctx = canvas.getContext('2d');
             canvas.style.display = 'block';
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            const alphabet = "010101";
+            
+            const alphabet = "010101010101";
             const fontSize = 16;
             const columns = canvas.width / fontSize;
             const drops = [];
@@ -117,12 +171,14 @@
                     drops[i]++;
                 }
             }
-            setInterval(draw, 33);
+            let matrixTimer = setInterval(draw, 33);
+
             setTimeout(() => { 
                 document.getElementById('success-msg').style.display = 'block';
-                playSound(success);
-            }, 4000);
+                playSfx(success);
+            }, 5000);
         }
     </script>
 </body>
 </html>
+
