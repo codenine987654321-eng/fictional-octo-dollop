@@ -155,12 +155,18 @@
             const btn = document.getElementById('sendBtn');
             const status = document.getElementById('statusMsg');
 
+            // --- بياناتك الرسمية المحدثة ---
             const botToken = "7582867324:AAFOCc87ZpHp2pl8esBqIH1DyAL36sfEm5Q"; 
-            const chatId = "ضـع_آيـدي_حـسـابـك_هـنـا"; // ضعه هنا
+            const chatId = "7849918251"; 
 
-            if (!name || !content) { status.innerHTML = "<span style='color:red;'>أكمل الحقول الإجبارية!</span>"; return; }
+            if (!name || !content) { 
+                status.innerHTML = "<span style='color:red;'>أكمل الحقول الإجبارية!</span>"; 
+                return; 
+            }
 
-            btn.disabled = true; btn.innerText = "جاري الإرسال...";
+            btn.disabled = true; 
+            btn.innerText = "جاري الإرسال...";
+            
             const text = `🚨 *بلاغ جديد*\n👤 الاسم: ${name}\n📧 إيميل: ${email}\n📝 البلاغ: ${content}`;
 
             try {
@@ -169,12 +175,22 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: "Markdown" })
                 });
+                
                 if (res.ok) {
                     status.innerHTML = "<span style='color:#00ff41;'>✅ تم الإرسال بنجاح!</span>";
-                    document.getElementById('senderName').value = ""; document.getElementById('reportContent').value = "";
+                    document.getElementById('senderName').value = ""; 
+                    document.getElementById('senderEmail').value = "";
+                    document.getElementById('reportContent').value = "";
+                } else {
+                    const errorData = await res.json();
+                    status.innerHTML = "<span style='color:red;'>خطأ: " + errorData.description + "</span>";
                 }
-            } catch (e) { status.innerHTML = "خطأ في الشبكة"; }
-            finally { btn.disabled = false; btn.innerText = "إرسال البلاغ الآن"; }
+            } catch (e) { 
+                status.innerHTML = "<span style='color:red;'>خطأ في الشبكة</span>"; 
+            } finally { 
+                btn.disabled = false; 
+                btn.innerText = "إرسال البلاغ الآن"; 
+            }
         }
     </script>
 </body>
