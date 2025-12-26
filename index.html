@@ -16,11 +16,10 @@
             --primary: #00f2ff;
             --hacker-green: #00ff41;
             --bg-dark: #020617;
-            --glass: rgba(15, 23, 42, 0.9);
+            --glass: rgba(15, 23, 42, 0.85);
         }
 
         * { box-sizing: border-box; transition: all 0.3s ease; }
-
         body {
             background-color: var(--bg-dark);
             color: #e2e8f0;
@@ -29,163 +28,160 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .bg-animate {
+        /* --- نظام رسائل الدليل (Overlay) --- */
+        #guide-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
-        }
-
-        .main-wrapper {
-            flex: 1;
+            background: rgba(2, 6, 23, 0.95);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
         }
 
-        .cyber-container {
-            width: 90%;
-            max-width: 400px;
+        .guide-box {
+            background: rgba(0, 242, 255, 0.05);
+            border: 1px solid var(--primary);
             padding: 40px 30px;
-            background: var(--glass);
             border-radius: 30px;
-            border: 1px solid rgba(0, 242, 255, 0.2);
             text-align: center;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            max-width: 350px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
         }
 
-        .scanner-box {
-            width: 70px; height: 70px;
-            margin: 0 auto 20px;
-            border: 2px solid var(--primary);
-            border-radius: 15px;
-            display: flex; align-items: center; justify-content: center;
-            animation: pulse 2s infinite;
-        }
+        .guide-text { font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; color: #fff; }
 
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 5px var(--primary); }
-            50% { box-shadow: 0 0 20px var(--primary); }
-        }
-
-        h1 { font-size: 2rem; margin-bottom: 10px; }
-        .status-tag { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 30px; color: var(--primary); }
-
-        .nav-list { display: grid; gap: 12px; }
-
-        .nav-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px 20px;
-            border-radius: 15px;
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-card:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); }
-
-        /* زر "حول الموقع" الصغير */
-        .about-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 25px;
-            color: #64748b;
-            text-decoration: none;
-            font-size: 0.85rem;
-            padding: 8px 15px;
+        .skip-btn {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
             border-radius: 20px;
-            background: rgba(255,255,255,0.03);
+            font-size: 0.8rem;
+            cursor: pointer;
+            z-index: 10000;
         }
-        .about-btn:hover { color: var(--primary); background: rgba(0,242,255,0.05); }
 
-        .footer-copy { font-family: 'Share Tech Mono'; font-size: 0.6rem; color: #334155; margin-top: 20px; }
+        .bg-animate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%); }
+        .particle { position: absolute; background: var(--primary); border-radius: 50%; opacity: 0.3; animation: move-up linear infinite; }
+        @keyframes move-up { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
+
+        .main-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; z-index: 1; }
+        .cyber-container { width: 100%; max-width: 420px; padding: 40px 25px; background: var(--glass); border-radius: 30px; border: 1px solid rgba(0, 242, 255, 0.2); text-align: center; }
+        .scanner-box { width: 85px; height: 85px; margin: 0 auto 20px; border: 2px solid var(--primary); border-radius: 20px; display: flex; align-items: center; justify-content: center; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 5px var(--primary); } 50% { box-shadow: 0 0 25px var(--primary); } }
+        
+        .nav-list { display: grid; gap: 15px; }
+        .nav-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 242, 255, 0.1); padding: 18px 22px; border-radius: 18px; text-decoration: none; color: #fff; display: flex; align-items: center; justify-content: space-between; }
+        .nav-card:hover { border-color: var(--primary); transform: translateX(-8px); background: rgba(0, 242, 255, 0.1); }
+        .about-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 25px; color: #64748b; text-decoration: none; font-size: 0.85rem; padding: 8px 20px; background: rgba(255,255,255,0.02); border-radius: 20px; }
     </style>
 </head>
-<body>
+<body onclick="nextStep()">
 
-    <div class="bg-animate"></div>
-
-    <div class="main-wrapper">
-        <div class="cyber-container">
-            <div class="scanner-box">
-                <i class="fas fa-shield-alt" id="main-icon" style="font-size: 1.5rem; color: var(--primary);"></i>
-            </div>
-            
-            <h1 id="welcome-msg">CIPHER 9</h1>
-            <div id="auth-status" class="status-tag">برجاء إثبات الهوية...</div>
-
-            <nav class="nav-list" id="main-nav">
-                </nav>
-
-            <a href="about.html" class="about-btn">
-                <i class="fas fa-info-circle"></i>
-                <span>حول الموقع</span>
-            </a>
-
-            <div class="footer-copy">SECURED BY CIPHER 9 INFRASTRUCTURE</div>
+    <div id="guide-overlay">
+        <div class="guide-box">
+            <div id="guide-content" class="guide-text"></div>
+            <button class="skip-btn" onclick="skipGuide(event)">تخطي الجولة</button>
+            <div style="font-size: 0.7rem; color: var(--primary); margin-top: 15px;">اضغط في أي مكان للمتابعة</div>
         </div>
     </div>
 
+    <div class="bg-animate" id="particles"></div>
+
+    <div class="main-wrapper">
+        <div class="cyber-container">
+            <div class="scanner-box"><i class="fas fa-terminal" id="status-icon" style="font-size: 2rem; color: var(--primary);"></i></div>
+            <h1>شيفرة 9</h1>
+            <div id="auth-status" style="font-size: 0.75rem; color: var(--primary); margin-bottom: 30px; font-weight: bold;">جاري فحص الهوية...</div>
+            <nav class="nav-list" id="dynamic-nav"></nav>
+            <a href="about.html" class="about-btn"><i class="fas fa-info-circle"></i> حول الموقع</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://t.me/MohammedAlSinijarbot"><i class="fab fa-telegram"></i></a>
+            <a href="https://wa.me/967783787656"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div style="font-family: 'Share Tech Mono'; font-size: 0.7rem; color: #475569; margin-top: 15px;">&copy; 2025 CIPHER 9 - ALL RIGHTS RESERVED</div>
+    </footer>
+
     <script>
-        // 1. إعدادات Firebase الخاصة بك
+        // --- 1. إعدادات محمد فهد الخاصة ---
         const firebaseConfig = {
-            apiKey: "ضع_المفتاح_هنا",
-            authDomain: "your-app.firebaseapp.com",
-            projectId: "your-id",
-            storageBucket: "your-app.appspot.com",
-            messagingSenderId: "12345",
-            appId: "1:2345:web:abc"
+            apiKey: "AIzaSyA8lxq_gHtOAO9m9CtuBG5m1tNf9h6TE2U",
+            authDomain: "code-9-aaed2.firebaseapp.com",
+            projectId: "code-9-aaed2",
+            storageBucket: "code-9-aaed2.firebasestorage.app",
+            messagingSenderId: "494338698190",
+            appId: "1:494338698190:web:2fdf1f0e740fa05fd2999f"
         };
         firebase.initializeApp(firebaseConfig);
 
-        const nav = document.getElementById('main-nav');
-        const status = document.getElementById('auth-status');
-        const icon = document.getElementById('main-icon');
-        const welcome = document.getElementById('welcome-msg');
+        // --- 2. نظام الدليل التفاعلي ---
+        let currentStep = 0;
+        const steps = [
+            "مرحباً بك في نظام <b>شيفرة 9</b>.. دعني أشرح لك المكان.",
+            "هذا الموقع يضم رؤيتنا التقنية، خدمات الذكاء الاصطناعي، ولوحة مهاراتك الخاصة.",
+            "تم تصميم وتطوير هذا النظام بالكامل بواسطة المبرمج: <b>محمد فهد</b>.",
+            "استمتع في الموقع وأتمنى لك كل التوفيق في رحلتك التقنية!<br><br><b>محمد فهد</b><br>تواصل: 783787656"
+        ];
 
-        // 2. فحص حالة المستخدم (Logic)
+        function showStep() { document.getElementById('guide-content').innerHTML = steps[currentStep]; }
+        function nextStep() { if (currentStep < steps.length - 1) { currentStep++; showStep(); } else { document.getElementById('guide-overlay').style.display = 'none'; } }
+        function skipGuide(e) { e.stopPropagation(); currentStep = steps.length - 1; showStep(); }
+        showStep();
+
+        // --- 3. فحص حالة الدخول ---
         firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                // حالة: مسجل دخول (إظهار الموقع بالكامل)
-                status.innerText = "ACCESS GRANTED";
-                status.style.color = "var(--hacker-green)";
-                welcome.innerText = "مرحباً " + user.displayName.split(' ')[0];
-                icon.className = "fas fa-unlock-alt";
-                icon.style.color = "var(--hacker-green)";
+            const nav = document.getElementById('dynamic-nav');
+            const statusText = document.getElementById('auth-status');
+            const icon = document.getElementById('status-icon');
 
+            if (user) {
+                statusText.innerText = "متصل: " + user.displayName.split(' ')[0];
+                statusText.style.color = "var(--hacker-green)";
+                icon.className = "fas fa-unlock-alt"; icon.style.color = "var(--hacker-green)";
                 nav.innerHTML = `
                     <a href="vision.html" class="nav-card"><span>رؤية شيفرة 9</span><i class="fas fa-eye"></i></a>
-                    <a href="projects.html" class="nav-card"><span>الذكاء الاصطناعي</span><i class="fas fa-robot"></i></a>
-                    <a href="dashboard.html" class="nav-card" style="border-color:var(--hacker-green)">
-                        <span style="color:var(--hacker-green)">لوحة المهارات</span><i class="fas fa-user-circle"></i>
+                    <a href="login.html" class="nav-card"><span>الذكاء الاصطناعي</span><i class="fas fa-robot"></i></a>
+                    <a href="dashboard.html" class="nav-card" style="border-color: var(--hacker-green);">
+                        <span style="color: var(--hacker-green);">لوحة المهارات</span><i class="fas fa-user-shield"></i>
                     </a>
                 `;
             } else {
-                // حالة: غير مسجل (إخفاء الموقع والمطالبة بالدخول)
-                status.innerText = "AUTH REQUIRED";
-                status.style.color = "var(--primary)";
-                welcome.innerText = "شيفرة 9";
-                icon.className = "fas fa-lock";
-
+                statusText.innerText = "النظام مغلق - يرجى تسجيل الدخول";
+                icon.className = "fas fa-lock"; icon.style.color = "var(--primary)";
                 nav.innerHTML = `
-                    <div style="padding: 15px; font-size: 0.85rem; color: #64748b; line-height: 1.5;">
-                        النظام مشفر. يرجى تسجيل الدخول باستخدام حساب جوجل لفك التشفير والوصول للمحتوى.
-                    </div>
-                    <a href="login.html" class="nav-card" style="border-color: var(--primary); background: rgba(0,242,255,0.08);">
-                        <span style="color: var(--primary); font-weight: bold;">تسجيل الدخول للنظام</span>
-                        <i class="fas fa-sign-in-alt"></i>
+                    <a href="auth.html" class="nav-card" style="border-color: var(--primary); background: rgba(0,242,255,0.05);">
+                        <span style="color: var(--primary);">تسجيل الدخول للنظام</span><i class="fas fa-sign-in-alt"></i>
                     </a>
                 `;
             }
         });
+
+        // --- 4. تأثيرات الخلفية ---
+        const pContainer = document.getElementById('particles');
+        for (let i = 0; i < 25; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.width = p.style.height = Math.random() * 4 + 1 + 'px';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = Math.random() * 7 + 5 + 's';
+            pContainer.appendChild(p);
+        }
     </script>
 </body>
 </html>
