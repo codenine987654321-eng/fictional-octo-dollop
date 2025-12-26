@@ -8,12 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+
     <style>
         :root {
             --primary: #00f2ff;
             --hacker-green: #00ff41;
             --bg-dark: #020617;
-            --glass: rgba(15, 23, 42, 0.85);
+            --glass: rgba(15, 23, 42, 0.9);
         }
 
         * { box-sizing: border-box; transition: all 0.3s ease; }
@@ -26,236 +29,163 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
-            position: relative;
+            overflow: hidden;
         }
 
-        /* --- تأثير الخلفية السيبرانية المتحركة --- */
         .bg-animate {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            overflow: hidden;
             background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
         }
 
-        /* رسم الشبكة (Grid) */
-        .bg-animate::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--primary);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: move-up linear infinite;
-        }
-
-        @keyframes move-up {
-            0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            50% { opacity: 0.4; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-        }
-
-        /* --- حاوية المحتوى الرئيسية --- */
         .main-wrapper {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
             z-index: 1;
         }
 
         .cyber-container {
-            width: 100%;
-            max-width: 420px;
-            padding: 40px 25px;
+            width: 90%;
+            max-width: 400px;
+            padding: 40px 30px;
             background: var(--glass);
-            backdrop-filter: blur(20px);
             border-radius: 30px;
             border: 1px solid rgba(0, 242, 255, 0.2);
             text-align: center;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
         }
 
-        /* الجزء العلوي (الشعار) */
         .scanner-box {
-            width: 85px; height: 85px;
+            width: 70px; height: 70px;
             margin: 0 auto 20px;
             border: 2px solid var(--primary);
-            border-radius: 20px;
+            border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
-            position: relative;
-            animation: pulse-glow 2s infinite;
+            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 5px var(--primary); transform: scale(1); }
-            50% { box-shadow: 0 0 25px var(--primary); transform: scale(1.05); }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 5px var(--primary); }
+            50% { box-shadow: 0 0 20px var(--primary); }
         }
 
-        h1 { font-size: 2.4rem; margin: 10px 0; font-weight: 900; letter-spacing: -1px; }
+        h1 { font-size: 2rem; margin-bottom: 10px; }
+        .status-tag { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 30px; color: var(--primary); }
 
-        .tagline {
-            font-size: 0.75rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 30px;
-            font-weight: bold;
-        }
-
-        /* قائمة الأزرار (البطاقات) */
-        .nav-list {
-            display: grid;
-            gap: 15px;
-        }
+        .nav-list { display: grid; gap: 12px; }
 
         .nav-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 242, 255, 0.1);
-            padding: 18px 22px;
-            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 15px;
             text-decoration: none;
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .nav-card:hover {
-            background: rgba(0, 242, 255, 0.1);
-            border-color: var(--primary);
-            transform: translateX(-8px);
-        }
+        .nav-card:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); }
 
-        .nav-card i { font-size: 1.3rem; color: var(--primary); }
-        .nav-card span { font-weight: 700; font-size: 1.05rem; }
-
-        /* تذييل الصفحة (Footer) */
-        footer {
-            padding: 30px 20px;
-            background: rgba(2, 6, 23, 0.9);
-            border-top: 1px solid rgba(0, 242, 255, 0.1);
-            text-align: center;
-        }
-
-        .social-icons { margin-bottom: 15px; }
-        .social-icons a {
-            color: #64748b;
-            font-size: 1.4rem;
-            margin: 0 15px;
-            transition: 0.3s;
-        }
-        .social-icons a:hover { color: var(--primary); transform: translateY(-3px); }
-
-        .footer-info {
-            font-size: 0.95rem;
-            color: #e2e8f0;
-            display: flex;
+        /* زر "حول الموقع" الصغير */
+        .about-btn {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .footer-info a {
-            color: var(--primary);
+            gap: 8px;
+            margin-top: 25px;
+            color: #64748b;
             text-decoration: none;
-            border-bottom: 1px dashed var(--primary);
-            padding-bottom: 2px;
+            font-size: 0.85rem;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.03);
         }
+        .about-btn:hover { color: var(--primary); background: rgba(0,242,255,0.05); }
 
-        .copy {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: #475569;
-            margin-top: 15px;
-            letter-spacing: 2px;
-        }
+        .footer-copy { font-family: 'Share Tech Mono'; font-size: 0.6rem; color: #334155; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="bg-animate" id="particles"></div>
+    <div class="bg-animate"></div>
 
     <div class="main-wrapper">
         <div class="cyber-container">
             <div class="scanner-box">
-                <i class="fas fa-terminal" style="font-size: 2rem; color: var(--primary);"></i>
+                <i class="fas fa-shield-alt" id="main-icon" style="font-size: 1.5rem; color: var(--primary);"></i>
             </div>
             
-            <h1>شيفرة 9</h1>
-            <div class="tagline">System Online</div>
+            <h1 id="welcome-msg">CIPHER 9</h1>
+            <div id="auth-status" class="status-tag">برجاء إثبات الهوية...</div>
 
-            <nav class="nav-list">
-                <a href="vision.html" class="nav-card">
-                    <span>رؤية شيفرة 9</span>
-                    <i class="fas fa-eye"></i>
-                </a>
-                
-                <a href="projects.html" class="nav-card">
-                    <span>الذكاء الاصطناعي</span>
-                    <i class="fas fa-robot"></i>
-                </a>
+            <nav class="nav-list" id="main-nav">
+                </nav>
 
-                <a href="more.html" class="nav-card" style="border-color: var(--hacker-green);">
-                    <span style="color: var(--hacker-green);">استكشف المزيد</span>
-                    <i class="fas fa-chevron-left" style="color: var(--hacker-green);"></i>
-                </a>
-            </nav>
+            <a href="about.html" class="about-btn">
+                <i class="fas fa-info-circle"></i>
+                <span>حول الموقع</span>
+            </a>
+
+            <div class="footer-copy">SECURED BY CIPHER 9 INFRASTRUCTURE</div>
         </div>
     </div>
 
-    <footer>
-        <div class="social-icons">
-            <a href="https://t.me/MohammedAlSinijarbot"><i class="fab fa-telegram"></i></a>
-            <a href="https://wa.me/967783787656"><i class="fab fa-whatsapp"></i></a>
-        </div>
-
-        <div class="footer-info">
-            <span>بناء وتطوير <strong style="color: #fff;">محمد فهد</strong></span>
-            <span style="color: #475569;">|</span>
-            <a href="about.html">حول الموقع</a>
-        </div>
-
-        <div class="copy">
-            &copy; 2025 CIPHER 9 - ALL RIGHTS RESERVED
-        </div>
-    </footer>
-
     <script>
-        // إنشاء الجزيئات المتحركة برمجياً لضمان الخفة
-        const particleContainer = document.getElementById('particles');
-        const particleCount = 25;
+        // 1. إعدادات Firebase الخاصة بك
+        const firebaseConfig = {
+            apiKey: "ضع_المفتاح_هنا",
+            authDomain: "your-app.firebaseapp.com",
+            projectId: "your-id",
+            storageBucket: "your-app.appspot.com",
+            messagingSenderId: "12345",
+            appId: "1:2345:web:abc"
+        };
+        firebase.initializeApp(firebaseConfig);
 
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // تخصيص عشوائي لكل نقطة
-            const size = Math.random() * 4 + 1 + 'px';
-            particle.style.width = size;
-            particle.style.height = size;
-            particle.style.left = Math.random() * 100 + 'vw';
-            
-            // سرعة الحركة وتأخير البداية
-            const duration = Math.random() * 7 + 5 + 's';
-            const delay = Math.random() * 5 + 's';
-            particle.style.animationDuration = duration;
-            particle.style.animationDelay = delay;
-            
-            particleContainer.appendChild(particle);
-        }
+        const nav = document.getElementById('main-nav');
+        const status = document.getElementById('auth-status');
+        const icon = document.getElementById('main-icon');
+        const welcome = document.getElementById('welcome-msg');
+
+        // 2. فحص حالة المستخدم (Logic)
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // حالة: مسجل دخول (إظهار الموقع بالكامل)
+                status.innerText = "ACCESS GRANTED";
+                status.style.color = "var(--hacker-green)";
+                welcome.innerText = "مرحباً " + user.displayName.split(' ')[0];
+                icon.className = "fas fa-unlock-alt";
+                icon.style.color = "var(--hacker-green)";
+
+                nav.innerHTML = `
+                    <a href="vision.html" class="nav-card"><span>رؤية شيفرة 9</span><i class="fas fa-eye"></i></a>
+                    <a href="projects.html" class="nav-card"><span>الذكاء الاصطناعي</span><i class="fas fa-robot"></i></a>
+                    <a href="dashboard.html" class="nav-card" style="border-color:var(--hacker-green)">
+                        <span style="color:var(--hacker-green)">لوحة المهارات</span><i class="fas fa-user-circle"></i>
+                    </a>
+                `;
+            } else {
+                // حالة: غير مسجل (إخفاء الموقع والمطالبة بالدخول)
+                status.innerText = "AUTH REQUIRED";
+                status.style.color = "var(--primary)";
+                welcome.innerText = "شيفرة 9";
+                icon.className = "fas fa-lock";
+
+                nav.innerHTML = `
+                    <div style="padding: 15px; font-size: 0.85rem; color: #64748b; line-height: 1.5;">
+                        النظام مشفر. يرجى تسجيل الدخول باستخدام حساب جوجل لفك التشفير والوصول للمحتوى.
+                    </div>
+                    <a href="login.html" class="nav-card" style="border-color: var(--primary); background: rgba(0,242,255,0.08);">
+                        <span style="color: var(--primary); font-weight: bold;">تسجيل الدخول للنظام</span>
+                        <i class="fas fa-sign-in-alt"></i>
+                    </a>
+                `;
+            }
+        });
     </script>
 </body>
 </html>
