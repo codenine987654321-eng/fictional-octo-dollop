@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إثبات الهوية | CIPHER 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --bg-dark: #020617;
+            --glass: rgba(15, 23, 42, 0.9);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .auth-card {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 25px;
+            border: 1px solid var(--primary);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+        }
+
+        .icon-shield {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
+
+        h2 { margin: 10px 0; font-weight: 900; }
+        p { color: #64748b; font-size: 0.9rem; margin-bottom: 30px; }
+
+        .google-btn {
+            background: #fff;
+            color: #000;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .google-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .google-btn img { width: 22px; }
+
+        .note {
+            margin-top: 25px;
+            font-size: 0.75rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <i class="fas fa-user-shield icon-shield"></i>
+        <h2>تحقق من الهوية</h2>
+        <p>يجب تسجيل الدخول للوصول إلى سيرفرات شيفرة 9 وحفظ تقدمك.</p>
+
+        <button class="google-btn" onclick="signIn()">
+            <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google">
+            الدخول عبر حساب Google
+        </button>
+
+        <div class="note">
+            بمجرد دخولك، سيتم إنشاء سجل رقمي لك في قاعدة البيانات لمتابعة مهاراتك ونقاطك التقنية.
+        </div>
+    </div>
+
+    <script>
+        // --- ضع إعدادات Firebase الخاصة بك هنا ---
+        const firebaseConfig = {
+            apiKey: "AIzaSy...",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "...",
+            appId: "..."
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        function signIn() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    
+                    // العلم العميق: فحص وإنشاء ملف مستخدم في Firestore
+                    const userRef = db.collection("users").doc(user.uid);
+                    userRef.get().then((doc) => {
+                        if (!doc.exists) {
+                            userRef.set({
+                                name: user.displayName,
+                                email: user.email,
+                                points: 0,
+                                createdAt: new Date()
+                            }).then(() => {
+                                window.location.href = "index.html"; // العودة للرئيسية بعد التسجيل
+                            });
+                        } else {
+                            window.location.href = "index.html";
+                        }
+                    });
+                }).catch((error) => {
+                    console.error(error);
+                    alert("فشل تسجيل الدخول: " + error.message);
+                });
+        }
+    </script>
+</body>
+</html>
