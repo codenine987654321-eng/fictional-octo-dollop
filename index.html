@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIPHER 9 | شيفرة 9</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #00f2ff; /* اللون السماوي السيبراني */
-            --hacker-green: #00ff41; /* لون الهكر التقليدي */
+            --primary: #00f2ff;
+            --hacker-green: #00ff41;
             --bg-dark: #020617;
-            --glass: rgba(15, 23, 42, 0.8);
+            --glass: rgba(15, 23, 42, 0.85);
         }
 
         * { box-sizing: border-box; transition: all 0.3s ease; }
@@ -25,87 +26,95 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             overflow-x: hidden;
-            /* خلفية الشبكة السيبرانية */
-            background-image: 
-                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
+            position: relative;
         }
 
-        /* حاوية المحتوى الرئيسية */
+        /* --- تأثير الخلفية السيبرانية المتحركة --- */
+        .bg-animate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+        }
+
+        /* رسم الشبكة (Grid) */
+        .bg-animate::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: move-up linear infinite;
+        }
+
+        @keyframes move-up {
+            0% { transform: translateY(110vh) scale(0); opacity: 0; }
+            50% { opacity: 0.4; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* --- حاوية المحتوى الرئيسية --- */
         .main-wrapper {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            padding: 20px;
+            padding: 40px 20px;
+            z-index: 1;
         }
 
         .cyber-container {
-            position: relative;
             width: 100%;
-            max-width: 450px;
-            padding: 40px 30px;
+            max-width: 420px;
+            padding: 40px 25px;
             background: var(--glass);
-            backdrop-filter: blur(15px);
-            border-radius: 24px;
-            border: 1px solid rgba(0, 242, 255, 0.3);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
             text-align: center;
-            box-shadow: 0 0 40px rgba(0, 242, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
         }
 
-        /* الشعار المتحرك */
-        .core-animation {
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .scanner {
-            width: 100px; height: 100px;
+        /* الجزء العلوي (الشعار) */
+        .scanner-box {
+            width: 85px; height: 85px;
+            margin: 0 auto 20px;
             border: 2px solid var(--primary);
-            border-radius: 50%;
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
             position: relative;
-            animation: pulse-border 2s infinite;
-        }
-        .scanner::after {
-            content: "";
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 80%; height: 80%;
-            border: 1px solid var(--hacker-green);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 4s linear infinite;
+            animation: pulse-glow 2s infinite;
         }
 
-        @keyframes rotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
-        @keyframes pulse-border { 0%, 100% { box-shadow: 0 0 10px var(--primary); } 50% { box-shadow: 0 0 30px var(--primary); } }
-
-        h1 { 
-            font-size: 2.5rem; margin: 10px 0; 
-            letter-spacing: 2px; 
-            background: linear-gradient(to bottom, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px var(--primary); transform: scale(1); }
+            50% { box-shadow: 0 0 25px var(--primary); transform: scale(1.05); }
         }
 
-        .status-tag {
-            background: rgba(0, 255, 65, 0.1);
-            color: var(--hacker-green);
-            padding: 4px 15px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            border: 1px solid var(--hacker-green);
-            display: inline-block;
+        h1 { font-size: 2.4rem; margin: 10px 0; font-weight: 900; letter-spacing: -1px; }
+
+        .tagline {
+            font-size: 0.75rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
             margin-bottom: 30px;
+            font-weight: bold;
         }
 
-        /* قائمة الأزرار المطورة */
-        .btn-grid {
+        /* قائمة الأزرار (البطاقات) */
+        .nav-list {
             display: grid;
             gap: 15px;
         }
@@ -113,139 +122,141 @@
         .nav-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(0, 242, 255, 0.1);
-            padding: 18px;
-            border-radius: 15px;
+            padding: 18px 22px;
+            border-radius: 18px;
             text-decoration: none;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-card i {
-            font-size: 1.5rem;
-            color: var(--primary);
-            width: 30px;
+            justify-content: space-between;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-card:hover {
-            background: rgba(0, 242, 255, 0.08);
+            background: rgba(0, 242, 255, 0.1);
             border-color: var(--primary);
-            transform: translateX(-5px);
+            transform: translateX(-8px);
         }
 
-        .nav-card::before {
-            content: "";
-            position: absolute;
-            right: 0; top: 0; width: 3px; height: 100%;
-            background: var(--primary);
-            opacity: 0;
-        }
-        .nav-card:hover::before { opacity: 1; }
+        .nav-card i { font-size: 1.3rem; color: var(--primary); }
+        .nav-card span { font-weight: 700; font-size: 1.05rem; }
 
-        /* التذييل الاحترافي (Footer) */
+        /* تذييل الصفحة (Footer) */
         footer {
-            width: 100%;
-            padding: 30px;
+            padding: 30px 20px;
             background: rgba(2, 6, 23, 0.9);
-            border-top: 1px solid rgba(0, 242, 255, 0.2);
+            border-top: 1px solid rgba(0, 242, 255, 0.1);
             text-align: center;
-            margin-top: 40px;
         }
 
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .social-icons {
-            margin: 15px 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
+        .social-icons { margin-bottom: 15px; }
         .social-icons a {
             color: #64748b;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            margin: 0 15px;
             transition: 0.3s;
         }
-
         .social-icons a:hover { color: var(--primary); transform: translateY(-3px); }
 
-        .copyright {
-            font-size: 0.75rem;
-            color: #64748b;
+        .footer-info {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer-info a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--primary);
+            padding-bottom: 2px;
+        }
+
+        .copy {
             font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: #475569;
+            margin-top: 15px;
+            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-animate" id="particles"></div>
+
     <div class="main-wrapper">
         <div class="cyber-container">
-            <div class="core-animation">
-                <div class="scanner">
-                    <i class="fas fa-shield-halved" style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); color: var(--primary); font-size: 2rem;"></i>
-                </div>
+            <div class="scanner-box">
+                <i class="fas fa-terminal" style="font-size: 2rem; color: var(--primary);"></i>
             </div>
-
+            
             <h1>شيفرة 9</h1>
-            <div class="status-tag">
-                <i class="fas fa-circle" style="font-size: 0.5rem; vertical-align: middle;"></i> النظام نشط
-            </div>
+            <div class="tagline">System Online</div>
 
-            <nav class="btn-grid">
+            <nav class="nav-list">
                 <a href="vision.html" class="nav-card">
+                    <span>رؤية شيفرة 9</span>
                     <i class="fas fa-eye"></i>
-                    <div style="text-align: right;">
-                        <div style="font-weight: bold;">رؤية المشروع</div>
-                        <div style="font-size: 0.7rem; color: #64748b;">مستقبل الأمن السيبراني</div>
-                    </div>
                 </a>
-
+                
                 <a href="projects.html" class="nav-card">
-                    <i class="fas fa-brain"></i>
-                    <div style="text-align: right;">
-                        <div style="font-weight: bold;">مساعد الذكاء الاصطناعي</div>
-                        <div style="font-size: 0.7rem; color: #64748b;">تحدث مع نظام شيفرة 9</div>
-                    </div>
-                </a>
-
-                <a href="lab.html" class="nav-card">
-                    <i class="fas fa-flask"></i>
-                    <div style="text-align: right;">
-                        <div style="font-weight: bold;">المختبر التقني</div>
-                        <div style="font-size: 0.7rem; color: #64748b;">تجارب برمجية واختراق أخلاقي</div>
-                    </div>
+                    <span>الذكاء الاصطناعي</span>
+                    <i class="fas fa-robot"></i>
                 </a>
 
                 <a href="more.html" class="nav-card" style="border-color: var(--hacker-green);">
-                    <i class="fas fa-ellipsis-h" style="color: var(--hacker-green);"></i>
-                    <div style="text-align: right;">
-                        <div style="font-weight: bold; color: var(--hacker-green);">استكشف المزيد</div>
-                    </div>
+                    <span style="color: var(--hacker-green);">استكشف المزيد</span>
+                    <i class="fas fa-chevron-left" style="color: var(--hacker-green);"></i>
                 </a>
             </nav>
         </div>
     </div>
 
     <footer>
-        <div class="footer-content">
-            <div class="social-icons">
-                <a href="https://t.me/MohammedAlSinijarbot" title="Telegram"><i class="fab fa-telegram"></i></a>
-                <a href="https://wa.me/967783787656" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://github.com/mohammedalfaqe" title="GitHub"><i class="fab fa-github"></i></a>
-            </div>
-            <p style="margin: 10px 0; font-size: 0.9rem;">بناء وتطوير <span style="color: var(--primary);">محمد فهد</span></p>
-            <div class="copyright">
-                &copy; 2025 CIPHER 9 SYSTEM | SECURED & ENCRYPTED
-            </div>
+        <div class="social-icons">
+            <a href="https://t.me/MohammedAlSinijarbot"><i class="fab fa-telegram"></i></a>
+            <a href="https://wa.me/967783787656"><i class="fab fa-whatsapp"></i></a>
+        </div>
+
+        <div class="footer-info">
+            <span>بناء وتطوير <strong style="color: #fff;">محمد فهد</strong></span>
+            <span style="color: #475569;">|</span>
+            <a href="about.html">حول الموقع</a>
+        </div>
+
+        <div class="copy">
+            &copy; 2025 CIPHER 9 - ALL RIGHTS RESERVED
         </div>
     </footer>
 
+    <script>
+        // إنشاء الجزيئات المتحركة برمجياً لضمان الخفة
+        const particleContainer = document.getElementById('particles');
+        const particleCount = 25;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // تخصيص عشوائي لكل نقطة
+            const size = Math.random() * 4 + 1 + 'px';
+            particle.style.width = size;
+            particle.style.height = size;
+            particle.style.left = Math.random() * 100 + 'vw';
+            
+            // سرعة الحركة وتأخير البداية
+            const duration = Math.random() * 7 + 5 + 's';
+            const delay = Math.random() * 5 + 's';
+            particle.style.animationDuration = duration;
+            particle.style.animationDelay = delay;
+            
+            particleContainer.appendChild(particle);
+        }
+    </script>
 </body>
 </html>
 
