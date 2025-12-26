@@ -101,14 +101,14 @@
     </div>
 
     <script>
-        // --- ضع إعدادات Firebase الخاصة بك هنا ---
+        // دمج إعدادات محمد فهد الخاصة
         const firebaseConfig = {
-            apiKey: "AIzaSy...",
-            authDomain: "your-project.firebaseapp.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project.appspot.com",
-            messagingSenderId: "...",
-            appId: "..."
+            apiKey: "AIzaSyA8lxq_gHtOAO9m9CtuBG5m1tNf9h6TE2U",
+            authDomain: "code-9-aaed2.firebaseapp.com",
+            projectId: "code-9-aaed2",
+            storageBucket: "code-9-aaed2.firebasestorage.app",
+            messagingSenderId: "494338698190",
+            appId: "1:494338698190:web:2fdf1f0e740fa05fd2999f"
         };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
@@ -130,11 +130,15 @@
                                 points: 0,
                                 createdAt: new Date()
                             }).then(() => {
-                                window.location.href = "index.html"; // العودة للرئيسية بعد التسجيل
+                                window.location.href = "index.html"; 
                             });
                         } else {
                             window.location.href = "index.html";
                         }
+                    }).catch((error) => {
+                         // في حال عدم تفعيل Firestore بعد، سينتقل للصفحة الرئيسية مباشرة
+                         console.log("Firestore not active yet, skipping DB check.");
+                         window.location.href = "index.html";
                     });
                 }).catch((error) => {
                     console.error(error);
@@ -144,3 +148,4 @@
     </script>
 </body>
 </html>
+
