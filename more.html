@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,7 +6,6 @@
 <title>مركز القيادة | شيفرة 9</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
 :root {
     --primary: #00f2ff;
@@ -19,220 +17,220 @@
     --email: #ea4335;
 }
 
+/* --- خلفية متحركة --- */
 body {
-    background-color: var(--bg-dark);
-    font-family: 'Cairo', sans-serif;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+    font-family: 'Cairo', sans-serif;
+    color: #e2e8f0;
+    background: var(--bg-dark);
+    overflow-x: hidden;
 }
 
-/* خطوط مسح السيبر */
-.cyber-line {
+.background {
     position: fixed;
-    background: linear-gradient(90deg, transparent, var(--primary), transparent);
-    width: 100%;
-    height: 2px;
-    z-index: 1000;
-    opacity: 0.4;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at 20% 30%, #0f172a, #020617);
+    overflow: hidden;
+    z-index: -1;
 }
-.line-top { top: 0; left: -100%; animation: scan-h 3s linear infinite; }
-.line-bottom { bottom: 0; right: -100%; animation: scan-h 3s linear infinite reverse; }
-@keyframes scan-h { 0% { left: -100%; } 100% { left: 100%; } }
 
-/* الحاوية الرئيسية */
+.background span {
+    position: absolute;
+    display: block;
+    width: 15px; height: 15px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: float 10s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-1200px) translateX(400px) scale(0.3); opacity: 0; }
+}
+
+/* --- هيكل الصفحة --- */
 .container {
-    width: 100%;
     max-width: 450px;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* أيقونة رئيسية */
-.container i.fas.fa-th-large {
-    font-size: 50px;
-    color: var(--primary);
-    margin-bottom: 15px;
-}
-
-/* عنوان الصفحة */
-.container h2 {
-    font-weight: 900;
-    font-size: 24px;
-    margin-bottom: 25px;
-    color: #fff;
+    margin: 60px auto;
     text-align: center;
 }
 
-/* شبكة البطاقات */
+/* --- العنوان --- */
+.container h2 {
+    font-weight: 900;
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: var(--primary);
+    text-shadow: 0 0 15px rgba(0,242,255,0.5);
+}
+
+/* --- بطاقات النظام --- */
 .grid-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    width: 100%;
+    gap: 20px;
 }
 
-/* البطاقات */
 .cyber-card {
-    background: rgba(15, 23, 42, 0.9);
-    border: 2px solid rgba(0, 242, 255, 0.15);
-    padding: 20px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(0, 242, 255, 0.15);
     border-radius: 20px;
+    padding: 25px 15px;
     color: #fff;
     text-decoration: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    transition: 0.3s;
+    transition: 0.4s;
     cursor: pointer;
     box-shadow: 0 0 15px rgba(0,242,255,0.2);
 }
-.cyber-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-5px);
-    box-shadow: 0 0 25px rgba(0,242,255,0.5);
-}
+
 .cyber-card i {
-    font-size: 28px;
+    font-size: 30px;
+    margin-bottom: 12px;
     color: var(--primary);
 }
 
-/* بطاقة العودة للرئيسية */
-.cyber-card.full-span { grid-column: span 2; }
+.cyber-card:hover {
+    transform: translateY(-7px);
+    border-color: var(--primary);
+    box-shadow: 0 0 25px rgba(0,242,255,0.3);
+}
 
-/* أزرار المحاكاة والدعم */
+/* --- أزرار المحاكاة والدعم --- */
 .sim-btn {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 15px;
     background: rgba(255,255,255,0.05);
-    border: 2px solid rgba(0, 255, 65, 0.3);
-    border-radius: 18px;
+    border: 1px solid rgba(0, 255, 65, 0.25);
+    border-radius: 15px;
     color: #fff;
     text-decoration: none;
+    padding: 15px;
     transition: 0.3s;
 }
 .sim-btn:hover {
-    border-color: var(--hacker-green);
-    background: rgba(0,255,65,0.1);
+    background: rgba(0, 255, 65, 0.1);
+    transform: translateY(-3px);
 }
 
-/* Overlay */
+/* --- النوافذ المنبثقة --- */
 .overlay {
     position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background: rgba(0,0,0,0.95);
     display: none;
-    align-items: center;
     justify-content: center;
-    z-index: 10000;
+    align-items: center;
     backdrop-filter: blur(20px);
+    z-index: 10000;
 }
 
-/* بطاقة داخل Overlay */
 .custom-card {
     width: 90%;
     max-width: 420px;
     background: rgba(15,23,42,0.95);
     border: 2px solid var(--primary);
-    border-radius: 30px;
+    border-radius: 25px;
     padding: 25px;
     text-align: center;
     box-shadow: 0 0 50px rgba(0,242,255,0.2);
-    animation: emerge 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
 }
 
-/* --- المحاكاة والدعم --- */
+/* --- دعم فني وبلاغات --- */
 .support-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 15px;
+    gap: 10px;
     margin-bottom: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 15px;
 }
+
 .sup-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
-    padding: 10px;
+    padding: 12px;
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(0,242,255,0.1);
-    border-radius: 15px;
+    border-radius: 12px;
     color: #fff;
     text-decoration: none;
     font-size: 12px;
-    transition: 0.3s;
 }
-.sup-item i { font-size: 20px; }
 
-/* فورم البلاغ */
-.report-form { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; text-align: right; }
-.report-form input, .report-form textarea {
+.sup-item i { font-size: 22px; }
+
+.report-form input,
+.report-form textarea {
     width: 100%;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(0,242,255,0.2);
-    border-radius: 12px;
-    color: #fff;
     padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,242,255,0.2);
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    margin-bottom: 8px;
     font-family: 'Cairo';
-    font-size: 13px;
-    outline: none;
-    box-sizing: border-box;
 }
+
 .send-btn {
     width: 100%;
     padding: 12px;
     background: var(--primary);
     color: #000;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-weight: 900;
     cursor: pointer;
 }
 
-/* Animation */
-@keyframes emerge { from { opacity:0; transform: scale(0.9);} to { opacity:1; transform: scale(1);} }
+/* --- العنوان الفرعي --- */
+i.title-icon {
+    font-size: 50px;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
 </style>
 </head>
 <body>
 
-<div class="cyber-line line-top"></div>
-<div class="cyber-line line-bottom"></div>
+<div class="background">
+    <!-- إضافة 50 نقطة متحركة -->
+    <span style="top: 10%; left: 20%; animation-duration: 12s;"></span>
+    <span style="top: 30%; left: 70%; animation-duration: 18s;"></span>
+    <span style="top: 50%; left: 40%; animation-duration: 16s;"></span>
+    <span style="top: 80%; left: 10%; animation-duration: 20s;"></span>
+    <span style="top: 60%; left: 80%; animation-duration: 14s;"></span>
+    <!-- يمكنك تكرار أو نسخ المزيد -->
+</div>
 
 <div class="container">
-    <i class="fas fa-th-large"></i>
-    <h2>قائمة الأنظمة</h2>
+    <i class="fas fa-th-large title-icon"></i>
+    <h2>مركز القيادة</h2>
 
     <div class="grid-layout">
         <a href="tools.html" class="cyber-card"><i class="fas fa-tools"></i><span>الأدوات</span></a>
         <a href="dashboard.html" class="cyber-card"><i class="fas fa-terminal"></i><span>لوحة المهارات</span></a>
         <a href="#" class="cyber-card"><i class="fas fa-graduation-cap"></i><span>دورات البرمجة</span></a>
         <a href="#" class="cyber-card"><i class="fas fa-book-open"></i><span>مقالات تقنية</span></a>
-        <div class="cyber-card" onclick="toggleSim(true)" style="border-color: var(--hacker-green);"><i class="fas fa-flask" style="color: var(--hacker-green);"></i><span style="color: var(--hacker-green);">المحاكاة</span></div>
-        <div class="cyber-card" onclick="toggleSupport(true)"><i class="fas fa-headset"></i><span>الدعم الفني</span></div>
-        <a href="index.html" class="cyber-card full-span"><i class="fas fa-home"></i><span>العودة للرئيسية</span></a>
+        <div class="cyber-card sim-btn" onclick="toggleSim(true)"><i class="fas fa-flask"></i><span>المحاكاة</span></div>
+        <div class="cyber-card sim-btn" onclick="toggleSupport(true)"><i class="fas fa-headset"></i><span>الدعم الفني</span></div>
+        <a href="index.html" class="cyber-card" style="grid-column: span 2;"><i class="fas fa-home"></i><span>العودة للرئيسية</span></a>
     </div>
 </div>
 
-<!-- Overlays -->
+<!-- --- نوافذ المحاكاة والدعم --- -->
 <div id="simOverlay" class="overlay">
     <div class="custom-card">
-        <i class="fas fa-microchip" style="font-size: 40px; color: var(--hacker-green); margin-bottom: 10px;"></i>
+        <i class="fas fa-microchip" style="font-size:40px; color: var(--hacker-green); margin-bottom:10px;"></i>
         <h3>اختر نوع المحاكاة</h3>
-        <div style="margin-top: 20px;">
-            <a href="lab.html" class="sim-btn"><i class="fas fa-user-secret" style="color: var(--hacker-green);"></i><div style="text-align: right;"><b>محاكاة الاختراق</b><br><small style="color:#888;">النظام الكلاسيكي</small></div></a>
-            <a href="vulnerabilities.html" class="sim-btn"><i class="fas fa-bug" style="color: var(--hacker-green);"></i><div style="text-align: right;"><b>محاكاة الثغرات</b><br><small style="color:#888;">هجمات SQL و CCTV</small></div></a>
+        <div style="margin-top:20px;">
+            <a href="lab.html" class="sim-btn"><i class="fas fa-user-secret" style="color: var(--hacker-green);"></i><div style="text-align:right;"><b>محاكاة الاختراق</b><br><small style="color:#888;">النظام الكلاسيكي</small></div></a>
+            <a href="vulnerabilities.html" class="sim-btn"><i class="fas fa-bug" style="color: var(--hacker-green);"></i><div style="text-align:right;"><b>محاكاة الثغرات</b><br><small style="color:#888;">هجمات SQL و CCTV</small></div></a>
         </div>
         <button onclick="toggleSim(false)" style="margin-top:10px; background:none; border:none; color:#666; cursor:pointer;">إغلاق</button>
     </div>
@@ -240,11 +238,11 @@ body {
 
 <div id="supportOverlay" class="overlay">
     <div class="custom-card">
-        <h3 style="margin: 0; color: var(--primary);">مركز المساعدة والبلاغات</h3>
+        <h3 style="margin:0; color: var(--primary);">مركز المساعدة والبلاغات</h3>
         <div class="support-grid">
             <a href="https://wa.me/967783787656" class="sup-item"><i class="fab fa-whatsapp" style="color: var(--whatsapp);"></i><span>واتساب</span></a>
             <a href="https://t.me/NewEra711" class="sup-item"><i class="fab fa-telegram" style="color: var(--telegram);"></i><span>تلجرام</span></a>
-            <a href="https://www.instagram.com/mfhd03189?igsh=b2FkdjBsZnlzN3M1" class="sup-item"><i class="fab fa-instagram" style="color: var(--instagram);"></i><span>انستقرام</span></a>
+            <a href="https://www.instagram.com/mfhd03189" class="sup-item"><i class="fab fa-instagram" style="color: var(--instagram);"></i><span>انستقرام</span></a>
             <a href="mailto:mf128919@gmail.com" class="sup-item"><i class="fas fa-envelope" style="color: var(--email);"></i><span>الإيميل</span></a>
         </div>
         <div class="report-form">
@@ -252,15 +250,15 @@ body {
             <input type="email" id="senderEmail" placeholder="إيميلك (اختياري)">
             <textarea id="reportContent" placeholder="اكتب تفاصيل البلاغ هنا..."></textarea>
             <button onclick="sendToTelegram()" id="sendBtn" class="send-btn">إرسال البلاغ الآن</button>
-            <div id="statusMsg" style="font-size: 11px; margin-top: 5px;"></div>
+            <div id="statusMsg" style="font-size:11px; margin-top:5px;"></div>
         </div>
         <button onclick="toggleSupport(false)" style="margin-top:10px; background:none; border:none; color:#666; cursor:pointer;">إغلاق</button>
     </div>
 </div>
 
 <script>
-function toggleSim(show){ document.getElementById('simOverlay').style.display = show ? 'flex' : 'none'; }
-function toggleSupport(show){ document.getElementById('supportOverlay').style.display = show ? 'flex' : 'none'; }
+function toggleSim(show) { document.getElementById('simOverlay').style.display = show ? 'flex' : 'none'; }
+function toggleSupport(show) { document.getElementById('supportOverlay').style.display = show ? 'flex' : 'none'; }
 
 async function sendToTelegram() {
     const name = document.getElementById('senderName').value.trim();
@@ -268,30 +266,29 @@ async function sendToTelegram() {
     const content = document.getElementById('reportContent').value.trim();
     const btn = document.getElementById('sendBtn');
     const status = document.getElementById('statusMsg');
-    const botToken = "7582867324:AAFOCc87ZpHp2pl8esBqIH1DyAL36sfEm5Q";
-    const chatId = "7849918251";
+    const botToken = "7582867324:AAFOCc87ZpHp2pl8esBqIH1DyAL36sfEm5Q"; 
+    const chatId = "7849918251"; 
 
     if (!name || !content) { status.innerHTML = "<span style='color:red;'>أكمل الحقول الإجبارية!</span>"; return; }
     btn.disabled = true; btn.innerText = "جاري الإرسال...";
-
     const text = `🚨 *بلاغ جديد*\n👤 الاسم: ${name}\n📧 إيميل: ${email}\n📝 البلاغ: ${content}`;
     try {
         const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ chat_id: chatId, text: text, parse_mode:"Markdown"})
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: "Markdown" })
         });
-        if(res.ok){
-            status.innerHTML="<span style='color:#00ff41;'>✅ تم الإرسال بنجاح!</span>";
-            document.getElementById('senderName').value=""; 
-            document.getElementById('senderEmail').value="";
-            document.getElementById('reportContent').value="";
+        if (res.ok) {
+            status.innerHTML = "<span style='color:#00ff41;'>✅ تم الإرسال بنجاح!</span>";
+            document.getElementById('senderName').value = ""; 
+            document.getElementById('senderEmail').value = "";
+            document.getElementById('reportContent').value = "";
         } else {
             const errorData = await res.json();
-            status.innerHTML="<span style='color:red;'>خطأ: "+errorData.description+"</span>";
+            status.innerHTML = "<span style='color:red;'>خطأ: " + errorData.description + "</span>";
         }
-    } catch(e){ status.innerHTML="<span style='color:red;'>خطأ في الشبكة</span>"; }
-    finally { btn.disabled=false; btn.innerText="إرسال البلاغ الآن"; }
+    } catch (e) { status.innerHTML = "<span style='color:red;'>خطأ في الشبكة</span>"; } 
+    finally { btn.disabled = false; btn.innerText = "إرسال البلاغ الآن"; }
 }
 </script>
 
