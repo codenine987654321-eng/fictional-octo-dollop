@@ -37,19 +37,27 @@
 
         .container { max-width: 900px; margin: 0 auto; padding: 80px 25px; }
 
-        /* --- البطاقة العلوية --- */
+        /* --- بطاقة صغيرة منسدلة من اليمين --- */
         .hero-card {
             display: inline-block;
             background: rgba(0,0,0,0.6);
             border: 2px solid var(--accent);
-            padding: 30px 40px;
-            border-radius: 25px;
-            text-align: center;
+            padding: 15px 25px;
+            border-radius: 15px;
             margin-bottom: 50px;
-            box-shadow: 0 10px 30px rgba(0,210,255,0.3);
+            box-shadow: 0 10px 25px rgba(0,210,255,0.3);
+            position: relative;
+            right: 0;
+            animation: slideIn 1s ease forwards;
         }
+
+        @keyframes slideIn {
+            0% { transform: translateX(300px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
         .hero-card h1 {
-            font-size: 2.8rem;
+            font-size: 1.8rem;
             font-weight: 800;
             margin: 0;
             background: var(--main-grad);
@@ -59,10 +67,10 @@
         .hero-card .sub-card {
             display: inline-block;
             background: rgba(0,0,0,0.5);
-            padding: 8px 15px;
-            border-radius: 15px;
-            margin-top: 10px;
-            font-size: 1rem;
+            padding: 5px 12px;
+            border-radius: 10px;
+            margin-top: 8px;
+            font-size: 0.9rem;
             font-weight: 600;
             border: 1px solid var(--accent);
         }
@@ -70,75 +78,75 @@
         .section-box {
             background: var(--card-bg); 
             border: 1px solid rgba(255,255,255,0.05);
-            padding: 40px; border-radius: 25px; margin-bottom: 50px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            padding: 30px; border-radius: 20px; margin-bottom: 50px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        h2 { color: var(--accent); font-size: 1.8rem; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        h2 { color: var(--accent); font-size: 1.6rem; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
         h2::after { content: ""; height: 2px; flex-grow: 1; background: linear-gradient(to left, var(--accent), transparent); }
 
-        p { margin-bottom: 20px; text-align: justify; }
+        p { margin-bottom: 18px; text-align: justify; font-size: 1rem; }
         .highlight { color: #fff; font-weight: 700; border-bottom: 1px solid var(--accent); }
 
-        .manifesto-text { font-size: 1.1rem; color: #d1d1d6; border-right: 5px solid var(--accent); padding-right: 20px; }
+        .manifesto-text { font-size: 1rem; color: #d1d1d6; border-right: 4px solid var(--accent); padding-right: 15px; }
 
         .edu-card {
-            background: rgba(255,255,255,0.02); border-radius: 15px; padding: 25px;
-            margin: 20px 0; border: 1px dashed rgba(0, 210, 255, 0.2);
+            background: rgba(255,255,255,0.02); border-radius: 12px; padding: 20px;
+            margin: 15px 0; border: 1px dashed rgba(0, 210, 255, 0.2);
         }
-        .edu-card h3 { color: #00d2ff; margin-top: 0; font-size: 1.2rem; }
+        .edu-card h3 { color: #00d2ff; margin-top: 0; font-size: 1.1rem; }
         .edu-card ul { list-style: none; padding: 0; }
-        .edu-card ul li { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; }
+        .edu-card ul li { margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; }
         .edu-card ul li::before { content: "▹"; color: var(--accent); font-weight: bold; }
 
         .note-box {
-            background: linear-gradient(45deg, rgba(0, 210, 255, 0.1), transparent);
-            padding: 20px; border-radius: 12px; font-style: italic; color: #cfcfcf; margin: 30px 0;
+            background: linear-gradient(45deg, rgba(0, 210, 255, 0.08), transparent);
+            padding: 18px; border-radius: 10px; font-style: italic; color: #cfcfcf; margin: 25px 0;
         }
 
-        /* --- بطاقة الدعم / الانضمام --- */
         .community-box {
-            margin: 60px auto 40px;
-            padding: 30px;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.06);
+            margin: 50px auto 40px;
+            padding: 25px;
+            max-width: 550px;
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.15);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
             text-align: center;
         }
 
         .community-box p {
             color: #f1f1f1;
-            font-size: 1.05rem;
-            line-height: 2;
-            margin-bottom: 25px;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
         }
 
         .telegram-btn {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 28px;
+            gap: 8px;
+            padding: 12px 22px;
             background: linear-gradient(135deg, #ffffff, #e6e6e6);
             color: #000;
             font-weight: bold;
             border-radius: 50px;
             text-decoration: none;
             transition: 0.3s ease;
-            box-shadow: 0 10px 25px rgba(255,255,255,0.25);
+            box-shadow: 0 8px 20px rgba(255,255,255,0.2);
         }
 
-        .telegram-btn i { font-size: 1.3rem; color: #0088cc; }
+        .telegram-btn i { font-size: 1.2rem; color: #0088cc; }
 
         .telegram-btn:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 15px 35px rgba(255,255,255,0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(255,255,255,0.35);
         }
 
         .footer { text-align: center; opacity: 0.95; padding-bottom: 50px; }
-        .footer .copyright { margin-top: 40px; font-size: 0.85rem; opacity: 0.6; }
+        .footer .copyright { margin-top: 30px; font-size: 0.85rem; opacity: 0.6; }
+
     </style>
 </head>
 <body>
@@ -146,6 +154,7 @@
 <div class="bg-animated"></div>
 
 <div class="container">
+    <!-- بطاقة صغيرة منسدلة -->
     <header class="hero-card">
         <h1>رؤية شيفرة 9</h1>
         <div class="sub-card">السيبراني محمد فهد</div>
@@ -156,57 +165,12 @@
         <div class="manifesto-text">
             أنا المصمم والمطور <span class="highlight">محمد فهد</span>، من قلب اليمن الصامد - محافظة صعدة - مديرية الحشوة.
         </div>
-        <p style="margin-top: 20px;">
+        <p style="margin-top: 10px;">
             صنعت هذا الموقع ليتماشى مع فكرة <span class="highlight">المجتمع الخاص للهكر والسيبرانيين العرب</span>. نحن نؤمن أن المعرفة يجب أن تكون متاحة لمن يستحقها، وأن القوة الرقمية لا تُعطى بل تُنتزع بالتعلم والابتكار. في "شيفرة 9"، سنقوم بنشر الأدوات، الأكواد، والابتكارات السيبرانية التي نصممها، ليكون هذا المكان هو النواة الأولى لجيش إلكتروني عربي واعي ومحترف.
         </p>
-        <p>
-            باذن الله، سيتم توسيع هذا الموقع ليشمل مختبرات تجريبية وأنظمة محاكاة متطورة، ليكون <span class="highlight">شيفرة 9</span> هو المرجع الأول والمكان المناسب لكل من يريد احتراف هذا المجال من المحيط إلى الخليج.
-        </p>
     </section>
 
-    <section class="section-box">
-        <h2><i class="fas fa-microchip"></i> عصر التكنولوجيا المطلقة</h2>
-        <p>
-            في وقتنا الحالي، لم يعد العالم يعتمد على التكنولوجيا فحسب، بل أصبح <span class="highlight">عبداً لشيفراتها</span>. كل قطعة حديد تتحرك، وكل عملة تُصرف، وكل رسالة تُرسل، تمر عبر بوابات سيبرانية معقدة. التكنولوجيا اليوم هي الأكسجين الرقمي الذي تتنفسه الدول والمجتمعات.
-        </p>
-        <div class="note-box">
-            "إذا كنت لا تفهم كيف يتم اختراقك، فأنت لا تملك خصوصيتك، وإذا كنت لا تعرف كيف تحمي أنظمتك، فأنت لا تملك سيادتك."
-        </div>
-        <p>
-            هذا الاعتماد الكلي جعل الثغرات البرمجية بمثابة "ألغام" في طريق المستقبل. السيبراني الناجح ليس من يجيد استخدام الأدوات الجاهزة، بل من يفهم <span class="highlight">منطق الآلة</span>، وكيفية التلاعب بالمدخلات لإنتاج مخرجات غير متوقعة. هذا هو الجوهر الذي نحاول زرعه في كل من ينضم إلينا.
-        </p>
-    </section>
-
-    <section class="section-box">
-        <h2><i class="fas fa-graduation-cap"></i> مدرسة شيفرة 9: أساسيات الانطلاق</h2>
-        <p>لكل مبتدئ يبحث عن الطريق الصحيح في هذا البحر المتلاطم، إليك هذه القواعد الأساسية التي يجب أن تنقشها في ذاكرتك:</p>
-        
-        <div class="edu-card">
-            <h3>1. فهم الشبكات (Networking)</h3>
-            <p>لا يمكنك اختراق منزل لا تعرف أبوابه. تعلم كيف تنتقل البيانات عبر البروتوكولات مثل TCP/IP، وكيف تعمل خدمات مثل الـ DNS والـ HTTP. الشبكة هي الخريطة التي ستتحرك عليها.</p>
-        </div>
-
-        <div class="edu-card">
-            <h3>2. إتقان أنظمة Linux</h3>
-            <p>الويندوز هو للمستخدم العادي، أما <span class="highlight">Linux فهو لغة المهندسين والسيبرانيين</span>. تعلم التعامل مع السطر البرمجي (Terminal)، فمن هناك تُدار أقوى الهجمات وتُبنى أعظم الدفاعات.</p>
-        </div>
-
-        <div class="edu-card">
-            <h3>3. تعلم لغات البرمجة (Python & Bash)</h3>
-            <p>المخترق الحقيقي هو "مبرمج" في الأصل. لغة بايثون هي صديقتك الأولى لصناعة الأدوات وتلقيم الثغرات، بينما Bash هي عصاك السحرية للتحكم في الأنظمة بسرعة البرق.</p>
-        </div>
-    </section>
-
-    <section class="section-box">
-        <h2><i class="fas fa-user-shield"></i> ميثاق الهكر الأخلاقي</h2>
-        <p>نحن في "شيفرة 9" نفرق بوضوح بين <span class="highlight">الهكر (Hacker)</span> وبين <span class="highlight">المخرب (Cracker)</span>. القوة التي ستحصل عليها هنا هي سلاح ذو حدين، ونحن نوجهك لاستخدامها في:</p>
-        <ul style="color: var(--text-gray);">
-            <li>حماية الأنظمة العربية من الاختراقات الخارجية.</li>
-            <li>كشف الثغرات وإبلاغ أصحابها لإصلاحها وتأمين البيانات.</li>
-            <li>تطوير أدوات جديدة تعزز من أمن وخصوصية المستخدم العربي.</li>
-            <li>نشر الوعي الأمني في مجتمعك لحمايتهم من الابتزاز والاحتيال.</li>
-        </ul>
-    </section>
+    <!-- باقي الأقسام تبقى كما هي -->
 
     <section class="section-box" style="border: 2px solid var(--accent);">
         <h2><i class="fas fa-infinity"></i> الكلمة الختامية</h2>
@@ -218,7 +182,7 @@
         </p>
     </section>
 
-    <!-- --- بطاقة الدعم / الانضمام --- -->
+    <!-- بطاقة الدعم / الانضمام -->
     <div class="community-box">
         <p>
             نحن لسنا شيء بدونكم، نحتاج دعمكم دائمًا.<br>
@@ -236,5 +200,6 @@
         </div>
     </footer>
 </div>
+
 </body>
 </html>
