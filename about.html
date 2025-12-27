@@ -18,22 +18,35 @@
             color: #e2e8f0;
             font-family: 'Cairo', sans-serif;
             margin: 0;
-            background-image: radial-gradient(circle at center, #0f172a 0%, #010208 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- خلفية جزيئات متحركة هادئة --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.4;
         }
 
         .mystery-container {
             max-width: 900px;
             margin: 60px auto;
-            padding: 40px;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .content-card {
-            background: rgba(10, 15, 30, 0.9);
-            border: 1px solid rgba(255, 0, 0, 0.2);
+            background: rgba(10, 15, 30, 0.85);
+            border: 1px solid rgba(0, 242, 255, 0.1);
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
             line-height: 2;
+            backdrop-filter: blur(10px);
         }
 
         .section-desc {
@@ -43,17 +56,17 @@
         }
 
         .section-desc h3 {
-            color: var(--hacker-red);
+            color: var(--primary);
             font-size: 24px;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .section-desc p {
             font-size: 17px;
-            color: #94a3b8;
+            color: #cbd5e1;
             text-align: justify;
         }
 
@@ -63,79 +76,160 @@
             gap: 10px;
             color: var(--primary);
             border: 1px solid var(--primary);
-            padding: 8px 20px;
+            padding: 10px 25px;
             text-decoration: none;
             font-weight: bold;
-            border-radius: 4px;
+            border-radius: 8px;
             transition: 0.3s;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .action-btn:hover {
             background: var(--primary);
             color: #000;
-            box-shadow: 0 0 20px var(--primary);
+            box-shadow: 0 0 25px var(--primary);
+            transform: translateY(-3px);
         }
 
-        /* قسم الخاتمة القوية - شيفرة 9 */
+        /* قسم الخاتمة القوية - مجتمع شيفرة 9 */
         .code9-footer {
-            background: rgba(255, 0, 0, 0.05);
-            border: 1px dashed var(--hacker-red);
-            padding: 30px;
+            background: rgba(0, 242, 255, 0.03);
+            border: 1px dashed var(--primary);
+            padding: 35px;
             margin-top: 50px;
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
         }
 
         .code9-footer h2 {
             color: #fff;
             font-weight: 900;
-            font-size: 28px;
+            font-size: 26px;
             margin-bottom: 15px;
-            letter-spacing: 2px;
         }
 
         .code9-footer p {
             color: #fff;
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 17px;
+            font-weight: 400;
             line-height: 1.8;
+            margin-bottom: 20px;
         }
 
         .highlight-9 {
-            color: var(--hacker-red);
-            text-shadow: 0 0 10px var(--hacker-red);
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            font-weight: 900;
+            display: block;
+            margin-top: 10px;
         }
+
+        .telegram-btn {
+            background: #24A1DE;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .telegram-btn:hover {
+            background: #fff;
+            color: #24A1DE;
+            box-shadow: 0 0 20px rgba(36, 161, 222, 0.5);
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .back-home a { color: #64748b; text-decoration: none; font-size: 13px; }
+        .back-home a:hover { color: var(--primary); }
     </style>
 </head>
 <body>
+
+    <canvas id="bg-canvas"></canvas>
 
     <div class="mystery-container">
         <div class="content-card">
             
             <div class="section-desc">
-                <h3><i class="fas fa-microchip"></i> طبيعة الموقع</h3>
-                <p>هذا الموقع هو مركز محاكاة وتحليل للمنظومات الأمنية المعقدة، بُني ليكون الوجهة الأولى لمن يريد فهم "لغة الظل" والتعامل مع الثغرات البرمجية في أعمق مستوياتها.</p>
-                <a href="projects.html" class="action-btn">الذكاء الاصطناعي <i class="fas fa-robot"></i></a>
+                <h3><i class="fas fa-graduation-cap"></i> رسالة الموقع التعليمية</h3>
+                <p>شيفرة 9 ليس مجرد موقع، بل هو منصة تعليمية شاملة صُممت لتمكين المبتدئين وكل المهتمين من دخول عالم الهكر الأخلاقي والأمن السيبراني. نحن هنا لتبسيط "المعنى العميق" لعلوم الحاسوب وتوفير الأدوات والبرمجيات التي تجعل منك محترفاً قادراً على الفهم، الدفاع، والابتكار.</p>
+                <a href="projects.html" class="action-btn">مساعد الذكاء الاصطناعي <i class="fas fa-robot"></i></a>
             </div>
 
             <div class="section-desc">
-                <h3><i class="fas fa-user-secret"></i> لمن هذا المكان؟</h3>
-                <p>أنا محمد فهد من اليمن، هنا نصنع العقول التي تبني الدفاعات وتفهم لغة الاختراق لتمنعها. نرحب بكل من يمتلك الشغف لدخول عالم الأمن السيبراني المحترف.</p>
-                <a href="https://wa.me/967783787656" class="action-btn">تواصل معنا <i class="fab fa-whatsapp"></i></a>
+                <h3><i class="fas fa-user-ninja"></i> من خلف "شيفرة 9"؟</h3>
+                <p>أنا محمد فهد، أسعى لبناء جيل سيبراني واعٍ يمتلك المهارة البرمجية والقدرة على حماية الفضاء الرقمي. هنا أشارككم خبرتي في البرمجة، الحماية، والاختراق الأخلاقي لنرتقي معاً في هذا الميدان التقني.</p>
+                <a href="https://wa.me/967783787656" class="action-btn">استشارة تقنية <i class="fab fa-whatsapp"></i></a>
             </div>
 
             <div class="code9-footer">
-                <h2><i class="fas fa-terminal"></i> شيفرة 9</h2>
+                <h2><i class="fas fa-users"></i> نحن لسنا شيئاً بدونكم</h2>
                 <p>
-                    رح نطور ونستمر بالتحديث.. رح يتم الاستمرار بتزويد هذا الموقع بأدوات واكواد وتعليمات جاهزه لتجعلك محترفاً في هذا الميدان الرقمي المعقد. 
-                    <br>
-                    <span class="highlight-9">كن معنا في موقعنا: شيفرة 9</span>
+                    نحتاج دعمكم دائماً لنستمر في العطاء وتطوير الأدوات المجانية. هذا هو مجتمع الهكر والسيبرانيين، المكان الذي يجمع العقول الطموحة تحت سقف واحد.
+                    <span class="highlight-9">لا تنسوا الانضمام إلى قناتنا الرسمية لمتابعة كل جديد وجاهز.</span>
                 </p>
+                <a href="https://t.me/Code9vTelegram" target="_blank" class="telegram-btn">
+                    <i class="fab fa-telegram-plane"></i> انضم لقناة التلغرام
+                </a>
+            </div>
+
+            <div class="back-home">
+                <a href="index.html"> العودة للصفحة الرئيسية <i class="fas fa-home"></i></a>
             </div>
 
         </div>
     </div>
 
+    <script>
+        // إعداد خلفية الجزيئات (Canvas) لتكون مطابقة للوحة المهارات
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const particleCount = 50;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        for(let i=0; i<particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 2 + 0.5,
+                dx: (Math.random() - 0.5) * 0.4,
+                dy: (Math.random() - 0.5) * 0.4
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 242, 255, 0.3)";
+            particles.forEach(p => {
+                p.x += p.dx;
+                p.y += p.dy;
+                if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+
 </body>
 </html>
+
