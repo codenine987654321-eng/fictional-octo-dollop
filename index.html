@@ -6,6 +6,10 @@
     <title>CIPHER 9 | شيفرة 9</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+
     <style>
         :root {
             --primary: #00f2ff;
@@ -26,7 +30,6 @@
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
         }
 
-        /* خطوط المسح السيبراني */
         .cyber-line {
             position: fixed;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
@@ -50,7 +53,6 @@
             z-index: 10;
         }
 
-        /* الشعار والذكاء الاصطناعي */
         .logo-section {
             position: relative;
             margin-bottom: 20px;
@@ -108,7 +110,6 @@
         .status-text { color: var(--hacker-green); font-weight: 800; font-size: 12px; }
         .status-led { width: 9px; height: 9px; background: var(--hacker-green); border-radius: 50%; margin-right: 12px; box-shadow: 0 0 12px var(--hacker-green); animation: blink 1.2s infinite; }
 
-        /* الأزرار */
         .btn-list { display: flex; flex-direction: column; gap: 12px; }
         .cyber-btn {
             font-weight: 700; padding: 15px 22px; background: rgba(255, 255, 255, 0.02);
@@ -118,7 +119,6 @@
         }
         .cyber-btn:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); transform: translateY(-2px); color: var(--primary); }
         
-        /* مظهر خاص لزر شاهد أكثر */
         .btn-more {
             border-color: var(--hacker-green);
             color: var(--hacker-green);
@@ -141,6 +141,18 @@
             70%, 100% { content: "صلي على محمد ﷺ"; }
         }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* زر تسجيل الخروج الصغير */
+        .logout-link {
+            display: block;
+            margin-top: 15px;
+            color: #ff4d4d;
+            font-size: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+        .logout-link:hover { opacity: 1; }
     </style>
 </head>
 <body>
@@ -149,7 +161,6 @@
     <div class="cyber-line line-bottom"></div>
 
     <div class="cyber-container">
-        
         <div class="logo-section">
             <div class="ai-bubble"><span class="ai-text-anim"></span></div>
             <div class="cyber-core-wrapper">
@@ -162,7 +173,7 @@
         </div>
 
         <div class="status-box">
-            <div class="status-text">حالة النظام: نشط</div>
+            <div class="status-text" id="user-status">حالة النظام: نشط</div>
             <div class="status-led"></div>
         </div>
 
@@ -185,12 +196,41 @@
                 <span>شاهد أكثر</span>
                 <i class="fas fa-arrow-left"></i>
             </a>
+            
+            <a onclick="logout()" class="logout-link">تسجيل الخروج من السيرفر</a>
         </div>
 
         <div class="footer">CIPHER 9 | YEMEN 🇾🇪</div>
     </div>
 
     <script>
+        // إعدادات Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8lxq_gHtOAO9m9CtuBG5m1tNf9h6TE2U",
+            authDomain: "code-9-aaed2.firebaseapp.com",
+            projectId: "code-9-aaed2",
+            storageBucket: "code-9-aaed2.firebasestorage.app",
+            messagingSenderId: "494338698190",
+            appId: "1:494338698190:web:2fdf1f0e740fa05fd2999f"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // حماية الصفحة: التأكد من تسجيل الدخول
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                // إذا لم يسجل دخول، ارجع لصفحة التحقق
+                window.location.href = "auth.html";
+            } else {
+                document.getElementById('user-status').innerText = "العميل: " + user.displayName;
+            }
+        });
+
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "auth.html";
+            });
+        }
+
         function toggleSub() {
             const list = document.getElementById('subList');
             const chevron = document.getElementById('chevron');
@@ -200,3 +240,4 @@
     </script>
 </body>
 </html>
+
