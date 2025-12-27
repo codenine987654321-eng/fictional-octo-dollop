@@ -30,7 +30,7 @@
             background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
         }
 
-        /* خطوط المسح السيبراني (احترافيتك الخاصة) */
+        /* خطوط المسح السيبراني الخاصة بمحمد فهد */
         .cyber-line {
             position: fixed;
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
@@ -63,7 +63,7 @@
             z-index: 10;
         }
 
-        /* الذكر والبركة فوق الشعار */
+        /* فقاعة الذكر العلوية */
         .ai-bubble {
             background: rgba(15, 23, 42, 0.95);
             border: 1px solid var(--primary);
@@ -77,7 +77,7 @@
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
         }
 
-        /* القلب النابض */
+        /* القلب النابض في المركز */
         .cyber-core-wrapper {
             width: 90px; height: 90px;
             position: relative;
@@ -102,41 +102,36 @@
             padding: 8px 20px; border-radius: 15px; border: 1px solid var(--hacker-green);
             margin: 25px 0;
         }
-        .status-text { color: var(--hacker-green); font-weight: 800; font-size: 12px; letter-spacing: 1px; }
+        .status-text { color: var(--hacker-green); font-weight: 800; font-size: 12px; }
         .status-led { width: 8px; height: 8px; background: var(--hacker-green); border-radius: 50%; margin-left: 12px; box-shadow: 0 0 12px var(--hacker-green); animation: blink 1.5s infinite; }
 
-        /* الأزرار */
+        /* الأزرار السيبرانية */
         .btn-list { display: flex; flex-direction: column; gap: 14px; }
         .cyber-btn {
             font-weight: 700; padding: 16px 24px; background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(0, 242, 255, 0.15); border-radius: 20px;
             color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: space-between;
-            transition: 0.3s; font-size: 14px;
+            transition: 0.3s; font-size: 14px; cursor: pointer;
         }
         .cyber-btn:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); transform: translateY(-3px); }
         
-        /* زر شاهد أكثر المميز */
         .btn-more { border-color: var(--hacker-green); color: var(--hacker-green); background: rgba(0, 255, 65, 0.05); margin-top: 5px; }
-        .btn-more:hover { background: rgba(0, 255, 65, 0.1); border-color: var(--hacker-green); }
 
-        /* القائمة المنسدلة */
+        /* القائمة المنسدلة للخيارات الإضافية */
         .sub-btn-list { max-height: 0; overflow: hidden; transition: 0.5s ease; display: flex; flex-direction: column; gap: 10px; }
         .sub-btn-list.active { max-height: 250px; margin-top: 12px; }
         .sub-btn { background: rgba(0, 242, 255, 0.05); padding: 14px; border-radius: 15px; color: #fff; text-decoration: none; font-size: 13px; display: flex; gap: 12px; border: 1px dashed rgba(0, 242, 255, 0.2); }
-        .sub-btn:hover { border-style: solid; border-color: var(--primary); background: rgba(0, 242, 255, 0.1); }
 
-        /* التذييل الأسود الفخم */
+        /* التذييل الأسود المعتمد */
         .footer-black {
             background: #000; padding: 50px 20px; text-align: center;
             border-top: 1px solid rgba(0, 242, 255, 0.2);
             z-index: 11;
         }
         .footer-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 25px; }
-        .footer-links a { color: #64748b; text-decoration: none; font-size: 13px; font-weight: 700; transition: 0.3s; }
+        .footer-links a { color: #64748b; text-decoration: none; font-size: 13px; font-weight: 700; }
         .footer-links a:hover { color: var(--primary); }
-        .footer-socials a { color: #fff; margin: 0 15px; font-size: 1.6rem; transition: 0.3s; }
-        .footer-socials a:hover { color: var(--primary); transform: scale(1.2); }
-        .footer-copy { font-size: 10px; color: #334155; margin-top: 25px; font-weight: 900; letter-spacing: 2px; }
+        .footer-socials a { color: #fff; margin: 0 15px; font-size: 1.6rem; }
 
         .ai-text-anim::before { animation: changeText 12s linear infinite; content: ""; }
         @keyframes changeText {
@@ -165,7 +160,7 @@
             </div>
 
             <div class="status-box">
-                <div class="status-text" id="auth-status">جاري فحص التشفير...</div>
+                <div class="status-text" id="auth-status">جاري فحص النظام...</div>
                 <div class="status-led"></div>
             </div>
 
@@ -178,17 +173,19 @@
         <div class="footer-links">
             <a href="vision.html">حول النظام</a>
             <a href="privacy.html">سياسة الأمان</a>
-            <a href="contact.html">الدعم الفني</a>
+            <a href="mailto:mfhd03189@gmail.com">الدعم الفني</a>
         </div>
         <div class="footer-socials">
-            <a href="https://t.me/MohammedAlSinijarbot"><i class="fab fa-telegram"></i></a>
-            <a href="https://wa.me/967783787656"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://t.me/MohammedAlSinijarbot" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="https://wa.me/967783787656" target="_blank"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <div class="footer-copy">CIPHER 9 | YEMEN 🇾🇪 | BY MOHAMMED FAHAD © 2025</div>
+        <div style="font-size: 10px; color: #334155; margin-top: 25px; font-weight: 900; letter-spacing: 2px;">
+            CIPHER 9 | YEMEN 🇾🇪 | BY MOHAMMED FAHAD © 2025
+        </div>
     </footer>
 
     <script>
-        // إعدادات Firebase الخاصة بك
+        // إعدادات Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyA8lxq_gHtOAO9m9CtuBG5m1tNf9h6TE2U",
             authDomain: "code-9-aaed2.firebaseapp.com",
@@ -206,7 +203,6 @@
             if(chevron) chevron.style.transform = list.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        // مراقب حالة تسجيل الدخول
         firebase.auth().onAuthStateChanged((user) => {
             const menu = document.getElementById('main-menu');
             const status = document.getElementById('auth-status');
@@ -215,7 +211,7 @@
                 status.innerText = "نشط: " + user.displayName.split(' ')[0].toUpperCase();
                 menu.innerHTML = `
                     <a href="vision.html" class="cyber-btn"><span>رؤية شيفرة 9</span><i class="fas fa-eye"></i></a>
-                    <a href="ai.html" class="cyber-btn"><span>مساعد الذكاء الاصطناعي</span><i class="fas fa-microchip"></i></a>
+                    <a href="projects.html" class="cyber-btn"><span>مساعد الذكاء الاصطناعي</span><i class="fas fa-microchip"></i></a>
                     <div class="more-options">
                         <button class="cyber-btn" onclick="toggleSub()">
                             <span>مزيد من الخيارات</span>
@@ -227,7 +223,7 @@
                         </div>
                     </div>
                     <a href="more.html" class="cyber-btn btn-more"><span>شاهد أكثر</span><i class="fas fa-arrow-left"></i></a>
-                    <button onclick="firebase.auth().signOut()" style="background:none; border:none; color:#475569; margin-top:15px; cursor:pointer; font-size:11px; font-weight:bold;">إنهاء الجلسة</button>
+                    <button onclick="firebase.auth().signOut()" style="background:none; border:none; color:#475569; margin-top:15px; cursor:pointer; font-size:11px;">تسجيل الخروج</button>
                 `;
             } else {
                 status.innerText = "النظام مقفل: يرجى الدخول";
